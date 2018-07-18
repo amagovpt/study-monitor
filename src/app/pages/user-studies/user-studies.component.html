@@ -1,3 +1,50 @@
-<p>
-  user-studies works!
-</p>
+<section>
+  <mat-card class="mat-typography">
+    <mat-card-header fxLayout="row" fxLayoutAlign="center center">
+      <mat-card-title>
+        <h1>{{ "TAGS.title" | translate }}</h1>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content *ngIf="!loading && !error && tags.length > 0">
+      <div class="page-table-header">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'TAGS.table.filter' | translate}}">
+        </mat-form-field>
+      </div>
+
+      <mat-table #table [dataSource]="dataSource" matSort matSortActive="name" matSortDisableClear matSortDirection="desc">
+
+        <ng-container matColumnDef="Name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{ "TAGS.table.name" | translate }} </mat-header-cell>
+          <mat-cell *matCellDef="let element"> <strong>{{element.Name}}</strong> </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Pages">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{ "TAGS.table.pages" | translate }} </mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.Pages}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="See">
+          <mat-header-cell *matHeaderCellDef fxFlex="10"></mat-header-cell>
+          <mat-cell *matCellDef="let element" fxFlex="10">
+            <button mat-icon-button matTooltip="{{ 'TAGS.table.see_tooltip' | translate }}" (click)="showTag(element.Name)" fxFlex>
+              <mat-icon class="md-24" aria-label="">visibility</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </mat-card-content>
+    <mat-card-content *ngIf="!loading && !error && tags.length === 0" fxLayout="column" fxLayoutAlign="start center">
+      <span>{{ "TAGS.create_message" | translate }}</span>
+        <br>
+        <button mat-raised-button color="primary" type="button" (click)="openCreateCategoryDialog() ">
+          {{ "TAGS.create_button" | translate }}
+        </button>
+      <app-loading *ngIf="loading"></app-loading>
+      <app-error *ngIf="error"></app-error>
+    </mat-card-content>
+  </mat-card>
+</section>

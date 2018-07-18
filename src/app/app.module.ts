@@ -11,11 +11,16 @@ import { MaterialModule } from './material/material.module';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { NgxGaugeModule } from 'ngx-gauge';
+import { HighlightModule } from 'ngx-highlightjs';
 
 import { CookieService } from 'ngx-cookie-service';
 
 import { UserAuthGuard } from './guards/user-auth.guard';
 import { NoAuthGuard } from './guards/no-auth.guard';
+
+import { ToFixedPipe } from './pipes/to-fixed.pipe';
+import { HtmlPipe } from './pipes/html.pipe';
 
 import { AppComponent } from './app.component';
 import { ErrorComponent } from './global/error/error.component';
@@ -26,11 +31,24 @@ import { NotFound404Component } from './pages/not-found-404/not-found-404.compon
 import { LoginComponent } from './pages/login/login.component';
 import { UserStudiesComponent } from './pages/user-studies/user-studies.component';
 import { UserComponent } from './pages/user/user.component';
+import { NavbarComponent } from './pages/user/navbar/navbar.component';
+import { CreateCategoryDialogComponent } from './dialogs/create-category-dialog/create-category-dialog.component';
+import { TagComponent } from './pages/tag/tag.component';
+import { StatisticsComponent } from './pages/tag/statistics/statistics.component';
+import { AddPagesComponent } from './pages/tag/add-pages/add-pages.component';
+import { PagesTableComponent } from './pages/tag/pages-table/pages-table.component';
+import { EvaluationResultsComponent } from './pages/evaluation-results/evaluation-results.component';
+import { ElementResultComponent } from './pages/element-result/element-result.component';
+import { WebpageCodeComponent } from './pages/webpage-code/webpage-code.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent, canActivate: [NoAuthGuard] },
   { path: 'user', component: UserComponent, canActivate: [UserAuthGuard], children: [
-    { path: '', component: UserStudiesComponent }
+    { path: '', component: UserStudiesComponent },
+    { path: ':tag', component: TagComponent },
+    { path: ':tag/:url', component: EvaluationResultsComponent },
+    { path: ':tag/:url/code', component: WebpageCodeComponent },
+    { path: ':tag/:url/:ele', component: ElementResultComponent }
   ] },
   { path: '**', component: NotFound404Component }
 ];
@@ -55,7 +73,18 @@ export function HttpLoaderFactory(http: HttpClient) {
     NotFound404Component,
     LoginComponent,
     UserStudiesComponent,
-    UserComponent
+    UserComponent,
+    NavbarComponent,
+    CreateCategoryDialogComponent,
+    TagComponent,
+    StatisticsComponent,
+    AddPagesComponent,
+    PagesTableComponent,
+    ToFixedPipe,
+    EvaluationResultsComponent,
+    HtmlPipe,
+    ElementResultComponent,
+    WebpageCodeComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -78,7 +107,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     MaterialModule,
     PerfectScrollbarModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxGaugeModule,
+    HighlightModule.forRoot()
+  ],
+  entryComponents: [
+    CreateCategoryDialogComponent
   ],
   providers: [
     CookieService,

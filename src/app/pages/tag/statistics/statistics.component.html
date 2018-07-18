@@ -1,0 +1,48 @@
+<mat-card class="mat-typography">
+  <mat-card-header>
+    <mat-card-title>
+      <h1>Statistics</h1>
+    </mat-card-title>
+    <mat-card-subtitle>
+      <h2>Metadata</h2>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-grid-list cols="{{ n_cols }}" rowHeight="{{ rowHeight }}">
+      <mat-grid-tile>
+        <ngx-gauge 
+          [type]="'semi'"
+          [thick]="'10'"
+          [value]="score | toFixed" 
+          [label]="'STATISTICS.gauge.label' | translate" 
+          [min]="0" 
+          [max]="10"
+          [duration]="2000"
+          [thresholds]="thresholdConfig">
+        </ngx-gauge>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="{{ colspan }}">
+        <mat-list>
+          <mat-list-item>
+           <span><strong>{{ "STATISTICS.pages" | translate }}:</strong> {{ pages.length }}</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span><strong>Median:</strong> {{ median }}</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span><strong>Variance:</strong> {{ variance }}</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span><strong>Standard deviation:</strong> {{ standardDeviation }}</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span><strong>{{ "STATISTICS.newest_page_updated" | translate }}:</strong> {{ newest_page | date }}</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span><strong>{{ "STATISTICS.oldest_page_updated" | translate }}:</strong> {{ oldest_page | date }}</span>
+          </mat-list-item>
+        </mat-list>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>

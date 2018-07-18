@@ -1,3 +1,9 @@
-<p>
-  user works!
-</p>
+<main id="main" fxLayout="row" fxLayoutAlign="center center">
+  <div fxFlex="80" fxFlex.gt-lg="60" fxFlex.lt-md="95">
+    <app-navbar fxHide.lt-md></app-navbar>
+    <router-outlet></router-outlet>
+  </div>
+</main>
+<button mat-fab color="warn" class="add-tag" matTooltip="Add new Tag" (click)="openCreateCategoryDialog()">
+  <mat-icon aria-label="Add content">add</mat-icon>
+</button>

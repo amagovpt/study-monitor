@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>Criar uma categoria</h1>
+<form (submit)="createCategory($event)" [formGroup]="tagForm" novalidate>
+  <mat-dialog-content>
+    <mat-radio-group fxLayout="column" formControlName="type" (change)="changeType()" required>
+      <mat-radio-button value="official">Escolha uma categoria existente</mat-radio-button>
+      <mat-form-field>
+        <label for="create_tag_name_select">Categoria</label>
+        <mat-select id="create_tag_name_select" formControlName="officialTag">
+          <mat-option *ngFor="let tag of officialTags" [value]="tag.Name">
+            {{ tag.Name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-radio-button value="user">Crie uma nova categoria</mat-radio-button>
+      <mat-form-field>
+        <label for="create_tag_name">Nome da categoria</label>
+        <input id="create_tag_name" matInput formControlName="userTag">
+      </mat-form-field>
+    </mat-radio-group>
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row">
+    <span fxFlex></span>
+    <button mat-raised-button color="primary" type="submit">
+      Criar
+    </button>
+  </mat-dialog-actions>
+</form>

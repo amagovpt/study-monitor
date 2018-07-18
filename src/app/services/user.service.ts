@@ -18,7 +18,7 @@ import { AsError } from '../models/error';
 export class UserService {
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private cookieService: CookieService,
     private message: MessageService,
     private dialog: MatDialog
@@ -32,30 +32,32 @@ export class UserService {
         if (!res.response || res.status === 404) {
           throw new AsError(404, 'Service not found', 'SERIOUS');
         }
-        
-        let response = new Response(res.response);
+
+        const response = new Response(res.response);
 
         if (response.hasError()) {
           throw new AsError(response.success, response.message);
         }
 
+        const user = _.split(response.result, '.');
+        const email = atob(user[0]);
+        const cookie = user[1];
         const host = this.getEnv();
         const tomorrow = new Date();
-
         tomorrow.setDate(tomorrow.getDate() + 1);
 
-        this.cookieService.set('AS-SSID', btoa(JSON.stringify(response.result)), tomorrow, '/', host, false);
+        sessionStorage.setItem('email', email);
+        this.cookieService.set('AS-SSID', btoa(cookie), tomorrow, '/', host, false);
         this.router.navigateByUrl('/user');
         return true;
       }),
       catchError((err: AsError) => {
         switch (err.code) {
-          case -3: // error, password doesn't match
-            this.message.show('LOGIN.messages.password_match');
-            break;
-          case -1: // user does exist but doesn't belong to this website
-          case -2: // user doesn't exist
+          case -1: // user doesn't exist
             this.message.show('LOGIN.messages.no_user');
+            break;
+          case -2: // error, password doesn't match
+            this.message.show('LOGIN.messages.password_match');
             break;
           default:
             this.message.show('LOGIN.messages.system_error');
@@ -65,7 +67,7 @@ export class UserService {
         console.log(err);
         return of(false);
       })
-    );    
+    );
   }
 
   isUserLoggedIn(): boolean {
@@ -73,12 +75,17 @@ export class UserService {
   }
 
   getUserData(): {} {
-    return JSON.parse(atob(this.cookieService.get('AS-SSID')));
+    return atob(this.cookieService.get('AS-SSID'));
+  }
+
+  getEmail(): string {
+    return sessionStorage.getItem('email');
   }
 
   logout(location: string = '/'): void {
     const host = this.getEnv();
 
+    sessionStorage.removeItem('email');
     this.cookieService.delete('AS-SSID');
     this.router.navigateByUrl(location);
   }

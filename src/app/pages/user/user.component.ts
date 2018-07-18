@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+
+import { CreateCategoryDialogComponent } from '../../dialogs/create-category-dialog/create-category-dialog.component';
 
 @Component({
   selector: 'app-user',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit() {
   }
 
+  openCreateCategoryDialog(): void {
+    this.dialog.open(CreateCategoryDialogComponent);
+  }
 }
