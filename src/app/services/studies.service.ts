@@ -69,7 +69,7 @@ export class StudiesService {
   }
 
   getOfficialTags(): Observable<Array<Tag>> {
-    return ajax(this.getServer('/tags/allOfficial')).pipe(
+    return ajax.post(this.getServer('/tags/allOfficial'), {cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -115,7 +115,123 @@ export class StudiesService {
       }),
       catchError(err => {
         console.log(err);
+        if (err.code === -17) {
+          this.message.show('MISC.unexpected_error');
+        } else {
+          this.message.show('CREATE_TAG.error_message');
+        }
         return of(-1);
+      })
+    );
+  }
+
+  userTagNameExists(name: string): Observable<any> {
+    return ajax.post(this.getServer('/studies/user/tag/nameExists'), {name, cookie: this.user.getUserData()}).pipe(
+      retry(3),
+      map(res => {
+        const response = <Response> res.response;
+
+        if (!res.response || res.status === 404) {
+          throw new AsError(404, 'Service not found', 'SERIOUS');
+        }
+
+        if (response.success !== 1) {
+          throw new AsError(response.success, response.message);
+        }
+
+        if (response.result) {
+          return { 'notTakenName': true };
+        } else {
+          return null;
+        }
+      }),
+      catchError(err => {
+        console.log(err);
+        return of(null);
+      })
+    );
+  }
+
+  addTagPages(tag: string, urls: Array<string>): Observable<Array<Page>> {
+    return ajax.post(this.getServer('/studies/user/tag/addPages'), {tag, urls: JSON.stringify(urls), cookie: this.user.getUserData()}).pipe(
+      retry(3),
+      map(res => {
+        const response = <Response> res.response;
+
+        if (!res.response || res.status === 404) {
+          throw new AsError(404, 'Service not found', 'SERIOUS');
+        }
+
+        if (response.success !== 1) {
+          throw new AsError(response.success, response.message);
+        }
+
+        return <Array<Page>> response.result;
+      }),
+      catchError(err => {
+        console.log(err);
+        if (err.code === -17) {
+          this.message.show('MISC.unexpected_error');
+        } else {
+          this.message.show('ADD_PAGES.error_message');
+        }
+        return of(null);
+      })
+    );
+  }
+
+  removeTags(tagsId: Array<number>): Observable<Array<Tag>> {
+    return ajax.post(this.getServer('/studies/user/removeTags'), {tagsId, cookie: this.user.getUserData()}).pipe(
+      retry(3),
+      map(res => {
+        const response = <Response> res.response;
+
+        if (!res.response || res.status === 404) {
+          throw new AsError(404, 'Service not found', 'SERIOUS');
+        }
+
+        if (response.success !== 1) {
+          throw new AsError(response.success, response.message);
+        }
+
+        return <Array<Tag>> response.result;
+      }),
+      catchError(err => {
+        console.log(err);
+        if (err.code === -17) {
+          this.message.show('MISC.unexpected_error');
+        } else {
+          this.message.show('TAGS.remove_error_message');
+        }
+        return of(null);
+      })
+    );
+  }
+
+  removePages(tag: string, pagesId: Array<number>): Observable<Array<Page>> {
+    return ajax.post(this.getServer('/studies/user/tag/removePages'), {tag, pagesId, cookie: this.user.getUserData()}).pipe(
+      retry(3),
+      map(res => {
+        const response = <Response> res.response;
+
+        if (!res.response || res.status === 404) {
+          throw new AsError(404, 'Service not found', 'SERIOUS');
+        }
+
+        if (response.success !== 1) {
+          throw new AsError(response.success, response.message);
+        }
+
+        return <Array<Page>> response.result;
+      }),
+      catchError(err => {
+        console.log(err);
+        if (err.code === -17) {
+          this.message.show('MISC.unexpected_error');
+        } else {
+          this.message.show('PAGES.remove_error_message');
+        }
+        return of(null);
       })
     );
   }

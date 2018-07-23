@@ -1,3 +1,32 @@
-<p>
-  navbar works!
-</p>
+<nav fxLayout="row">
+  <span>{{ "HEADER.NAV.location" | translate }} &nbsp;</span>
+  <a href="http://www.acessibilidade.gov.pt/">{{ "HEADER.NAV.access" | translate }}</a>
+
+  <mat-icon>arrow_forward</mat-icon>
+  <a routerLink="/user" routerLinkActive="active">{{ "HEADER.NAV.home" | translate }}</a>
+
+  <mat-icon *ngIf="addCategory">arrow_forward</mat-icon>
+  <a routerLink="/user/add-category" routerLinkActive="active" *ngIf="addCategory">
+    {{ "HEADER.NAV.add_category" | translate }}
+  </a>
+
+  <mat-icon *ngIf="tag">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag]" routerLinkActive="active" *ngIf="tag">
+    {{ tag }}
+  </a>
+
+  <mat-icon *ngIf="page">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, page]" routerLinkActive="active" *ngIf="page">
+    {{ page }}
+  </a>
+
+  <mat-icon *ngIf="pageCode">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, '/code']" routerLinkActive="active" *ngIf="pageCode">
+    {{ "HEADER.NAV.code" | translate }}
+  </a>
+
+  <mat-icon *ngIf="pageEle">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, page, pageEle]" routerLinkActive="active" *ngIf="pageEle">
+    {{ pageEle }}
+  </a>
+</nav>

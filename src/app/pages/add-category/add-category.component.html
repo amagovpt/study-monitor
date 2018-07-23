@@ -1,0 +1,42 @@
+<section>
+  <mat-card class="mat-typography">
+    <mat-card-header>
+      <mat-card-title>
+        <h1>{{ "CREATE_TAG.title" | translate }}</h1>
+      </mat-card-title>
+    </mat-card-header>
+    <br>
+    <form (submit)="createCategory($event)" [formGroup]="tagForm" novalidate>
+      <mat-card-content>
+        <mat-radio-group fxLayout="column" formControlName="type" (change)="changeType()" required>
+          <mat-radio-button value="official">{{ "CREATE_TAG.radio_button_choose" | translate }}</mat-radio-button>
+          <mat-form-field>
+            <label for="create_tag_name_select">{{ "CREATE_TAG.choose_category_label" | translate }}</label>
+            <mat-select id="create_tag_name_select" formControlName="officialTag">
+              <mat-option *ngFor="let tag of officialTags" [value]="tag.Name">
+                {{ tag.Name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-radio-button value="user">{{ "CREATE_TAG.radio_button_create" | translate }}</mat-radio-button>
+          <mat-form-field>
+            <label for="create_tag_name">{{ "CREATE_TAG.create_category_label" | translate }}</label>
+            <input id="create_tag_name" matInput formControlName="userTag" [errorStateMatcher]="matcher">
+            <mat-error *ngIf="tagForm.controls.userTag.status === 'PENDING'">
+              <mat-progress-bar mode="buffer"></mat-progress-bar>
+            </mat-error>
+            <mat-error *ngIf="tagForm.controls.userTag.hasError('notTakenName')">
+              {{ "CREATE_TAG.name_exists" | translate}}
+            </mat-error>
+          </mat-form-field>
+        </mat-radio-group>
+      </mat-card-content>
+      <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
+        <button mat-raised-button color="primary" type="submit" *ngIf="!loading" [disabled]="tagForm.controls.userTag.invalid || (!tagForm.value.userTag && !tagForm.value.officialTag)">
+          {{ "CREATE_TAG.create_button" | translate }}
+        </button>
+        <mat-spinner *ngIf="loading" [diameter]="40"></mat-spinner>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</section>

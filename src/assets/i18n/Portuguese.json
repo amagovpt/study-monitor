@@ -11,23 +11,97 @@
       "system_error": "Erro no sistema. Por favor tente mais tarde"
     }
   },
+  "SIDEBAR": {
+    "menu": "Menu",
+    "categories": "Categorias",
+    "add_category": "Adicionar categoria"
+  },
+  "HEADER": {
+    "NAV": {
+      "location": "Você está em",
+      "access": "Acesso",
+      "home": "Access Studies",
+      "add_category": "Adicionar categoria",
+      "code": "Código"
+    }
+  },
   "TAGS": {
     "title": "Lista de categorias",
     "create_message": "Atualemnte não tem categorias. Carregue no botão abaixo para criar uma.",
     "create_button": "Criar uma categoria",
+    "remove_button": "Remover",
+    "remove_success_message": "Categorias removidas com successo",
+    "remove_error_message": "Ocorreu um erro ao tentar remover as categorias selecionadas",
     "table": {
       "filter": "Filtro",
-      "name": "Nome",
+      "name": "Categoria",
       "pages": "Nº de páginas",
       "see_tooltip": "Ver categoria"
+    },
+    "dialog": {
+      "title": "Remover categorias",
+      "first_sentence": "Tem a certeza que pretende remover as categorias selecionadas?",
+      "second_sentence": "Esta operação não pode ser revertida.",
+      "yes": "Sim",
+      "no": "Não"
     }
   },
   "TAG": {
-    "create": {
-      "success": "Categoria criada com sucesso"
+    "no_pages": {
+      "message1": "Esta categoria não tem páginas.",
+      "message2": "Carregue acima para adicionar páginas a esta categoria."
     }
   },
+  "ADD_PAGES": {
+    "title": "Adicionat páginas",
+    "subtitle": "Adicione páginas a esta categoria",
+    "label": "Urls",
+    "required": "Este campo é <strong>obrigatório</strong>",
+    "error": "Um dos urls é <strong>inválido</strong>",
+    "button": "Adicionar páginas",
+    "error_message": "Ocorreu um erro ao tentar adicionar as páginas",
+    "success_message": "Páginas adicionadas com sucesso"
+  },
+  "PAGES": {
+    "title": "Páginas da categoria {{value}}",
+    "subtitle": "Lista de páginas",
+    "remove_button": "Remover",
+    "remove_success_message": "Páginas removidas com successo",
+    "remove_error_message": "Ocorreu um erro ao tentar remover as páginas selecionadas",
+    "table": {
+      "filter": "Filtro",
+      "page": "Página",
+      "score": "Pontuação",
+      "A": "A*",
+      "AA": "AA*",
+      "AAA": "AAA*",
+      "date": "Data",
+      "see_tooltip": "Ver categoria",
+      "note": "* Número de erros por nível de conformidade"
+    },
+    "dialog": {
+      "title": "Remover páginas",
+      "first_sentence": "Tem a certeza que pretende remover as páginas selecionadas?",
+      "second_sentence": "Esta operação não pode ser revertida.",
+      "yes": "Sim",
+      "no": "Não"
+    }
+  },
+  "CREATE_TAG": {
+    "title": "Crie uma categoria",
+    "radio_button_choose": "Escolha uma categoria existente",
+    "choose_category_label": "Categoria",
+    "radio_button_create": "Crie uma nova categoria",
+    "create_category_label": "Nome da categoria",
+    "create_button": "Criar",
+    "message": "Categoria criada com sucesso",
+    "error_message": "Ocorreu um erro ao tentar criar a categoria",
+    "action": "Ver categoria",
+    "name_exists": "Já tem uma categoria com este nome"
+  },
   "STATISTICS": {
+    "title": "Estatísticas",
+    "subtitle": "Metadados",
     "gauge": {
       "label": "Pontuação média"
     },

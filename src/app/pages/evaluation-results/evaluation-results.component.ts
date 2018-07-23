@@ -82,7 +82,7 @@ export class EvaluationResultsComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  evaluate(force: boolean): void {
+  evaluate(): void {
     this.loading = true;
 
     this.evaluation.evaluateUrl(this.url)

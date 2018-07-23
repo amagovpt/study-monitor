@@ -40,11 +40,15 @@ import { PagesTableComponent } from './pages/tag/pages-table/pages-table.compone
 import { EvaluationResultsComponent } from './pages/evaluation-results/evaluation-results.component';
 import { ElementResultComponent } from './pages/element-result/element-result.component';
 import { WebpageCodeComponent } from './pages/webpage-code/webpage-code.component';
+import { AddCategoryComponent } from './pages/add-category/add-category.component';
+import { RemoveTagsConfirmationDialogComponent } from './dialogs/remove-tags-confirmation-dialog/remove-tags-confirmation-dialog.component';
+import { RemovePagesConfirmationDialogComponent } from './dialogs/remove-pages-confirmation-dialog/remove-pages-confirmation-dialog.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent, canActivate: [NoAuthGuard] },
   { path: 'user', component: UserComponent, canActivate: [UserAuthGuard], children: [
     { path: '', component: UserStudiesComponent },
+    { path: 'add-category', component: AddCategoryComponent },
     { path: ':tag', component: TagComponent },
     { path: ':tag/:url', component: EvaluationResultsComponent },
     { path: ':tag/:url/code', component: WebpageCodeComponent },
@@ -84,7 +88,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     EvaluationResultsComponent,
     HtmlPipe,
     ElementResultComponent,
-    WebpageCodeComponent
+    WebpageCodeComponent,
+    AddCategoryComponent,
+    RemoveTagsConfirmationDialogComponent,
+    RemovePagesConfirmationDialogComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -112,7 +119,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     HighlightModule.forRoot()
   ],
   entryComponents: [
-    CreateCategoryDialogComponent
+    CreateCategoryDialogComponent,
+    RemoveTagsConfirmationDialogComponent,
+    RemovePagesConfirmationDialogComponent
   ],
   providers: [
     CookieService,

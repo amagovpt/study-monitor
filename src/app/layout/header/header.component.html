@@ -7,11 +7,12 @@
       </button>
     </mat-toolbar-row>
     <mat-toolbar-row fxHide.gt-sm>
-      <button class="menu-button" mat-icon-button (click)="toggleSidenav()" *ngIf="user.isUserLoggedIn()">
+      <button class="menu-button" mat-icon-button (click)="toggleSidenav()">
         <mat-icon aria-label="Open sidebar menu">menu</mat-icon>
       </button>
       <span class="title" fxFlex>Access Studies</span>
     </mat-toolbar-row>
   </mat-toolbar>
+  <app-navbar *ngIf="user.isUserLoggedIn()" fxHide.lt-md></app-navbar>
 </header>
 <br>

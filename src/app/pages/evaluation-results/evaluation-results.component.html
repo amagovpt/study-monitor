@@ -9,17 +9,17 @@
       </mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions *ngIf="!loading && !error">
-      <a mat-icon-button class="tools" routerLink="/" matTooltip="{{ 'RESULTS.actions.back' | translate }}">
+      <a mat-icon-button class="tools" [routerLink]="['/user', tag]" matTooltip="{{ 'RESULTS.actions.back' | translate }}">
          <mat-icon aria-label="'RESULTS.actions.back' | translate">arrow_back</mat-icon>
       </a>
       <span fxFlex></span>
-      <button mat-icon-button class="tools" (click)="evaluate(true)" matTooltip="{{ 'RESULTS.actions.re_evaluate' | translate }}">
+      <button mat-icon-button class="tools" (click)="evaluate()" matTooltip="{{ 'RESULTS.actions.re_evaluate' | translate }}">
         <mat-icon aria-label="'RESULTS.actions.re_evaluate' | translate">autorenew</mat-icon>
       </button>
       <a mat-icon-button class="tools" (click)="downloadEvaluation()" download="eval.csv" matTooltip="{{ 'RESULTS.actions.download' | translate }}">
          <mat-icon aria-label="'RESULTS.actions.download' | translate">file_download</mat-icon>
       </a>
-      <a mat-icon-button class="tools" [routerLink]="['/results', url, 'code']" matTooltip="{{ 'RESULTS.actions.pagecode' | translate }}">
+      <a mat-icon-button class="tools" [routerLink]="['/user', tag, url, 'code']" matTooltip="{{ 'RESULTS.actions.pagecode' | translate }}">
          <mat-icon aria-label="'RESULTS.actions.pagecode' | translate">code</mat-icon>
       </a>
       <a mat-icon-button class="tools" matTooltip="{{ 'RESULTS.actions.open_webpage' | translate }}" href="http://{{url}}" target="_blank">
@@ -68,6 +68,12 @@
                     <strong>{{ "RESULTS.summary.metadata.page_size_label" | translate }}</strong>
                   </th>
                   <td [innerHTML]="eval.metadata.size | html"></td>
+                </tr>
+                <tr>
+                  <th scope="row">
+                    <strong>{{ "RESULTS.summary.metadata.last_update_label" | translate }}</strong>
+                  </th>
+                  <td>{{ eval.metadata.last_update | date }}</td>
                 </tr>
               </table>
             </mat-grid-tile>

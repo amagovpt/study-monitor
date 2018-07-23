@@ -1,10 +1,10 @@
 <mat-card class="mat-typography">
   <mat-card-header>
     <mat-card-title>
-      <h1>Statistics</h1>
+      <h1>{{ "STATISTICS.title" | translate }}</h1>
     </mat-card-title>
     <mat-card-subtitle>
-      <h2>Metadata</h2>
+      <h2>{{ "STATISTICS.subtitle" | translate }}</h2>
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
@@ -27,13 +27,13 @@
            <span><strong>{{ "STATISTICS.pages" | translate }}:</strong> {{ pages.length }}</span>
           </mat-list-item>
           <mat-list-item>
-            <span><strong>Median:</strong> {{ median }}</span>
+            <span><strong>Median:</strong> {{ median | toFixed:{places: 3} }}</span>
           </mat-list-item>
           <mat-list-item>
-            <span><strong>Variance:</strong> {{ variance }}</span>
+            <span><strong>Variance:</strong> {{ variance | toFixed:{places: 3} }}</span>
           </mat-list-item>
           <mat-list-item>
-            <span><strong>Standard deviation:</strong> {{ standardDeviation }}</span>
+            <span><strong>Standard deviation:</strong> {{ standardDeviation | toFixed:{places: 3} }}</span>
           </mat-list-item>
           <mat-list-item>
             <span><strong>{{ "STATISTICS.newest_page_updated" | translate }}:</strong> {{ newest_page | date }}</span>

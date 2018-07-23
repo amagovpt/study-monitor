@@ -5,13 +5,24 @@
         <h1>{{ tag }}</h1>
       </mat-card-title>
     </mat-card-header>
+    <mat-card-actions>
+      <a mat-icon-button class="tools" routerLink="/user" matTooltip="{{ 'RESULTS.actions.back' | translate }}">
+         <mat-icon aria-label="'RESULTS.actions.back' | translate">arrow_back</mat-icon>
+      </a>
+    </mat-card-actions>
   </mat-card>
   <br>
-  <app-add-pages *ngIf="!loading && !error"></app-add-pages>
-  <br>
-  <app-tag-statistics [pages]="pages" *ngIf="!loading && !error"></app-tag-statistics>
-  <br>
-  <app-pages-table [tag]="tag" [pages]="pages" *ngIf="!loading && !error"></app-pages-table>
+  <div *ngIf="!loading && !error">
+    <app-add-pages [tag]="tag" (addPages)="addPages($event)"></app-add-pages>
+    <br>
+    <span class="no-pages-message" *ngIf="pages.length === 0" fxLayout="column" fxLayoutAlign="start center">
+      <p>{{ "TAG.no_pages.message1" | translate }}</p>
+      <p>{{ "TAG.no_pages.message2" | translate }}</p>
+    </span>
+    <app-tag-statistics *ngIf="pages.length > 0" [pages]="pages"></app-tag-statistics>
+    <br *ngIf="pages.length > 0">
+    <app-pages-table *ngIf="pages.length > 0" [tag]="tag" [pages]="pages" (removePages)="removePages($event)"></app-pages-table>
+  </div>
   <app-loading *ngIf="loading"></app-loading>
   <app-error *ngIf="error"></app-error>
 </section>

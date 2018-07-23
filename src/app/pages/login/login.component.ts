@@ -61,11 +61,7 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm.value.password;
 
     this.user.login(email, password)
-      .subscribe((success: boolean) => {
-        if (!success) {
-          //this.error = true;
-        }
-
+      .subscribe(() => {
         this.loginLoading = false;
       });
   }

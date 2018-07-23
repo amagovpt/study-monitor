@@ -507,7 +507,7 @@ export class EvaluationService {
 
     while (n) {
       let attrs = '';
-      
+
       for (let i = 0 ; i < _.size(n['attributes']) ; i++) {
         const attr = <Attr> n['attributes'][i];
         if (attr.value) {

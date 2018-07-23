@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ export class MessageService {
   constructor(
     private translate: TranslateService,
     private snackBar: MatSnackBar,
+    private dialog: MatDialog,
     private router: Router
   ) { }
 
@@ -22,7 +23,7 @@ export class MessageService {
           duration: duration,
         });
         snack.onAction().subscribe(() => {
-          console.log(button.path);
+          this.dialog.closeAll();
           this.router.navigateByUrl(button.path);
         });
       });

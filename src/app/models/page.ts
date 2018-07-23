@@ -23,7 +23,7 @@ export class Page implements IPage {
 
   constructor(PageId: number, DomainId: number, Uri: string, Score: number,
     A: number, AA: number, AAA: number, Creation_Date: Date, Evaluation_Date: Date) {
-    
+
     this.PageId = PageId;
     this.DomainId = DomainId;
     this.Uri = Uri;

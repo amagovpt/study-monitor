@@ -39,14 +39,12 @@ export class UserService {
           throw new AsError(response.success, response.message);
         }
 
-        const user = _.split(response.result, '.');
-        const email = atob(user[0]);
-        const cookie = user[1];
+        const cookie = response.result;
         const host = this.getEnv();
         const tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 1);
 
-        sessionStorage.setItem('email', email);
+        sessionStorage.setItem('AS-email', email);
         this.cookieService.set('AS-SSID', btoa(cookie), tomorrow, '/', host, false);
         this.router.navigateByUrl('/user');
         return true;
@@ -79,7 +77,7 @@ export class UserService {
   }
 
   getEmail(): string {
-    return sessionStorage.getItem('email');
+    return sessionStorage.getItem('AS-email');
   }
 
   logout(location: string = '/'): void {

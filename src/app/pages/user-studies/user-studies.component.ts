@@ -1,12 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material';
 import * as _ from 'lodash';
 
 import { CreateCategoryDialogComponent } from '../../dialogs/create-category-dialog/create-category-dialog.component';
+import { RemoveTagsConfirmationDialogComponent } from '../../dialogs/remove-tags-confirmation-dialog/remove-tags-confirmation-dialog.component';
 
 import { StudiesService } from '../../services/studies.service';
+import { MessageService } from '../../services/message.service';
 
 import { Tag } from '../../models/tag';
 
@@ -23,6 +26,7 @@ export class UserStudiesComponent implements OnInit {
   tags: Array<Tag>;
 
   displayedColumns = [
+    'Select',
     'Name',
     'Pages',
     'See'
@@ -31,12 +35,15 @@ export class UserStudiesComponent implements OnInit {
   // column sorter
   @ViewChild(MatSort) sort: MatSort;
   dataSource: MatTableDataSource<Tag>;
+  selection: SelectionModel<Tag>;
 
   constructor(
     private router: Router,
     private studies: StudiesService,
+    private message: MessageService,
     private dialog: MatDialog
   ) {
+    this.selection = new SelectionModel<Tag>(true, []);
     this.loading = true;
     this.error = false;
   }
@@ -51,7 +58,7 @@ export class UserStudiesComponent implements OnInit {
           this.dataSource = new MatTableDataSource(this.tags);
           this.dataSource.sort = this.sort;
         }
-        
+
         this.loading = false;
       });
   }
@@ -62,11 +69,47 @@ export class UserStudiesComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  showTag(tagName: string): void {
-    this.router.navigateByUrl('/user/' + tagName);
-  }
-
   openCreateCategoryDialog(): void {
     this.dialog.open(CreateCategoryDialogComponent);
+  }
+
+  deleteTags(): void {
+    const tagsId = _.map(this.selection.selected, 'TagId');
+
+    const dialogRef = this.dialog.open(RemoveTagsConfirmationDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'true') {
+        this.loading = true;
+        this.studies.removeTags(tagsId)
+          .subscribe(tags => {
+            if (tags === null) {
+              this.error = true;
+            } else {
+              this.message.show('TAGS.remove_success_message');
+              this.tags = tags;
+              this.dataSource = new MatTableDataSource(this.tags);
+              this.dataSource.sort = this.sort;
+              this.selection.clear();
+            }
+
+            this.loading = false;
+          });
+      }
+    });
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
   }
 }

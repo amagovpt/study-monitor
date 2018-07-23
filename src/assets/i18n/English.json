@@ -11,23 +11,97 @@
       "system_error": "There was a system error. Please try later"
     }
   },
+  "SIDEBAR": {
+    "menu": "Menu",
+    "categories": "Categories",
+    "add_category": "Add category"
+  },
+  "HEADER": {
+    "NAV": {
+      "location": "You are in",
+      "access": "Access",
+      "home": "Access Studies",
+      "add_category": "Add category",
+      "code": "Code"
+    }
+  },
   "TAGS": {
     "title": "List of categories",
     "create_message": "You don't have any categories. Click the button below to add one.",
     "create_button": "Create a category",
+    "remove_button": "Remove",
+    "remove_success_message": "Categories removed successfully",
+    "remove_error_message": "There was an error while trying to remove the selected categories",
     "table": {
       "filter": "Filter",
-      "name": "Name",
+      "name": "Category",
       "pages": "Nº of pages",
       "see_tooltip": "See category"
+    },
+    "dialog": {
+      "title": "Remove categories",
+      "first_sentence": "Are you shure that you want to remove the selected categories?",
+      "second_sentence": "This operation cannot be reverted.",
+      "yes": "Yes",
+      "no": "No"
     }
   },
   "TAG": {
-    "create": {
-      "success": "Category created successfully"
+    "no_pages": {
+      "message1": "This category doesn't have any pages.",
+      "message2": "Please click above to add pages to this category."
     }
   },
+  "ADD_PAGES": {
+    "title": "Add pages",
+    "subtitle": "Add pages to this category",
+    "label": "Urls",
+    "required": "This field is <strong>required</strong>",
+    "error": "One of the urls is <strong>invalid</strong>",
+    "button": "Add pages",
+    "error_message": "There was an error while trying to add pages",
+    "success_message": "Pages added successfully"
+  },
+  "PAGES": {
+    "title": "Pages from the category {{value}}",
+    "subtitle": "List of pages",
+    "remove_button": "Remove",
+    "remove_success_message": "Pages removed successfully",
+    "remove_error_message": "There was an error while trying to remove the selected pages",
+    "table": {
+      "filter": "Filter",
+      "page": "Page",
+      "score": "Score",
+      "A": "A*",
+      "AA": "AA*",
+      "AAA": "AAA*",
+      "date": "Date",
+      "see_tooltip": "See category",
+      "note": "* Number of errors for each conform level"
+    },
+    "dialog": {
+      "title": "Remove pages",
+      "first_sentence": "Are you shure that you want to remove the selected pages?",
+      "second_sentence": "This operation cannot be reverted.",
+      "yes": "Yes",
+      "no": "No"
+    }
+  },
+  "CREATE_TAG": {
+    "title": "Create a category",
+    "radio_button_choose": "Choose an existing category",
+    "choose_category_label": "Category",
+    "radio_button_create": "Create a new category",
+    "create_category_label": "Category name",
+    "create_button": "Create",
+    "message": "Category created successfully",
+    "error_message": "There was an error while trying to create the category",
+    "action": "See category",
+    "name_exists": "You already have a category with this name"
+  },
   "STATISTICS": {
+    "title": "Statistics",
+    "subtitle": "Metadata",
     "gauge": {
       "label": "Average score"
     },

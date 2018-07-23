@@ -38,11 +38,11 @@ export class StatisticsComponent implements OnInit {
     if (window.innerWidth < 960) {
       this.n_cols = 1;
       this.colspan = 1;
-      this.rowHeight = '0.5:0.3';
+      this.rowHeight = '1:1';
     } else {
       this.n_cols = 3;
       this.colspan = 2;
-      this.rowHeight = '1.5:1';
+      this.rowHeight = '1:1';
     }
 
     this.score = 0;
@@ -55,18 +55,20 @@ export class StatisticsComponent implements OnInit {
   onResize(event) {
     if (event.target.innerWidth < 960) {
       this.n_cols = 1;
-      this.rowHeight = '0.5:0.3';
+      this.colspan = 1;
+      this.rowHeight = '1:1';
     } else {
       this.n_cols = 3;
-      this.rowHeight = '1.5:1';
+      this.colspan = 2;
+      this.rowHeight = '1:1';
     }
   }
 
   ngOnInit() {
     this.newest_page = this.pages[0].Evaluation_Date;
     this.oldest_page = this.pages[0].Evaluation_Date;
-    
-    let scores = _.map(this.pages, 'Score');
+
+    const scores = _.map(this.pages, 'Score');
     scores.sort();
     const size = _.size(scores);
 
@@ -87,17 +89,17 @@ export class StatisticsComponent implements OnInit {
     if (size === 1) {
       this.median = this.score;
     } else if (size % 2 === 0) {
-      const lower = scores[(size/2)-1];
-      const upper = scores[size/2];
+      const lower = scores[(size / 2) - 1];
+      const upper = scores[size / 2];
       this.median = (lower + upper) / 2;
     } else {
-      this.median = scores[((size-1)/2)+1];
+      this.median = scores[((size - 1) / 2)];
     }
 
     if (size > 1) {
       let st = 0;
       for (let i = 0 ; i < size ; i++) {
-        st += Math.pow(scores[i] - this.score, 2)
+        st += Math.pow(scores[i] - this.score, 2);
       }
 
       this.variance = st / (size - 1);

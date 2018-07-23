@@ -18,11 +18,11 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 }
 
 @Component({
-  selector: 'app-create-category-dialog',
-  templateUrl: './create-category-dialog.component.html',
-  styleUrls: ['./create-category-dialog.component.css']
+  selector: 'app-add-category',
+  templateUrl: './add-category.component.html',
+  styleUrls: ['./add-category.component.css']
 })
-export class CreateCategoryDialogComponent implements OnInit {
+export class AddCategoryComponent implements OnInit {
 
   loading: boolean;
 

@@ -10,7 +10,7 @@ import { EvaluationService } from '../../services/evaluation.service';
   templateUrl: './element-result.component.html',
   styleUrls: ['./element-result.component.css']
 })
-export class ElementResultComponent implements OnInit {
+export class ElementResultComponent implements OnInit, OnDestroy {
 
   @ViewChild('iframe') iframe: ElementRef;
 

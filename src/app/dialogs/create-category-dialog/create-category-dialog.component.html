@@ -1,27 +1,34 @@
-<h1 mat-dialog-title>Criar uma categoria</h1>
+<h1 mat-dialog-title>{{ "CREATE_TAG.title" | translate }}</h1>
 <form (submit)="createCategory($event)" [formGroup]="tagForm" novalidate>
   <mat-dialog-content>
     <mat-radio-group fxLayout="column" formControlName="type" (change)="changeType()" required>
-      <mat-radio-button value="official">Escolha uma categoria existente</mat-radio-button>
+      <mat-radio-button value="official">{{ "CREATE_TAG.radio_button_choose" | translate }}</mat-radio-button>
       <mat-form-field>
-        <label for="create_tag_name_select">Categoria</label>
+        <label for="create_tag_name_select">{{ "CREATE_TAG.choose_category_label" | translate }}</label>
         <mat-select id="create_tag_name_select" formControlName="officialTag">
           <mat-option *ngFor="let tag of officialTags" [value]="tag.Name">
             {{ tag.Name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-radio-button value="user">Crie uma nova categoria</mat-radio-button>
+      <mat-radio-button value="user">{{ "CREATE_TAG.radio_button_create" | translate }}</mat-radio-button>
       <mat-form-field>
-        <label for="create_tag_name">Nome da categoria</label>
-        <input id="create_tag_name" matInput formControlName="userTag">
+        <label for="create_tag_name">{{ "CREATE_TAG.create_category_label" | translate }}</label>
+        <input id="create_tag_name" matInput formControlName="userTag" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="tagForm.controls.userTag.status === 'PENDING'">
+          <mat-progress-bar mode="buffer"></mat-progress-bar>
+        </mat-error>
+        <mat-error *ngIf="tagForm.controls.userTag.hasError('notTakenName')">
+          {{ "CREATE_TAG.name_exists" | translate}}
+        </mat-error>
       </mat-form-field>
     </mat-radio-group>
   </mat-dialog-content>
   <mat-dialog-actions fxLayout="row">
     <span fxFlex></span>
-    <button mat-raised-button color="primary" type="submit">
-      Criar
+    <button mat-raised-button color="primary" type="submit" *ngIf="!loading" [disabled]=" tagForm.controls.userTag.invalid || (!tagForm.value.userTag && !tagForm.value.officialTag)">
+      {{ "CREATE_TAG.create_button" | translate }}
     </button>
+    <mat-spinner *ngIf="loading" [diameter]="40"></mat-spinner>
   </mat-dialog-actions>
 </form>
