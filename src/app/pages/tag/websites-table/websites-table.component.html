@@ -1,0 +1,79 @@
+<mat-card class="mat-typography">
+  <mat-card-header>
+    <mat-card-title>
+      <h1>{{ "WEBSITES.title" | translate:{value: tag} }}</h1>
+    </mat-card-title>
+    <mat-card-subtitle>
+      <h2>{{ "WEBSITES.subtitle" | translate }}</h2>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="page-table-header">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'WEBSITES.table.filter' | translate}}">
+      </mat-form-field>
+    </div>
+
+    <button mat-raised-button color="warn" (click)="deleteWebsites()" [disabled]="!selection.hasValue()">
+      {{ "WEBSITES.remove_button" | translate }}
+    </button>
+
+    <mat-table #table [dataSource]="dataSource" matSort matSortActive="Score" matSortDisableClear matSortDirection="desc">
+
+      <ng-container matColumnDef="Select">
+        <mat-header-cell *matHeaderCellDef fxFlex="10" fxHide.xs>
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row" fxFlex="10" fxHide.xs>
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header fxFlex>
+          {{ "WEBSITES.table.name" | translate }}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex>
+          <strong>{{element.Name}}</strong>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Url">
+        <mat-header-cell *matHeaderCellDef mat-sort-header fxFlex>
+          {{ "WEBSITES.table.domain" | translate }}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex>
+          <strong>{{element.Url}}</strong>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Score">
+        <mat-header-cell *matHeaderCellDef mat-sort-header fxFlex="10" fxHide.lt-sm>
+          {{ "WEBSITES.table.score" | translate }}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" fxHide.lt-sm>
+          {{element.Score}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="See">
+        <mat-header-cell *matHeaderCellDef fxFlex="10"></mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10">
+          <button mat-icon-button matTooltip="{{ 'WEBSITES.table.see_tooltip' | translate }}" [routerLink]="['/user', tag, element.Name]" fxFlex>
+            <mat-icon class="md-24" aria-label="">visibility</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <small><strong>{{ "WEBSITES.table.note" | translate }}</strong></small>
+  </mat-card-content>
+</mat-card>

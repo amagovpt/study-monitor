@@ -34,15 +34,22 @@ import { UserComponent } from './pages/user/user.component';
 import { NavbarComponent } from './pages/user/navbar/navbar.component';
 import { CreateCategoryDialogComponent } from './dialogs/create-category-dialog/create-category-dialog.component';
 import { TagComponent } from './pages/tag/tag.component';
-import { StatisticsComponent } from './pages/tag/statistics/statistics.component';
-import { AddPagesComponent } from './pages/tag/add-pages/add-pages.component';
-import { PagesTableComponent } from './pages/tag/pages-table/pages-table.component';
+import { TagStatisticsComponent } from './pages/tag/tag-statistics/tag-statistics.component';
+import { AddWebsiteComponent } from './pages/tag/add-website/add-website.component';
+import { PagesTableComponent } from './pages/website/pages-table/pages-table.component';
 import { EvaluationResultsComponent } from './pages/evaluation-results/evaluation-results.component';
 import { ElementResultComponent } from './pages/element-result/element-result.component';
 import { WebpageCodeComponent } from './pages/webpage-code/webpage-code.component';
 import { AddCategoryComponent } from './pages/add-category/add-category.component';
 import { RemoveTagsConfirmationDialogComponent } from './dialogs/remove-tags-confirmation-dialog/remove-tags-confirmation-dialog.component';
 import { RemovePagesConfirmationDialogComponent } from './dialogs/remove-pages-confirmation-dialog/remove-pages-confirmation-dialog.component';
+import { WebsitesTableComponent } from './pages/tag/websites-table/websites-table.component';
+import { WebsiteComponent } from './pages/website/website.component';
+import { WebsiteStatisticsComponent } from './pages/website/website-statistics/website-statistics.component';
+import { AddPagesComponent } from './pages/website/add-pages/add-pages.component';
+import { WebsiteDetailedStatisticsComponent } from './pages/website-detailed-statistics/website-detailed-statistics.component';
+import { TagDetaildStatisticsComponent } from './pages/tag-detaild-statistics/tag-detaild-statistics.component';
+import { RemoveWebsitesConfirmationDialogComponent } from './dialogs/remove-websites-confirmation-dialog/remove-websites-confirmation-dialog.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent, canActivate: [NoAuthGuard] },
@@ -50,9 +57,12 @@ const appRoutes: Routes = [
     { path: '', component: UserStudiesComponent },
     { path: 'add-category', component: AddCategoryComponent },
     { path: ':tag', component: TagComponent },
-    { path: ':tag/:url', component: EvaluationResultsComponent },
-    { path: ':tag/:url/code', component: WebpageCodeComponent },
-    { path: ':tag/:url/:ele', component: ElementResultComponent }
+    { path: ':tag/statistics', component: TagDetaildStatisticsComponent },
+    { path: ':tag/:website', component: WebsiteComponent },
+    { path: ':tag/:website/statistics', component: WebsiteDetailedStatisticsComponent },
+    { path: ':tag/:website/:url', component: EvaluationResultsComponent },
+    { path: ':tag/:website/:url/code', component: WebpageCodeComponent },
+    { path: ':tag/:website/:url/:ele', component: ElementResultComponent }
   ] },
   { path: '**', component: NotFound404Component }
 ];
@@ -81,8 +91,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     NavbarComponent,
     CreateCategoryDialogComponent,
     TagComponent,
-    StatisticsComponent,
-    AddPagesComponent,
+    TagStatisticsComponent,
+    AddWebsiteComponent,
     PagesTableComponent,
     ToFixedPipe,
     EvaluationResultsComponent,
@@ -91,7 +101,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     WebpageCodeComponent,
     AddCategoryComponent,
     RemoveTagsConfirmationDialogComponent,
-    RemovePagesConfirmationDialogComponent
+    RemovePagesConfirmationDialogComponent,
+    WebsitesTableComponent,
+    WebsiteComponent,
+    WebsiteStatisticsComponent,
+    AddPagesComponent,
+    WebsiteDetailedStatisticsComponent,
+    TagDetaildStatisticsComponent,
+    RemoveWebsitesConfirmationDialogComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -121,6 +138,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   entryComponents: [
     CreateCategoryDialogComponent,
     RemoveTagsConfirmationDialogComponent,
+    RemoveWebsitesConfirmationDialogComponent,
     RemovePagesConfirmationDialogComponent
   ],
   providers: [

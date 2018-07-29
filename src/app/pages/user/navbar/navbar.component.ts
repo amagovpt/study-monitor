@@ -15,6 +15,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   addCategory: boolean;
   tag: string;
+  website: string;
   page: string;
   pageEle: string;
   pageCode: boolean;
@@ -25,6 +26,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ) {
     this.addCategory = false;
     this.tag = null;
+    this.website = null;
     this.page = null;
     this.pageEle = null;
     this.pageCode = false;
@@ -35,6 +37,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {
         this.addCategory = false;
         this.tag = null;
+        this.website = null;
         this.page = null;
         this.pageEle = null;
         this.pageCode = false;
@@ -47,14 +50,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.addCategory = true;
           } else {
             switch (_.size(segments)) {
-              case 5:
-                if (segments[4] === 'code') {
+              case 6:
+                if (segments[5] === 'code') {
                   this.pageCode = true;
                 } else {
-                  this.pageEle = decodeURIComponent(segments[4]);
+                  this.pageEle = decodeURIComponent(segments[5]);
                 }
+              case 5:
+                this.page = decodeURIComponent(segments[4]);
               case 4:
-                this.page = decodeURIComponent(segments[3]);
+                this.website = decodeURIComponent(segments[3]);
               case 3:
                 this.tag = decodeURIComponent(segments[2]);
                 break;

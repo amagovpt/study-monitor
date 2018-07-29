@@ -35,14 +35,13 @@
           <mat-list-item>
             <span><strong>Standard deviation:</strong> {{ standardDeviation | toFixed:{places: 3} }}</span>
           </mat-list-item>
-          <mat-list-item>
-            <span><strong>{{ "STATISTICS.newest_page_updated" | translate }}:</strong> {{ newest_page | date }}</span>
-          </mat-list-item>
-          <mat-list-item>
-            <span><strong>{{ "STATISTICS.oldest_page_updated" | translate }}:</strong> {{ oldest_page | date }}</span>
-          </mat-list-item>
         </mat-list>
       </mat-grid-tile>
     </mat-grid-list>
   </mat-card-content>
+  <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
+    <a mat-raised-button color="warn" type="button" [routerLink]="['/user', tag, website, 'statistics']">
+      {{ "STATISTICS.details_button" | translate }}
+    </a>
+  </mat-card-actions>
 </mat-card>

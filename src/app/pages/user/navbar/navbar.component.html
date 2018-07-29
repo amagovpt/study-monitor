@@ -15,18 +15,23 @@
     {{ tag }}
   </a>
 
+  <mat-icon *ngIf="website">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, website]" routerLinkActive="active" *ngIf="website">
+    {{ website }}
+  </a>
+
   <mat-icon *ngIf="page">arrow_forward</mat-icon>
-  <a [routerLink]="['/user', tag, page]" routerLinkActive="active" *ngIf="page">
+  <a [routerLink]="['/user', tag, website, page]" routerLinkActive="active" *ngIf="page">
     {{ page }}
   </a>
 
   <mat-icon *ngIf="pageCode">arrow_forward</mat-icon>
-  <a [routerLink]="['/user', tag, '/code']" routerLinkActive="active" *ngIf="pageCode">
+  <a [routerLink]="['/user', tag, website, page, 'code']" routerLinkActive="active" *ngIf="pageCode">
     {{ "HEADER.NAV.code" | translate }}
   </a>
 
   <mat-icon *ngIf="pageEle">arrow_forward</mat-icon>
-  <a [routerLink]="['/user', tag, page, pageEle]" routerLinkActive="active" *ngIf="pageEle">
+  <a [routerLink]="['/user', tag, website, page, pageEle]" routerLinkActive="active" *ngIf="pageEle">
     {{ pageEle }}
   </a>
 </nav>

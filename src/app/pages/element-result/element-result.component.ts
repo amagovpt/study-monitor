@@ -17,6 +17,7 @@ export class ElementResultComponent implements OnInit, OnDestroy {
   sub: Subscription;
 
   tag: string;
+  website: string;
   url: string;
 
   data: any;
@@ -33,6 +34,7 @@ export class ElementResultComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sub = this.router.params.subscribe(params => {
       this.tag = params.tag;
+      this.website = params.website;
       this.url = params.url;
       this.ele = params.ele;
 

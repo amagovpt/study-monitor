@@ -2,7 +2,7 @@
   <mat-card class="mat-typography">
     <mat-card-header fxLayout="row" fxLayoutAlign="center center">
       <mat-card-title>
-        <h1>{{ tag }}</h1>
+        <h1>{{ "TAG.title" | translate }} {{ tag }}</h1>
       </mat-card-title>
     </mat-card-header>
     <mat-card-actions>
@@ -13,15 +13,15 @@
   </mat-card>
   <br>
   <div *ngIf="!loading && !error">
-    <app-add-pages [tag]="tag" (addPages)="addPages($event)"></app-add-pages>
+    <app-add-website [tag]="tag" (addWebsite)="addWebsite($event)"></app-add-website>
     <br>
-    <span class="no-pages-message" *ngIf="pages.length === 0" fxLayout="column" fxLayoutAlign="start center">
-      <p>{{ "TAG.no_pages.message1" | translate }}</p>
-      <p>{{ "TAG.no_pages.message2" | translate }}</p>
+    <span class="no-websites-message" *ngIf="websites.length === 0" fxLayout="column" fxLayoutAlign="start center">
+      <p>{{ "TAG.no_websites.message1" | translate }}</p>
+      <p>{{ "TAG.no_websites.message2" | translate }}</p>
     </span>
-    <app-tag-statistics *ngIf="pages.length > 0" [pages]="pages"></app-tag-statistics>
-    <br *ngIf="pages.length > 0">
-    <app-pages-table *ngIf="pages.length > 0" [tag]="tag" [pages]="pages" (removePages)="removePages($event)"></app-pages-table>
+    <app-tag-statistics *ngIf="websites.length > 0" [tag]="tag" [websites]="websites"></app-tag-statistics>
+    <br *ngIf="websites.length > 0">
+    <app-websites-table *ngIf="websites.length > 0" [tag]="tag" [websites]="websites" (removeWebsites)="removeWebsites($event)"></app-websites-table>
   </div>
   <app-loading *ngIf="loading"></app-loading>
   <app-error *ngIf="error"></app-error>

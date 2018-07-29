@@ -35,6 +35,7 @@
     "table": {
       "filter": "Filter",
       "name": "Category",
+      "websites": "Nº of websites",
       "pages": "Nº of pages",
       "see_tooltip": "See category"
     },
@@ -47,23 +48,72 @@
     }
   },
   "TAG": {
+    "title": "Category",
+    "no_websites": {
+      "message1": "This category doesn't have any websites.",
+      "message2": "Please click above to add a website to this category."
+    }
+  },
+  "ADD_WEBSITE": {
+    "title": "Add a website",
+    "subtitle": "Add a website to this category",
+    "name_label": "Name",
+    "domain_label": "Domain",
+    "urls_label": "Urls",
+    "required": "This field is <strong>required</strong>",
+    "taken_name": "You <strong>already</strong> have an website with this name",
+    "taken_name_error": "An error has ocurred while trying to validate this name",
+    "invalid_domain": "<string>Invalid</strong> domain",
+    "taken_domain": "You <strong>already</strong> have an website with this domain",
+    "taken_domain_error": "An error has ocurred while trying to validate this domain",
+    "invalid_url": "One of the urls is <strong>invalid</strong>",
+    "url_match_error": "One of the urls doesn't match the domain",
+    "button": "Add website",
+    "error_message": "There was an error while trying to add the website",
+    "success_message": "Website added successfully"
+  },
+  "WEBSITES": {
+    "title": "Websites from the category {{value}}",
+    "subtitle": "List of websites",
+    "remove_button": "Remove",
+    "remove_success_message": "Websites removed successfully",
+    "remove_error_message": "There was an error while trying to remove the selected websites",
+    "table": {
+      "filter": "Filter",
+      "name": "Name",
+      "url": "Url",
+      "score": "Score",
+      "see_tooltip": "See website",
+      "note": "* Number of errors for each conform level"
+    },
+    "dialog": {
+      "title": "Remove websites",
+      "first_sentence": "Are you shure that you want to remove the selected websites?",
+      "second_sentence": "This operation cannot be reverted.",
+      "yes": "Yes",
+      "no": "No"
+    }
+  },
+  "WEBSITE": {
+    "title": "Website",
     "no_pages": {
-      "message1": "This category doesn't have any pages.",
-      "message2": "Please click above to add pages to this category."
+      "message1": "This website doesn't have any pages.",
+      "message2": "Please click above to add a pages to this website."
     }
   },
   "ADD_PAGES": {
     "title": "Add pages",
-    "subtitle": "Add pages to this category",
-    "label": "Urls",
+    "subtitle": "Add pages to this website",
+    "domain_label": "Current domain",
+    "pages_label": "Urls",
     "required": "This field is <strong>required</strong>",
     "error": "One of the urls is <strong>invalid</strong>",
     "button": "Add pages",
     "error_message": "There was an error while trying to add pages",
-    "success_message": "Pages added successfully"
+    "success_message": "Websites added successfully"
   },
   "PAGES": {
-    "title": "Pages from the category {{value}}",
+    "title": "Pages from the website {{value}}",
     "subtitle": "List of pages",
     "remove_button": "Remove",
     "remove_success_message": "Pages removed successfully",
@@ -76,7 +126,7 @@
       "AA": "AA*",
       "AAA": "AAA*",
       "date": "Date",
-      "see_tooltip": "See category",
+      "see_tooltip": "See page",
       "note": "* Number of errors for each conform level"
     },
     "dialog": {
@@ -109,6 +159,7 @@
     "websites": "Nº of websites",
     "pages": "Nº of pages",
     "score": "Score",
+    "note": "<strong>Note:</strong> Websites without pages will not be used during statistical calculations",
     "newest_page_updated": "Most recently evaluated page",
     "oldest_page_updated": "Least recently evaluated page",
     "last_updated": "Statistics last updated",
@@ -117,7 +168,8 @@
     "pages_with_errors": "Pages with errors",
     "pages_without_errors_a": "Pages without errors A",
     "pages_without_errors_a_aa": "Pages without errors A+AA",
-    "pages_without_errors_a_aa_aaa": "Pages without errors A+AA+AAA"
+    "pages_without_errors_a_aa_aaa": "Pages without errors A+AA+AAA",
+    "details_button": "More details"
   },
   "RESULTS": {
     "title": "Web accessibility practices report (W3C WCAG 2.0)",

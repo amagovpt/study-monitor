@@ -15,6 +15,7 @@ export class WebpageCodeComponent implements OnInit, OnDestroy {
   sub: Subscription;
 
   tag: string;
+  website: string;
   url: string;
   encodedUrl: string;
 
@@ -29,6 +30,7 @@ export class WebpageCodeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sub = this.activatedRoute.params.subscribe(params => {
       this.tag = params.tag;
+      this.website = params.website;
       this.url = params.url;
       this.pagecode = JSON.parse(sessionStorage.getItem('evaluation')).pagecode;
       const blob = new Blob([this.pagecode], { type: 'text/html' });

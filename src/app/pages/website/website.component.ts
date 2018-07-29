@@ -3,19 +3,19 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
 
-import { RemoveWebsitesConfirmationDialogComponent } from '../../dialogs/remove-websites-confirmation-dialog/remove-websites-confirmation-dialog.component';
+import { RemovePagesConfirmationDialogComponent } from '../../dialogs/remove-pages-confirmation-dialog/remove-pages-confirmation-dialog.component';
 
 import { StudiesService } from '../../services/studies.service';
 import { MessageService } from '../../services/message.service';
 
-import { Website } from '../../models/website';
+import { Page } from '../../models/page';
 
 @Component({
-  selector: 'app-tag',
-  templateUrl: './tag.component.html',
-  styleUrls: ['./tag.component.css']
+  selector: 'app-website',
+  templateUrl: './website.component.html',
+  styleUrls: ['./website.component.css']
 })
-export class TagComponent implements OnInit, OnDestroy {
+export class WebsiteComponent implements OnInit, OnDestroy {
 
   sub: Subscription;
 
@@ -23,7 +23,8 @@ export class TagComponent implements OnInit, OnDestroy {
   error: boolean;
 
   tag: string;
-  websites: Array<Website>;
+  website: string;
+  pages: Array<Page>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -38,13 +39,14 @@ export class TagComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sub = this.activatedRoute.params.subscribe(params => {
       this.tag = params.tag;
+      this.website = params.website;
 
-      this.studies.getUserTagWebsites(this.tag)
-        .subscribe(websites => {
-          if (websites === null) {
+      this.studies.getUserTagWebsitePages(this.tag, this.website)
+        .subscribe(pages => {
+          if (pages === null) {
             this.error = true;
           } else {
-            this.websites = websites;
+            this.pages = pages;
           }
 
           this.loading = false;
@@ -56,32 +58,32 @@ export class TagComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  addWebsite(data): void {
+  addPages(urls): void {
     this.loading = true;
-    this.studies.addTagWebsite(this.tag, data.name, data.domain, data.pages)
-      .subscribe(websites => {
-        if (websites) {
-          this.message.show('ADD_WEBSITE.success_message');
-          this.websites = websites;
+    this.studies.addTagWebsitePages(this.tag, this.website, urls)
+      .subscribe(pages => {
+        if (pages) {
+          this.message.show('ADD_PAGES.success_message');
+          this.pages = pages;
         }
 
         this.loading = false;
       });
   }
 
-  removeWebsites(websitesId): void {
-    const dialogRef = this.dialog.open(RemoveWebsitesConfirmationDialogComponent);
+  removePages(pagesId): void {
+    const dialogRef = this.dialog.open(RemovePagesConfirmationDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'true') {
         this.loading = true;
-        this.studies.removeWebsites(this.tag, websitesId)
-          .subscribe(websites => {
-            if (websites === null) {
+        this.studies.removePages(this.tag, this.website, pagesId)
+          .subscribe(pages => {
+            if (pages === null) {
               this.error = true;
             } else {
-              this.message.show('WEBSITES.remove_success_message');
-              this.websites = websites;
+              this.message.show('PAGES.remove_success_message');
+              this.pages = pages;
             }
 
             this.loading = false;

@@ -4,42 +4,39 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
 
-import { Page } from '../../../models/page';
+import { Website } from '../../../models/website';
 
 @Component({
-  selector: 'app-pages-table',
-  templateUrl: './pages-table.component.html',
-  styleUrls: ['./pages-table.component.css']
+  selector: 'app-websites-table',
+  templateUrl: './websites-table.component.html',
+  styleUrls: ['./websites-table.component.css']
 })
-export class PagesTableComponent implements OnInit {
+export class WebsitesTableComponent implements OnInit {
 
-  @Input('pages') pages: Array<Page>;
+  @Input('websites') websites: Array<Website>;
   @Input('tag') tag: string;
 
-  @Output('removePages') removePages = new EventEmitter<Array<number>>();
+  @Output('removeWebsites') removeWebsites = new EventEmitter<Array<number>>();
 
   displayedColumns = [
     'Select',
-    'Uri',
+    'Name',
+    'Url',
     'Score',
-    'A',
-    'AA',
-    'AAA',
-    'Evaluation_Date',
     'See'
   ];
 
   // column sorter
   @ViewChild(MatSort) sort: MatSort;
-  dataSource: MatTableDataSource<Page>;
-  selection: SelectionModel<Page>;
+  dataSource: MatTableDataSource<Website>;
+  selection: SelectionModel<Website>;
 
   constructor(private router: Router) { }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(this.pages);
+    this.dataSource = new MatTableDataSource(this.websites);
     this.dataSource.sort = this.sort;
-    this.selection = new SelectionModel<Page>(true, []);
+    this.selection = new SelectionModel<Website>(true, []);
   }
 
   applyFilter(filterValue: string): void {
@@ -48,9 +45,9 @@ export class PagesTableComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  deletePages(): void {
-    const pagesId = _.map(this.selection.selected, 'PageId');
-    this.removePages.next(pagesId);
+  deleteWebsites(): void {
+    const websitesId = _.map(this.selection.selected, 'WebsiteId');
+    this.removeWebsites.next(websitesId);
   }
 
   /** Whether the number of selected elements matches the total number of rows. */

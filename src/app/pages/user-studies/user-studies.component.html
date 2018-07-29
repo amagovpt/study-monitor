@@ -34,6 +34,11 @@
                   <mat-cell *matCellDef="let element"> <strong>{{element.Name}}</strong> </mat-cell>
               </ng-container>
 
+              <ng-container matColumnDef="Websites">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> {{ "TAGS.table.websites" | translate }} </mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{element.Websites}}</mat-cell>
+              </ng-container>
+
               <ng-container matColumnDef="Pages">
                   <mat-header-cell *matHeaderCellDef mat-sort-header> {{ "TAGS.table.pages" | translate }} </mat-header-cell>
                   <mat-cell *matCellDef="let element">{{element.Pages}}</mat-cell>

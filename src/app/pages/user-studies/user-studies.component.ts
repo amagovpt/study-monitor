@@ -28,6 +28,7 @@ export class UserStudiesComponent implements OnInit {
   displayedColumns = [
     'Select',
     'Name',
+    'Websites',
     'Pages',
     'See'
   ];

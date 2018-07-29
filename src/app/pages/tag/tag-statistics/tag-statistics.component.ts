@@ -1,27 +1,25 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import * as _ from 'lodash';
 
-import { Page } from '../../../models/page';
-
+import { Website } from '../../../models/website';
 
 @Component({
   selector: 'app-tag-statistics',
-  templateUrl: './statistics.component.html',
-  styleUrls: ['./statistics.component.css']
+  templateUrl: './tag-statistics.component.html',
+  styleUrls: ['./tag-statistics.component.css']
 })
-export class StatisticsComponent implements OnInit {
+export class TagStatisticsComponent implements OnInit {
 
-  @Input('pages') pages: Array<Page>;
+  @Input('tag') tag: string;
+  @Input('websites') websites: Array<Website>;
 
   n_cols: number;
   colspan: number;
   rowHeight: string;
 
-  newest_page: any;
-  oldest_page: any;
-
   thresholdConfig: any;
 
+  n_pages: number;
   score: number;
   median: number;
   variance: number;
@@ -38,11 +36,11 @@ export class StatisticsComponent implements OnInit {
     if (window.innerWidth < 960) {
       this.n_cols = 1;
       this.colspan = 1;
-      this.rowHeight = '1:1';
+      this.rowHeight = '1:0.6';
     } else {
       this.n_cols = 3;
       this.colspan = 2;
-      this.rowHeight = '1:1';
+      this.rowHeight = '1:0.6';
     }
 
     this.score = 0;
@@ -56,53 +54,47 @@ export class StatisticsComponent implements OnInit {
     if (event.target.innerWidth < 960) {
       this.n_cols = 1;
       this.colspan = 1;
-      this.rowHeight = '1:1';
+      this.rowHeight = '1:0.6';
     } else {
       this.n_cols = 3;
       this.colspan = 2;
-      this.rowHeight = '1:1';
+      this.rowHeight = '1:0.6';
     }
   }
 
   ngOnInit() {
-    this.newest_page = this.pages[0].Evaluation_Date;
-    this.oldest_page = this.pages[0].Evaluation_Date;
-
-    const scores = _.map(this.pages, 'Score');
+    this.n_pages = _.sumBy(this.websites, 'Pages');
+    const scores = _.without(_.map(this.websites, 'Score'), null);
     scores.sort();
-    const size = _.size(scores);
 
+    let n = 0;
+    const size = _.size(scores);
     for (let i = 0 ; i < size ; i++) {
       this.score += scores[i];
-
-      if (this.pages[i].Evaluation_Date > this.newest_page) {
-        this.newest_page = this.pages[i].Evaluation_Date;
-      }
-
-      if (this.pages[i].Evaluation_Date < this.oldest_page) {
-        this.oldest_page = this.pages[i].Evaluation_Date;
-      }
+      n++;
     }
 
-    this.score /= size;
-
-    if (size === 1) {
+    this.score /= n;
+    
+    if (n === 0) {
+      this.median = 0;
+    } else if (n === 1) {
       this.median = this.score;
-    } else if (size % 2 === 0) {
-      const lower = scores[(size / 2) - 1];
-      const upper = scores[size / 2];
+    } else if (n % 2 === 0) {
+      const lower = scores[(n / 2) - 1];
+      const upper = scores[n / 2];
       this.median = (lower + upper) / 2;
     } else {
-      this.median = scores[((size - 1) / 2)];
+      this.median = scores[((n - 1) / 2)];
     }
 
-    if (size > 1) {
+    if (n > 1) {
       let st = 0;
-      for (let i = 0 ; i < size ; i++) {
+      for (let i = 0 ; i < n ; i++) {
         st += Math.pow(scores[i] - this.score, 2);
       }
 
-      this.variance = st / (size - 1);
+      this.variance = st / (n - 1);
       this.standardDeviation = Math.sqrt(this.variance);
     } else {
       this.variance = 0;
