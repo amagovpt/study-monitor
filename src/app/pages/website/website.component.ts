@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
+import * as _ from 'lodash';
 
 import { RemovePagesConfirmationDialogComponent } from '../../dialogs/remove-pages-confirmation-dialog/remove-pages-confirmation-dialog.component';
 
@@ -28,6 +30,7 @@ export class WebsiteComponent implements OnInit, OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private location: Location,
     private studies: StudiesService,
     private message: MessageService,
     private dialog: MatDialog
@@ -90,5 +93,15 @@ export class WebsiteComponent implements OnInit, OnDestroy {
           });
       }
     });
+  }
+
+  goBack(): Array<string> {
+    let path = this.location.path();
+    let segments = _.split(path, '/');
+    segments[0] = '/user';
+    segments.splice(1, 1);
+    segments.splice(_.size(segments)-1, 1);
+    
+    return segments;
   }
 }

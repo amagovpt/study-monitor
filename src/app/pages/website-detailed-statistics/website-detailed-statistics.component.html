@@ -1,3 +1,24 @@
-<p>
-  website-detailed-statistics works!
-</p>
+<section>
+  <mat-card class="mat-typography">
+    <mat-card-header fxLayout="row" fxLayoutAlign="center center">
+      <mat-card-title>
+        <h1>{{ "STATISTICS.title" | translate }}: {{ website }}</h1>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-actions>
+      <a mat-icon-button class="tools" [routerLink]="goBack()" matTooltip="{{ 'RESULTS.actions.back' | translate }}">
+         <mat-icon aria-label="'RESULTS.actions.back' | translate">arrow_back</mat-icon>
+      </a>
+    </mat-card-actions>
+  </mat-card>
+  <br>
+  <div *ngIf="!loading && !error">
+    <app-website-metadata [pages]="pages"></app-website-metadata>
+    <br>
+    <app-website-score-distribution [pages]="pages"></app-website-score-distribution>
+    <br>
+    <app-website-pages-results [tag]="tag" [website]="website" [pages]="pages"></app-website-pages-results>
+  </div>
+  <app-loading *ngIf="loading"></app-loading>
+  <app-error *ngIf="error"></app-error>
+</section>

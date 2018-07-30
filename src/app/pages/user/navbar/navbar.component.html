@@ -20,6 +20,16 @@
     {{ website }}
   </a>
 
+  <mat-icon *ngIf="websiteStatistics">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, website, 'statistics']" routerLinkActive="active" *ngIf="websiteStatistics">
+    {{ "HEADER.NAV.statistics" | translate }}
+  </a>
+
+  <mat-icon *ngIf="eleError">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, website, 'statistics', eleError]" routerLinkActive="active" *ngIf="eleError">
+    {{ eleError }}
+  </a>
+
   <mat-icon *ngIf="page">arrow_forward</mat-icon>
   <a [routerLink]="['/user', tag, website, page]" routerLinkActive="active" *ngIf="page">
     {{ page }}

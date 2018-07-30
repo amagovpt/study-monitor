@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
+import * as _ from 'lodash';
 
 import { EvaluationService } from '../../services/evaluation.service';
 
@@ -25,7 +27,8 @@ export class ElementResultComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: ActivatedRoute,
-    public sanitizer: DomSanitizer,
+    private location: Location,
+    private sanitizer: DomSanitizer,
     private evaluation: EvaluationService
   ) {
     this.data = {};
@@ -53,5 +56,15 @@ export class ElementResultComponent implements OnInit, OnDestroy {
       doc.write(this.data.page);
       doc.close();
     }
+  }
+
+  goBack(): Array<string> {
+    let path = this.location.path();
+    let segments = _.split(path, '/');
+    segments[0] = '/user';
+    segments.splice(1, 1);
+    segments.splice(_.size(segments)-1, 1);
+    
+    return segments;
   }
 }

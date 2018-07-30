@@ -15,7 +15,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   addCategory: boolean;
   tag: string;
+  tagStatistics: boolean;
   website: string;
+  websiteStatistics: boolean;
+  eleError: string;
   page: string;
   pageEle: string;
   pageCode: boolean;
@@ -26,7 +29,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ) {
     this.addCategory = false;
     this.tag = null;
+    this.tagStatistics = false;
     this.website = null;
+    this.websiteStatistics = false;
+    this.eleError = null;
     this.page = null;
     this.pageEle = null;
     this.pageCode = false;
@@ -37,7 +43,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {
         this.addCategory = false;
         this.tag = null;
+        this.tagStatistics = false;
         this.website = null;
+        this.websiteStatistics = false;
+        this.eleError = null;
         this.page = null;
         this.pageEle = null;
         this.pageCode = false;
@@ -48,6 +57,26 @@ export class NavbarComponent implements OnInit, OnDestroy {
         if (_.size(segments) > 2) {
           if (segments[2] === 'add-category') {
             this.addCategory = true;
+          } else if (segments[4] === 'statistics') {
+            switch (_.size(segments)) {
+              case 8:
+                if (segments[7] === 'code') {
+                  this.pageCode = true;
+                } else {
+                  this.pageEle = decodeURIComponent(segments[7]);
+                }
+              case 7:
+                this.page = decodeURIComponent(segments[6]);
+              case 6:
+                this.eleError = decodeURIComponent(segments[5]);
+              case 5:
+                this.websiteStatistics = true;
+              case 4:
+                this.website = decodeURIComponent(segments[3]);
+              case 3:
+                this.tag = decodeURIComponent(segments[2]);
+                break;
+            }
           } else {
             switch (_.size(segments)) {
               case 6:

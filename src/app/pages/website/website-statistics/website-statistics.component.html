@@ -27,20 +27,20 @@
            <span><strong>{{ "STATISTICS.pages" | translate }}:</strong> {{ pages.length }}</span>
           </mat-list-item>
           <mat-list-item>
-            <span><strong>Median:</strong> {{ median | toFixed:{places: 3} }}</span>
+            <span><strong>{{ "STATISTICS.median" | translate }}:</strong> {{ median | toFixed:{places: 3} }}</span>
           </mat-list-item>
           <mat-list-item>
-            <span><strong>Variance:</strong> {{ variance | toFixed:{places: 3} }}</span>
+            <span><strong>{{ "STATISTICS.variance" | translate }}:</strong> {{ variance | toFixed:{places: 3} }}</span>
           </mat-list-item>
           <mat-list-item>
-            <span><strong>Standard deviation:</strong> {{ standardDeviation | toFixed:{places: 3} }}</span>
+            <span><strong>{{ "STATISTICS.amplitude" | translate }}:</strong> {{ amplitude | toFixed:{places: 3} }}</span>
           </mat-list-item>
         </mat-list>
       </mat-grid-tile>
     </mat-grid-list>
   </mat-card-content>
   <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
-    <a mat-raised-button color="warn" type="button" [routerLink]="['/user', tag, website, 'statistics']">
+    <a mat-raised-button color="warn" type="button" [routerLink]="['statistics']">
       {{ "STATISTICS.details_button" | translate }}
     </a>
   </mat-card-actions>

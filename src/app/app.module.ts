@@ -50,6 +50,10 @@ import { AddPagesComponent } from './pages/website/add-pages/add-pages.component
 import { WebsiteDetailedStatisticsComponent } from './pages/website-detailed-statistics/website-detailed-statistics.component';
 import { TagDetaildStatisticsComponent } from './pages/tag-detaild-statistics/tag-detaild-statistics.component';
 import { RemoveWebsitesConfirmationDialogComponent } from './dialogs/remove-websites-confirmation-dialog/remove-websites-confirmation-dialog.component';
+import { WebsitePagesResultsComponent } from './pages/website-detailed-statistics/website-pages-results/website-pages-results.component';
+import { WebsiteMetadataComponent } from './pages/website-detailed-statistics/website-metadata/website-metadata.component';
+import { WebsiteScoreDistributionComponent } from './pages/website-detailed-statistics/website-score-distribution/website-score-distribution.component';
+import { WebsiteListPagesErrorComponent } from './pages/website-list-pages-error/website-list-pages-error.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent, canActivate: [NoAuthGuard] },
@@ -60,6 +64,10 @@ const appRoutes: Routes = [
     { path: ':tag/statistics', component: TagDetaildStatisticsComponent },
     { path: ':tag/:website', component: WebsiteComponent },
     { path: ':tag/:website/statistics', component: WebsiteDetailedStatisticsComponent },
+    { path: ':tag/:website/statistics/:websiteError', component: WebsiteListPagesErrorComponent },
+    { path: ':tag/:website/statistics/:websiteError/:url', component: EvaluationResultsComponent },
+    { path: ':tag/:website/statistics/:websiteError/:url/code', component: WebpageCodeComponent },
+    { path: ':tag/:website/statistics/:websiteError/:url/:ele', component: ElementResultComponent },
     { path: ':tag/:website/:url', component: EvaluationResultsComponent },
     { path: ':tag/:website/:url/code', component: WebpageCodeComponent },
     { path: ':tag/:website/:url/:ele', component: ElementResultComponent }
@@ -108,7 +116,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddPagesComponent,
     WebsiteDetailedStatisticsComponent,
     TagDetaildStatisticsComponent,
-    RemoveWebsitesConfirmationDialogComponent
+    RemoveWebsitesConfirmationDialogComponent,
+    WebsitePagesResultsComponent,
+    WebsiteMetadataComponent,
+    WebsiteScoreDistributionComponent,
+    WebsiteListPagesErrorComponent
   ],
   imports: [
     RouterModule.forRoot(

@@ -92,6 +92,29 @@ export class StudiesService {
     );
   }
 
+  getUserTagWebsitePagesData(tag: string, website: string): Observable<Array<Page>> {
+    return ajax.post(this.getServer('/studies/user/tag/website/pagesData'), {tag, website, cookie: this.user.getUserData()}).pipe(
+      retry(3),
+      map(res => {
+        const response = <Response> res.response;
+
+        if (!res.response || res.status === 404) {
+          throw new AsError(404, 'Service not found', 'SERIOUS');
+        }
+
+        if (response.success !== 1) {
+          throw new AsError(response.success, response.message);
+        }
+
+        return <Array<Page>> response.result;
+      }),
+      catchError(err => {
+        console.log(err);
+        return of(null);
+      })
+    );
+  }
+
   getOfficialTags(): Observable<Array<Tag>> {
     return ajax.post(this.getServer('/tags/allOfficial'), {cookie: this.user.getUserData()}).pipe(
       retry(3),

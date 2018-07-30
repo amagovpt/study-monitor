@@ -22,7 +22,8 @@
       "access": "Acesso",
       "home": "Access Studies",
       "add_category": "Adicionar categoria",
-      "code": "Código"
+      "code": "Código",
+      "statistics": "Estatísticas"
     }
   },
   "TAGS": {
@@ -158,18 +159,70 @@
     "tags": "Nº de categorias",
     "websites": "Nº de websites",
     "pages": "Nº de páginas",
+    "website_conform": "Comformidade do website:",
+    "conform_veredict_a": "Não passa nível A",
+    "conform_veredict_aa": "Não passa nível AA",
+    "conform_veredict_aaa": "Não passa nível AAA",
+    "conform_veredict_success": "Passa em todos os níveis",
+    "n_pages": {
+      "s": "página",
+      "p": "páginas"
+    },
     "score": "Pontuação",
+    "scores": {
+      "title": "Distribuição de pontuações",
+      "frequencie": "Frequência (nº de páginas)",
+      "percentage": "Percentagem (nº de páginas)",
+      "range": "Intervalo",
+      "cumulative": "Frequência cumulativa"
+    },
+    "mean": "Mean",
+    "median": "Median",
+    "median_desc": "Trata-se do valor que corresponde a 50% da distribuição das pontuações.",
+    "variance": "Variância amostral",
+    "variance_desc": "Mede a dispersão dos valores (pontuações) com relação ao valor central (média).",
+    "amplitude": "Amplitude amostral",
+    "amplitude_desc": "A amplitude amostral é a diferença entre o valor máximo e o valor mínimo das pontuações. A amplitude amostral permite ter uma noção de dispersão dos dados.",
     "note": "<strong>Nota:</strong> Websites sem páginas não serão usados durante os cálculos estatísticos",
+    "table": {
+      "title": "Nº de páginas que falharam os testes por prioridade"
+    },
+    "table2": {
+      "title": "Distribuição detalhada de erros",
+      "error_label": "Erro (descrição)",
+      "n_errors_label": "Nº de ocurrências",
+      "n_pages_label": "Nº de páginas afetadas",
+      "details_label": "Existem",
+      "details": {
+        "single_error": "erro em",
+        "multi_error": "erros em",
+        "single_page": "página",
+        "multi_page": "páginas",
+        "from": "de",
+        "to": "a"
+      },
+      "lvl_label": "Nível"
+    },
     "newest_page_updated": "Avaliação mais recente duma página",
     "oldest_page_updated": "Avaliação mais antiga duma página",
     "last_updated": "Última atualização das estatísticas",
     "score_distribution": "Distribuição de pontuações",
     "error_distribution": "Distribuição de erros",
+    "pages_results": "Resultados",
+    "elements_results": "Resultados",
     "pages_with_errors": "Páginas com erros",
     "pages_without_errors_a": "Páginas sem erros A",
     "pages_without_errors_a_aa": "Páginas sem erros A+AA",
     "pages_without_errors_a_aa_aaa": "Páginas sem erros A+AA+AAA",
     "details_button": "Mais detalhes"
+  },
+  "PAGES_ERROR": {
+    "title": "Website",
+    "subtitle": "Erro",
+    "list": {
+      "title": "Lista de páginas",
+      "subtitle": "Nº de resultados"
+    }
   },
   "RESULTS": {
     "title": "Relatório de práticas de acessibilidade Web (WCAG 2.0 do W3C)",

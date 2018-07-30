@@ -4,18 +4,17 @@ import * as _ from 'lodash';
 import { Page } from '../../../models/page';
 
 @Component({
-  selector: 'app-website-statistics',
-  templateUrl: './website-statistics.component.html',
-  styleUrls: ['./website-statistics.component.css']
+  selector: 'app-website-metadata',
+  templateUrl: './website-metadata.component.html',
+  styleUrls: ['./website-metadata.component.css']
 })
-export class WebsiteStatisticsComponent implements OnInit {
+export class WebsiteMetadataComponent implements OnInit {
 
-  @Input('tag') tag: string;
-  @Input('website') website: string;
-  @Input('pages') pages: Array<Page>
+  @Input('pages') pages: Array<Page>;
 
   n_cols: number;
   colspan: number;
+  colspan2: number;
   rowHeight: string;
 
   thresholdConfig: any;
@@ -24,6 +23,15 @@ export class WebsiteStatisticsComponent implements OnInit {
   median: number;
   variance: number;
   amplitude: number;
+
+  pagesWithErrorsA: number;
+  pagesWithErrorsAA: number;
+  pagesWithErrorsAAA: number;
+  pagesWithoutErrors: number;
+
+  tablePagesErrorsA: number;
+  tablePagesErrorsAA: number;
+  tablePagesErrorsAAA: number;
 
   constructor() {
     this.thresholdConfig = {
@@ -36,10 +44,12 @@ export class WebsiteStatisticsComponent implements OnInit {
     if (window.innerWidth < 960) {
       this.n_cols = 1;
       this.colspan = 1;
+      this.colspan2 = 1;
       this.rowHeight = '1:0.5';
     } else {
       this.n_cols = 3;
       this.colspan = 2;
+      this.colspan2 = 3;
       this.rowHeight = '1:0.5';
     }
 
@@ -47,6 +57,15 @@ export class WebsiteStatisticsComponent implements OnInit {
     this.median = 0;
     this.variance = 0;
     this.amplitude = 0;
+
+    this.pagesWithErrorsA = 0;
+    this.pagesWithErrorsAA = 0;
+    this.pagesWithErrorsAAA = 0;
+    this.pagesWithoutErrors = 0;
+
+    this.tablePagesErrorsA = 0;
+    this.tablePagesErrorsAA = 0;
+    this.tablePagesErrorsAAA = 0;
   }
 
   @HostListener('window:resize', ['$event'])
@@ -54,15 +73,17 @@ export class WebsiteStatisticsComponent implements OnInit {
     if (event.target.innerWidth < 960) {
       this.n_cols = 1;
       this.colspan = 1;
+      this.colspan2 = 1;
       this.rowHeight = '1:0.5';
     } else {
       this.n_cols = 3;
       this.colspan = 2;
+      this.colspan2 = 3;
       this.rowHeight = '1:0.5';
     }
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const scores = _.map(this.pages, 'Score');
     scores.sort();
     const size = _.size(scores);
@@ -95,5 +116,30 @@ export class WebsiteStatisticsComponent implements OnInit {
     }
 
     this.amplitude = scores[size-1] - scores[0];
+
+    for (let p of this.pages) {
+      if (p.A > 0)
+        this.tablePagesErrorsA++;
+
+      if (p.AA > 0)
+        this.tablePagesErrorsAA++;
+
+      if (p.AAA > 0)
+        this.tablePagesErrorsAAA++;
+
+      if (p.A === 0) {
+        if (p.AA === 0) {
+          if (p.AAA === 0) {
+            this.pagesWithoutErrors++;
+          } else {
+            this.pagesWithErrorsAAA++;
+          }
+        } else {
+          this.pagesWithErrorsAA++;
+        }
+      } else {
+        this.pagesWithErrorsA++;
+      }
+    }
   }
 }

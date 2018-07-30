@@ -22,7 +22,8 @@
       "access": "Access",
       "home": "Access Studies",
       "add_category": "Add category",
-      "code": "Code"
+      "code": "Code",
+      "statistics": "Statistics"
     }
   },
   "TAGS": {
@@ -158,18 +159,70 @@
     "tags": "Nº of categories",
     "websites": "Nº of websites",
     "pages": "Nº of pages",
+    "website_conform": "Website conform:",
+    "conform_veredict_a": "Doesn't pass A level",
+    "conform_veredict_aa": "Doesn't pass AA level",
+    "conform_veredict_aaa": "Doesn't pass AAA level",
+    "conform_veredict_success": "Passes in all levels",
+    "n_pages": {
+      "s": "page",
+      "p": "pages"
+    },
     "score": "Score",
+    "scores": {
+      "title": "Score distribution",
+      "frequencie": "Frequencie (nº of pages)",
+      "percentage": "Percentage (nº of pages)",
+      "range": "Range",
+      "cumulative": "Cumulative frequencie"
+    },
+    "mean": "Mean",
+    "median": "Median",
+    "median_desc": "This is the value that corresponds to 50% of the distribution of the scores.",
+    "variance": "Sample variance",
+    "variance_desc": "It measures the dispersion of the values (scores) in relation to the central (average) value.",
+    "amplitude": "Sample amplitude",
+    "amplitude_desc": "The sample amplitude is the difference between the maximum value and the minimum value of the scores. The sample amplitude allows to have a notion of dispersion of the data.",
     "note": "<strong>Note:</strong> Websites without pages will not be used during statistical calculations",
+    "table": {
+      "title": "Nº of pages that failed the tests, ordered by level"
+    },
+    "table2": {
+      "title": "Detailed error distribution",
+      "error_label": "Error (description)",
+      "n_errors_label": "Nº of ocurrences",
+      "n_pages_label": "Nº of affected pages",
+      "details_label": "Exists",
+      "details": {
+        "single_error": "error in",
+        "multi_error": "errors in",
+        "single_page": "page",
+        "multi_page": "pages",
+        "from": "",
+        "to": "to"
+      },
+      "lvl_label": "Level"
+    },
     "newest_page_updated": "Most recently evaluated page",
     "oldest_page_updated": "Least recently evaluated page",
     "last_updated": "Statistics last updated",
     "score_distribution": "Score distribution",
     "error_distribution": "Error distribution",
+    "pages_results": "Results",
+    "elements_results": "Results",
     "pages_with_errors": "Pages with errors",
     "pages_without_errors_a": "Pages without errors A",
     "pages_without_errors_a_aa": "Pages without errors A+AA",
     "pages_without_errors_a_aa_aaa": "Pages without errors A+AA+AAA",
     "details_button": "More details"
+  },
+  "PAGES_ERROR": {
+    "title": "Website",
+    "subtitle": "Error",
+    "list": {
+      "title": "List of pages",
+      "subtitle": "Nº of results"
+    }
   },
   "RESULTS": {
     "title": "Web accessibility practices report (W3C WCAG 2.0)",

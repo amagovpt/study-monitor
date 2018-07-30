@@ -9,11 +9,11 @@ import { StudiesService } from '../../services/studies.service';
 import { Page } from '../../models/page';
 
 @Component({
-  selector: 'app-website-detailed-statistics',
-  templateUrl: './website-detailed-statistics.component.html',
-  styleUrls: ['./website-detailed-statistics.component.css']
+  selector: 'app-website-list-pages-error',
+  templateUrl: './website-list-pages-error.component.html',
+  styleUrls: ['./website-list-pages-error.component.css']
 })
-export class WebsiteDetailedStatisticsComponent implements OnInit, OnDestroy {
+export class WebsiteListPagesErrorComponent implements OnInit, OnDestroy {
 
   sub: Subscription;
 
@@ -22,14 +22,17 @@ export class WebsiteDetailedStatisticsComponent implements OnInit, OnDestroy {
 
   tag: string;
   website: string;
+  eleError: string;
 
   pages: Array<Page>;
+  list: any[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private studies: StudiesService
   ) {
+    this.list = [];
     this.error = false;
     this.loading = true;
   }
@@ -38,6 +41,7 @@ export class WebsiteDetailedStatisticsComponent implements OnInit, OnDestroy {
     this.sub = this.activatedRoute.params.subscribe(params => {
       this.tag = params.tag;
       this.website = params.website;
+      this.eleError = params.websiteError;
 
       this.studies.getUserTagWebsitePagesData(this.tag, this.website)
         .subscribe(pages => {
@@ -45,6 +49,19 @@ export class WebsiteDetailedStatisticsComponent implements OnInit, OnDestroy {
             this.error = true;
           } else {
             this.pages = pages;
+            let tmp = [];
+            for (let p of this.pages) {
+              let e = JSON.parse(atob(p.Errors));
+
+              if (e[this.eleError] && e[this.eleError] > 0) {
+                tmp.push({
+                  url: p.Uri,
+                  n: e[this.eleError]
+                });
+              }
+            }
+
+            this.list = tmp; 
           }
 
           this.loading = false;

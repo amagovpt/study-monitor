@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
 
@@ -29,7 +30,8 @@ export class EvaluationResultsComponent implements OnInit, OnDestroy {
 
   constructor(
     private evaluation: EvaluationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) {
 
     this.thresholdConfig = {
@@ -106,5 +108,15 @@ export class EvaluationResultsComponent implements OnInit, OnDestroy {
 
   downloadEvaluation(): void {
     this.evaluation.downloadCSV();
+  }
+
+  goBack(): Array<string> {
+    let path = this.location.path();
+    let segments = _.split(path, '/');
+    segments[0] = '/user';
+    segments.splice(1, 1);
+    segments.splice(_.size(segments)-1, 1);
+    
+    return segments;
   }
 }
