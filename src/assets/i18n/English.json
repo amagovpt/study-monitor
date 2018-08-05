@@ -1,4 +1,4 @@
-{
+\{
   "LOGIN": {
     "title": "Login",
     "password_label": "Password",
@@ -56,22 +56,31 @@
     }
   },
   "ADD_WEBSITE": {
-    "title": "Add a website",
-    "subtitle": "Add a website to this category",
-    "name_label": "Name",
-    "domain_label": "Domain",
-    "urls_label": "Urls",
-    "required": "This field is <strong>required</strong>",
-    "taken_name": "You <strong>already</strong> have an website with this name",
-    "taken_name_error": "An error has ocurred while trying to validate this name",
-    "invalid_domain": "<string>Invalid</strong> domain",
-    "taken_domain": "You <strong>already</strong> have an website with this domain",
-    "taken_domain_error": "An error has ocurred while trying to validate this domain",
-    "invalid_url": "One of the urls is <strong>invalid</strong>",
-    "url_match_error": "One of the urls doesn't match the domain",
-    "button": "Add website",
-    "error_message": "There was an error while trying to add the website",
-    "success_message": "Website added successfully"
+    "existing": {
+      "title": "Add an existing website",
+      "subtitle": "Add a website from other category to this category",
+      "label": "Websites",
+      "option": "<strong>Category</strong>: {{tag}}, <strong>Website</strong>: {{website}} - {{url}}",
+      "button": "Add websites"
+    },
+    "new": {
+      "title": "Add a new website",
+      "subtitle": "Add a new website to this category",
+      "name_label": "Name",
+      "domain_label": "Domain",
+      "urls_label": "Urls",
+      "required": "This field is <strong>required</strong>",
+      "taken_name": "You <strong>already</strong> have an website with this name",
+      "taken_name_error": "An error has ocurred while trying to validate this name",
+      "invalid_domain": "<string>Invalid</strong> domain",
+      "taken_domain": "You <strong>already</strong> have an website with this domain",
+      "taken_domain_error": "An error has ocurred while trying to validate this domain",
+      "invalid_url": "One of the urls is <strong>invalid</strong>",
+      "url_match_error": "One of the urls doesn't match the domain",
+      "button": "Add website",
+      "error_message": "There was an error while trying to add the website",
+      "success_message": "Website added successfully"
+    }
   },
   "WEBSITES": {
     "title": "Websites from the category {{value}}",
@@ -159,6 +168,7 @@
     "tags": "Nº of categories",
     "websites": "Nº of websites",
     "pages": "Nº of pages",
+    "tag_conform": "Category conform:",
     "website_conform": "Website conform:",
     "conform_veredict_a": "Doesn't pass A level",
     "conform_veredict_aa": "Doesn't pass AA level",
@@ -170,9 +180,12 @@
     },
     "score": "Score",
     "scores": {
-      "title": "Score distribution",
-      "frequencie": "Frequencie (nº of pages)",
-      "percentage": "Percentage (nº of pages)",
+      "title": "Score distribution (pages)",
+      "title2": "Score distribution (websites)",
+      "frequencie_p": "Frequencie (nº of pages)",
+      "percentage_p": "Percentage (nº of pages)",
+      "frequencie_w": "Frequencie (nº of websites)",
+      "percentage_w": "Percentage (nº of websites)",
       "range": "Range",
       "cumulative": "Cumulative frequencie"
     },
@@ -185,23 +198,41 @@
     "amplitude_desc": "The sample amplitude is the difference between the maximum value and the minimum value of the scores. The sample amplitude allows to have a notion of dispersion of the data.",
     "note": "<strong>Note:</strong> Websites without pages will not be used during statistical calculations",
     "table": {
-      "title": "Nº of pages that failed the tests, ordered by level"
+      "title": "Nº of pages that failed the tests, ordered by level",
+      "title2": "Nº of websites that failed the tests, ordered by level"
     },
     "table2": {
       "title": "Detailed error distribution",
-      "error_label": "Error (description)",
+      "error_label": "Test (description)",
       "n_errors_label": "Nº of ocurrences",
       "n_pages_label": "Nº of affected pages",
+      "n_websites_label": "Nº of affected websites",
       "details_label": "Exists",
       "details": {
-        "single_error": "error in",
-        "multi_error": "errors in",
+        "single_error": "ocurrence in",
+        "multi_error": "ocurrences in",
         "single_page": "page",
         "multi_page": "pages",
+        "single_page2": "page in",
+        "multi_page2": "pages in",
+        "single_website": "website",
+        "multi_website": "websites",
         "from": "",
         "to": "to"
       },
-      "lvl_label": "Level"
+      "lvl_label": "Level",
+      "veredict_label": "Result",
+      "scoreok": "Success",
+      "scorewar": "Warning",
+      "scorerror": "Error"
+    },
+    "table3": {
+      "title": "Results by websites",
+      "conform_label": "Conform",
+      "nc": "Non conform",
+      "A": "Level A",
+      "AA": "Level AA",
+      "AAA": "Level AAA"
     },
     "newest_page_updated": "Most recently evaluated page",
     "oldest_page_updated": "Least recently evaluated page",
@@ -215,6 +246,14 @@
     "pages_without_errors_a_aa": "Pages without errors A+AA",
     "pages_without_errors_a_aa_aaa": "Pages without errors A+AA+AAA",
     "details_button": "More details"
+  },
+  "WEBSITES_ERROR": {
+    "title": "Category",
+    "subtitle": "Error",
+    "list": {
+      "title": "List of websites",
+      "subtitle": "Nº of results"
+    }
   },
   "PAGES_ERROR": {
     "title": "Website",
@@ -308,6 +347,31 @@
       "data_error": "An error has ocurred while trying to retrieve user data",
       "data_table_error": "An error has ocurred when trying to load the data table"
     }
+  },
+  "ELEMS_HEADERS": {
+    "altImg": "Alternate text in images",
+    "altArea": "Image Map Marking",
+    "altInput": "Marking graphic buttons",
+    "media": "Multimedia Insertion (embed, object, iframe, applet)",
+    "js": "Use of Javascript",
+    "head": "Header Marking",
+    "links": "Marking Links, menus and text links",
+    "jumps": "Links to bypass blocks of information",
+    "tData": "Data tables",
+    "tLayout": "Layout Tables",
+    "frame": "Marking Frames and their alternative equivalents",
+    "form": "Form Marking",
+    "w3c": "Standards W3C: (X)HTML + CSS",
+    "deprec": "Presentation / obsolete elements and attributes",
+    "abs": "Use of absolute units",
+    "meta": "Metadata (title, navigation, redirection, restart)",
+    "lang": "Marking page primary language",
+    "text": "Text formatting (line spacing and justified text)",
+    "color": "Information Contrast",
+    "abbr": "Marking of abbreviations",
+    "aKey": "Hot Key Marking",
+    "nWin": "Opening new windows",
+    "pagalt": "Alternative page"
   },
   "ELEMS": {
         "a": "Links",

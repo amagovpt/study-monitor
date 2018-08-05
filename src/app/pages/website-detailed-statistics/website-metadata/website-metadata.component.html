@@ -62,7 +62,7 @@
             </div>
           </mat-list-item>
           <mat-list-item>
-            <span><strong>{{ "STATISTICS.mean" | translate }}:</strong> {{ score }}</span>
+            <span><strong>{{ "STATISTICS.mean" | translate }}:</strong> {{ score | toFixed:{places: 3} }}</span>
           </mat-list-item>
           <mat-list-item>
            <span><strong>{{ "STATISTICS.pages" | translate }}:</strong> {{ pages.length }}</span>

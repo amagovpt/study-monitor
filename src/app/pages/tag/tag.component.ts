@@ -56,12 +56,25 @@ export class TagComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  addWebsite(data): void {
+  addExistingWebsite(data): void {
     this.loading = true;
-    this.studies.addTagWebsite(this.tag, data.name, data.domain, data.pages)
+    this.studies.addExistingTagWebsite(this.tag, data)
       .subscribe(websites => {
         if (websites) {
-          this.message.show('ADD_WEBSITE.success_message');
+          this.message.show('ADD_WEBSITE.new.success_message');
+          this.websites = websites;
+        }
+
+        this.loading = false;
+      });
+  }
+
+  addNewWebsite(data): void {
+    this.loading = true;
+    this.studies.addNewTagWebsite(this.tag, data.name, data.domain, data.pages)
+      .subscribe(websites => {
+        if (websites) {
+          this.message.show('ADD_WEBSITE.new.success_message');
           this.websites = websites;
         }
 

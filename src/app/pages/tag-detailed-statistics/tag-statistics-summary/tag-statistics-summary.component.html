@@ -1,0 +1,312 @@
+<mat-card class="mat-typography">
+  <mat-card-header>
+    <mat-card-title>
+      <h1>{{ "STATISTICS.subtitle" | translate }}</h1>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-grid-list cols="{{ n_cols }}" rowHeight="{{ rowHeight }}">
+      <mat-grid-tile>
+        <ngx-gauge 
+          [type]="'semi'"
+          [thick]="'10'"
+          [value]="score | toFixed" 
+          [label]="'STATISTICS.gauge.label' | translate" 
+          [min]="0" 
+          [max]="10"
+          [duration]="2000"
+          [thresholds]="thresholdConfig">
+        </ngx-gauge>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="{{ colspan }}">
+        <mat-list>
+          <mat-list-item>
+            <span><strong>WCAG 2.0</strong></span>
+          </mat-list-item>
+          <mat-list-item>
+            <span mat-line>
+              <strong>{{ "STATISTICS.tag_conform" | translate }} </strong>
+              <span *ngIf="pagesWithErrorsA > 0">{{ "STATISTICS.conform_veredict_a" | translate }}</span>
+              <span *ngIf="pagesWithErrorsA === 0 && pagesWithErrorsAA > 0">{{ "STATISTICS.conform_veredict_aa" | translate }}</span>
+              <span *ngIf="pagesWithErrorsA === 0 && pagesWithErrorsAA === 0 && pagesWithErrorsAAA > 0">{{ "STATISTICS.conform_veredict_aaa" | translate }}</span>
+              <span *ngIf="pagesWithErrorsA === 0 && pagesWithErrorsAA === 0 && pagesWithErrorsAAA === 0">{{ "STATISTICS.conform_veredict_success" | translate }}</span>
+            </span>
+            <div class="pages_conform" mat-line fxLayout="column">
+              <span>
+                {{ (pagesWithErrorsA / pages.length) * 100 | toFixed }}% A 
+                <em *ngIf="pagesWithErrorsA === 1">
+                  ({{ pagesWithErrorsA }} {{ "STATISTICS.n_pages.s" | translate }})
+                </em>
+                <em *ngIf="pagesWithErrorsA !== 1">
+                  ({{ pagesWithErrorsA }} {{ "STATISTICS.n_pages.p" | translate }})
+                </em>
+              </span>
+              <span>
+                {{ (pagesWithErrorsAA / pages.length) * 100 | toFixed }}% AA
+                <em *ngIf="pagesWithErrorsAA === 1">
+                  ({{ pagesWithErrorsAA }} {{ "STATISTICS.n_pages.s" | translate }})
+                </em>
+                <em *ngIf="pagesWithErrorsAA !== 1">
+                  ({{ pagesWithErrorsAA }} {{ "STATISTICS.n_pages.p" | translate }})
+                </em>
+              </span>
+              <span>
+                {{ (pagesWithErrorsAAA / pages.length) * 100 | toFixed }}% AA
+                <em *ngIf="pagesWithErrorsAAA === 1">
+                  ({{ pagesWithErrorsAAA }} {{ "STATISTICS.n_pages.s" | translate }})
+                </em>
+                <em *ngIf="pagesWithErrorsAAA !== 1">
+                  ({{ pagesWithErrorsAAA }} {{ "STATISTICS.n_pages.p" | translate }})
+                </em>
+              </span>
+            </div>
+          </mat-list-item>
+          <mat-list-item>
+            <span><strong>{{ "STATISTICS.mean" | translate }}:</strong> {{ score | toFixed:{places: 3} }}</span>
+          </mat-list-item>
+          <mat-list-item>
+           <span><strong>{{ "STATISTICS.websites" | translate }}:</strong> {{ n_websites }}</span>
+          </mat-list-item>
+          <mat-list-item>
+           <span><strong>{{ "STATISTICS.pages" | translate }}:</strong> {{ pages.length }}</span>
+          </mat-list-item>
+        </mat-list>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="{{ colspan2 }}">
+        <table class="table table-bordered table-sm">
+          <thead>
+            <tr>
+              <th colspan="2">{{ "STATISTICS.table3.title" | translate }}</th>
+            </tr>
+            <tr>
+              <th>{{ "STATISTICS.table3.conform_label" | translate }}</th>
+              <th>{{ "STATISTICS.table2.details_label" | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">{{ "STATISTICS.table3.nc" | translate }}</th>
+              <td>
+                <span *ngFor="let q of table.nc" fxLayout="column">
+                  <span *ngIf="q.int.lower === q.int.upper && q.int.lower === 1 && q.tot === 1">
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.single_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.single_website" | translate }}
+                  </span>
+                  <span *ngIf="q.int.lower === q.int.upper && q.int.lower === 1 && q.tot > 1">
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.single_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.multi_website" | translate }}
+                  </span>
+
+                  <span *ngIf="q.int.lower === q.int.upper && q.int.lower !== 1 && q.tot === 1">
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.multi_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.single_website" | translate }}
+                  </span>
+                  <span *ngIf="q.int.lower === q.int.upper && q.int.lower !== 1 && q.tot > 1">
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.multi_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.multi_website" | translate }}
+                  </span>
+
+                  <span *ngIf="q.int.lower !== q.int.upper && q.tot === 1">
+                    {{ "STATISTICS.table2.details.from" | translate }}
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.to" | translate }}
+                    {{ q.int.upper }}
+                    {{ "STATISTICS.table2.details.multi_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.single_website" | translate }}
+                  </span>
+                  <span *ngIf="q.int.lower !== q.int.upper && q.tot > 1">
+                    {{ "STATISTICS.table2.details.from" | translate }}
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.to" | translate }}
+                    {{ q.int.upper }}
+                    {{ "STATISTICS.table2.details.multi_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.multi_website" | translate }}
+                  </span>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">{{ "STATISTICS.table3.A" | translate }}</th>
+              <td>
+                <span *ngFor="let q of table.A" fxLayout="column">
+                  <span *ngIf="q.int.lower === q.int.upper && q.int.lower === 1 && q.tot === 1">
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.single_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.single_website" | translate }}
+                  </span>
+                  <span *ngIf="q.int.lower === q.int.upper && q.int.lower === 1 && q.tot > 1">
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.single_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.multi_website" | translate }}
+                  </span>
+
+                  <span *ngIf="q.int.lower === q.int.upper && q.int.lower !== 1 && q.tot === 1">
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.multi_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.single_website" | translate }}
+                  </span>
+                  <span *ngIf="q.int.lower === q.int.upper && q.int.lower !== 1 && q.tot > 1">
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.multi_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.multi_website" | translate }}
+                  </span>
+
+                  <span *ngIf="q.int.lower !== q.int.upper && q.tot === 1">
+                    {{ "STATISTICS.table2.details.from" | translate }}
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.to" | translate }}
+                    {{ q.int.upper }}
+                    {{ "STATISTICS.table2.details.multi_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.single_website" | translate }}
+                  </span>
+                  <span *ngIf="q.int.lower !== q.int.upper && q.tot > 1">
+                    {{ "STATISTICS.table2.details.from" | translate }}
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.to" | translate }}
+                    {{ q.int.upper }}
+                    {{ "STATISTICS.table2.details.multi_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.multi_website" | translate }}
+                  </span>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">{{ "STATISTICS.table3.AA" | translate }}</th>
+              <td>
+                <span *ngFor="let q of table.AA" fxLayout="column">
+                  <span *ngIf="q.int.lower === q.int.upper && q.int.lower === 1 && q.tot === 1">
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.single_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.single_website" | translate }}
+                  </span>
+                  <span *ngIf="q.int.lower === q.int.upper && q.int.lower === 1 && q.tot > 1">
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.single_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.multi_website" | translate }}
+                  </span>
+
+                  <span *ngIf="q.int.lower === q.int.upper && q.int.lower !== 1 && q.tot === 1">
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.multi_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.single_website" | translate }}
+                  </span>
+                  <span *ngIf="q.int.lower === q.int.upper && q.int.lower !== 1 && q.tot > 1">
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.multi_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.multi_website" | translate }}
+                  </span>
+
+                  <span *ngIf="q.int.lower !== q.int.upper && q.tot === 1">
+                    {{ "STATISTICS.table2.details.from" | translate }}
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.to" | translate }}
+                    {{ q.int.upper }}
+                    {{ "STATISTICS.table2.details.multi_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.single_website" | translate }}
+                  </span>
+                  <span *ngIf="q.int.lower !== q.int.upper && q.tot > 1">
+                    {{ "STATISTICS.table2.details.from" | translate }}
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.to" | translate }}
+                    {{ q.int.upper }}
+                    {{ "STATISTICS.table2.details.multi_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.multi_website" | translate }}
+                  </span>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">{{ "STATISTICS.table3.AAA" | translate }}</th>
+              <td>
+                <span *ngFor="let q of table.AAA" fxLayout="column">
+                  <span *ngIf="q.int.lower === q.int.upper && q.int.lower === 1 && q.tot === 1">
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.single_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.single_website" | translate }}
+                  </span>
+                  <span *ngIf="q.int.lower === q.int.upper && q.int.lower === 1 && q.tot > 1">
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.single_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.multi_website" | translate }}
+                  </span>
+
+                  <span *ngIf="q.int.lower === q.int.upper && q.int.lower !== 1 && q.tot === 1">
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.multi_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.single_website" | translate }}
+                  </span>
+                  <span *ngIf="q.int.lower === q.int.upper && q.int.lower !== 1 && q.tot > 1">
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.multi_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.multi_website" | translate }}
+                  </span>
+
+                  <span *ngIf="q.int.lower !== q.int.upper && q.tot === 1">
+                    {{ "STATISTICS.table2.details.from" | translate }}
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.to" | translate }}
+                    {{ q.int.upper }}
+                    {{ "STATISTICS.table2.details.multi_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.single_website" | translate }}
+                  </span>
+                  <span *ngIf="q.int.lower !== q.int.upper && q.tot > 1">
+                    {{ "STATISTICS.table2.details.from" | translate }}
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.to" | translate }}
+                    {{ q.int.upper }}
+                    {{ "STATISTICS.table2.details.multi_page2" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.multi_website" | translate }}
+                  </span>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="{{ colspan2 }}">
+        <mat-list>
+          <mat-list-item>
+            <span mat-line><strong>{{ "STATISTICS.median" | translate }}:</strong> {{ median | toFixed:{places: 3} }}</span>
+            <p mat-line fxHide.lt-md>{{ "STATISTICS.median_desc" | translate }}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <span mat-line><strong>{{ "STATISTICS.amplitude" | translate }}:</strong> {{ amplitude | toFixed:{places: 3} }}</span>
+            <p mat-line fxHide.lt-md>{{ "STATISTICS.amplitude_desc" | translate }}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <span mat-line><strong>{{ "STATISTICS.variance" | translate }}:</strong> {{ variance | toFixed:{places: 3} }}</span>
+            <p mat-line fxHide.lt-md>{{ "STATISTICS.variance_desc" | translate }}</p>
+          </mat-list-item>
+        </mat-list>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>

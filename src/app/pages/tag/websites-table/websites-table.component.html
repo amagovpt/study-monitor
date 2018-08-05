@@ -58,7 +58,7 @@
           {{ "WEBSITES.table.score" | translate }}
         </mat-header-cell>
         <mat-cell *matCellDef="let element" fxFlex="10" fxHide.lt-sm>
-          {{element.Score}}
+          <span *ngIf="element.Score">{{element.Score | toFixed}}</span>
         </mat-cell>
       </ng-container>
 

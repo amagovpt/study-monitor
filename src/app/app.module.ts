@@ -48,26 +48,47 @@ import { WebsiteComponent } from './pages/website/website.component';
 import { WebsiteStatisticsComponent } from './pages/website/website-statistics/website-statistics.component';
 import { AddPagesComponent } from './pages/website/add-pages/add-pages.component';
 import { WebsiteDetailedStatisticsComponent } from './pages/website-detailed-statistics/website-detailed-statistics.component';
-import { TagDetaildStatisticsComponent } from './pages/tag-detaild-statistics/tag-detaild-statistics.component';
+import { TagDetailedStatisticsComponent } from './pages/tag-detailed-statistics/tag-detailed-statistics.component';
 import { RemoveWebsitesConfirmationDialogComponent } from './dialogs/remove-websites-confirmation-dialog/remove-websites-confirmation-dialog.component';
 import { WebsitePagesResultsComponent } from './pages/website-detailed-statistics/website-pages-results/website-pages-results.component';
 import { WebsiteMetadataComponent } from './pages/website-detailed-statistics/website-metadata/website-metadata.component';
 import { WebsiteScoreDistributionComponent } from './pages/website-detailed-statistics/website-score-distribution/website-score-distribution.component';
 import { WebsiteListPagesErrorComponent } from './pages/website-list-pages-error/website-list-pages-error.component';
+import { TagStatisticsSummaryComponent } from './pages/tag-detailed-statistics/tag-statistics-summary/tag-statistics-summary.component';
+import { TagStatisticsErrorsComponent } from './pages/tag-detailed-statistics/tag-statistics-errors/tag-statistics-errors.component';
+import { TagStatisticsScoreDistributionComponent } from './pages/tag-detailed-statistics/tag-statistics-score-distribution/tag-statistics-score-distribution.component';
+import { TagStatisticsWebsitesResultsComponent } from './pages/tag-detailed-statistics/tag-statistics-websites-results/tag-statistics-websites-results.component';
+import { TagStatisticsPagesResultsComponent } from './pages/tag-detailed-statistics/tag-statistics-pages-results/tag-statistics-pages-results.component';
+import { TagListWebsitesErrorComponent } from './pages/tag-list-websites-error/tag-list-websites-error.component';
+import { AddExistingWebsiteComponent } from './pages/tag/add-website/add-existing-website/add-existing-website.component';
+import { AddNewWebsiteComponent } from './pages/tag/add-website/add-new-website/add-new-website.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent, canActivate: [NoAuthGuard] },
   { path: 'user', component: UserComponent, canActivate: [UserAuthGuard], children: [
     { path: '', component: UserStudiesComponent },
     { path: 'add-category', component: AddCategoryComponent },
+
     { path: ':tag', component: TagComponent },
-    { path: ':tag/statistics', component: TagDetaildStatisticsComponent },
+    { path: ':tag/statistics', component: TagDetailedStatisticsComponent },
+    { path: ':tag/statistics/:tagError', component: TagListWebsitesErrorComponent },
+    { path: ':tag/statistics/:tagError/:website', component: WebsiteComponent },
+    { path: ':tag/statistics/:tagError/:website/statistics', component: WebsiteDetailedStatisticsComponent },
+    { path: ':tag/statistics/:tagError/:website/statistics/:websiteError', component: WebsiteListPagesErrorComponent },
+    { path: ':tag/statistics/:tagError/:website/statistics/:websiteError/:url', component: EvaluationResultsComponent },
+    { path: ':tag/statistics/:tagError/:website/statistics/:websiteError/:url/code', component: WebpageCodeComponent },
+    { path: ':tag/statistics/:tagError/:website/statistics/:websiteError/:url/:ele', component: ElementResultComponent },
+    { path: ':tag/statistics/:tagError/:website/:url', component: EvaluationResultsComponent },
+    { path: ':tag/statistics/:tagError/:website/:url/code', component: WebpageCodeComponent },
+    { path: ':tag/statistics/:tagError/:website/:url/:ele', component: ElementResultComponent },
+
     { path: ':tag/:website', component: WebsiteComponent },
     { path: ':tag/:website/statistics', component: WebsiteDetailedStatisticsComponent },
     { path: ':tag/:website/statistics/:websiteError', component: WebsiteListPagesErrorComponent },
     { path: ':tag/:website/statistics/:websiteError/:url', component: EvaluationResultsComponent },
     { path: ':tag/:website/statistics/:websiteError/:url/code', component: WebpageCodeComponent },
     { path: ':tag/:website/statistics/:websiteError/:url/:ele', component: ElementResultComponent },
+    
     { path: ':tag/:website/:url', component: EvaluationResultsComponent },
     { path: ':tag/:website/:url/code', component: WebpageCodeComponent },
     { path: ':tag/:website/:url/:ele', component: ElementResultComponent }
@@ -115,12 +136,20 @@ export function HttpLoaderFactory(http: HttpClient) {
     WebsiteStatisticsComponent,
     AddPagesComponent,
     WebsiteDetailedStatisticsComponent,
-    TagDetaildStatisticsComponent,
+    TagDetailedStatisticsComponent,
     RemoveWebsitesConfirmationDialogComponent,
     WebsitePagesResultsComponent,
     WebsiteMetadataComponent,
     WebsiteScoreDistributionComponent,
-    WebsiteListPagesErrorComponent
+    WebsiteListPagesErrorComponent,
+    TagStatisticsSummaryComponent,
+    TagStatisticsErrorsComponent,
+    TagStatisticsScoreDistributionComponent,
+    TagStatisticsWebsitesResultsComponent,
+    TagStatisticsPagesResultsComponent,
+    TagListWebsitesErrorComponent,
+    AddExistingWebsiteComponent,
+    AddNewWebsiteComponent
   ],
   imports: [
     RouterModule.forRoot(

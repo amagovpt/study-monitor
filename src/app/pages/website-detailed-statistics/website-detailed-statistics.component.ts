@@ -62,7 +62,8 @@ export class WebsiteDetailedStatisticsComponent implements OnInit, OnDestroy {
     segments[0] = '/user';
     segments.splice(1, 1);
     segments.splice(_.size(segments)-1, 1);
-    
+    segments = _.map(segments, s => decodeURIComponent(s));
+
     return segments;
   }
 }

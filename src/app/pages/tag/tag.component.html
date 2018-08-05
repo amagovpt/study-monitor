@@ -13,7 +13,7 @@
   </mat-card>
   <br>
   <div *ngIf="!loading && !error">
-    <app-add-website [tag]="tag" (addWebsite)="addWebsite($event)"></app-add-website>
+    <app-add-website [tag]="tag" (addExistingWebsite)="addExistingWebsite($event)" (addNewWebsite)="addNewWebsite($event)"></app-add-website>
     <br>
     <span class="no-websites-message" *ngIf="websites.length === 0" fxLayout="column" fxLayoutAlign="start center">
       <p>{{ "TAG.no_websites.message1" | translate }}</p>

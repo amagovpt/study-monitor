@@ -50,7 +50,7 @@ export class WebsiteMetadataComponent implements OnInit {
       this.n_cols = 3;
       this.colspan = 2;
       this.colspan2 = 3;
-      this.rowHeight = '1:0.5';
+      this.rowHeight = '1:0.8';
     }
 
     this.score = 0;
@@ -79,7 +79,7 @@ export class WebsiteMetadataComponent implements OnInit {
       this.n_cols = 3;
       this.colspan = 2;
       this.colspan2 = 3;
-      this.rowHeight = '1:0.5';
+      this.rowHeight = '1:0.8';
     }
   }
 

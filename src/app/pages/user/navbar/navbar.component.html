@@ -15,33 +15,88 @@
     {{ tag }}
   </a>
 
-  <mat-icon *ngIf="website">arrow_forward</mat-icon>
-  <a [routerLink]="['/user', tag, website]" routerLinkActive="active" *ngIf="website">
-    {{ website }}
-  </a>
-
-  <mat-icon *ngIf="websiteStatistics">arrow_forward</mat-icon>
-  <a [routerLink]="['/user', tag, website, 'statistics']" routerLinkActive="active" *ngIf="websiteStatistics">
+  <mat-icon *ngIf="tagStatistics">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, 'statistics']" routerLinkActive="active" *ngIf="tagStatistics">
     {{ "HEADER.NAV.statistics" | translate }}
   </a>
 
-  <mat-icon *ngIf="eleError">arrow_forward</mat-icon>
-  <a [routerLink]="['/user', tag, website, 'statistics', eleError]" routerLinkActive="active" *ngIf="eleError">
-    {{ eleError }}
+  <mat-icon *ngIf="tagError">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, 'statistics', tagError]" routerLinkActive="active" *ngIf="tagError">
+    {{ tagError }}
   </a>
 
-  <mat-icon *ngIf="page">arrow_forward</mat-icon>
-  <a [routerLink]="['/user', tag, website, page]" routerLinkActive="active" *ngIf="page">
+  <mat-icon *ngIf="website && tagStatistics">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, 'statistics', tagError, website]" routerLinkActive="active" *ngIf="website && tagStatistics">
+    {{ website }}
+  </a>
+
+  <mat-icon *ngIf="website && !tagStatistics">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, website]" routerLinkActive="active" *ngIf="website && !tagStatistics">
+    {{ website }}
+  </a>
+
+  <mat-icon *ngIf="websiteStatistics && tagStatistics">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, 'statistics', tagError, website, 'statistics']" routerLinkActive="active" *ngIf="websiteStatistics && tagStatistics">
+    {{ "HEADER.NAV.statistics" | translate }}
+  </a>
+
+  <mat-icon *ngIf="websiteStatistics && !tagStatistics">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, website, 'statistics']" routerLinkActive="active" *ngIf="websiteStatistics && !tagStatistics">
+    {{ "HEADER.NAV.statistics" | translate }}
+  </a>
+
+  <mat-icon *ngIf="websiteError && tagStatistics">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, 'statistics', tagError, website, 'statistics', websiteError]" routerLinkActive="active" *ngIf="websiteError && tagStatistics">
+    {{ websiteError }}
+  </a>
+
+  <mat-icon *ngIf="websiteError && !tagStatistics">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, website, 'statistics', websiteError]" routerLinkActive="active" *ngIf="websiteError && !tagStatistics">
+    {{ websiteError }}
+  </a>
+
+  <mat-icon *ngIf="page && tagStatistics">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, 'statistics', tagError, website, 'statistics', websiteError, page]" routerLinkActive="active" *ngIf="page && tagStatistics">
     {{ page }}
   </a>
 
-  <mat-icon *ngIf="pageCode">arrow_forward</mat-icon>
-  <a [routerLink]="['/user', tag, website, page, 'code']" routerLinkActive="active" *ngIf="pageCode">
+  <mat-icon *ngIf="page && !tagStatistics && websiteStatistics">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, website, 'statistics', websiteError, page]" routerLinkActive="active" *ngIf="page && !tagStatistics && websiteStatistics">
+    {{ page }}
+  </a>
+
+  <mat-icon *ngIf="page && !tagStatistics && !websiteStatistics">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, website, page]" routerLinkActive="active" *ngIf="page && !tagStatistics && !websiteStatistics">
+    {{ page }}
+  </a>
+
+  <mat-icon *ngIf="pageCode && tagStatistics">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, 'statistics', tagError, website, 'statistics', websiteError, page, 'code']" routerLinkActive="active" *ngIf="pageCode && tagStatistics">
     {{ "HEADER.NAV.code" | translate }}
   </a>
 
-  <mat-icon *ngIf="pageEle">arrow_forward</mat-icon>
-  <a [routerLink]="['/user', tag, website, page, pageEle]" routerLinkActive="active" *ngIf="pageEle">
+  <mat-icon *ngIf="pageCode && !tagStatistics && websiteStatistics">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, website, 'statistics', websiteError, page, 'code']" routerLinkActive="active" *ngIf="pageCode && !tagStatistics && websiteStatistics">
+    {{ "HEADER.NAV.code" | translate }}
+  </a>
+
+  <mat-icon *ngIf="pageCode && !tagStatistics && !websiteStatistics">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, website, page, 'code']" routerLinkActive="active" *ngIf="pageCode && !tagStatistics && !websiteStatistics">
+    {{ "HEADER.NAV.code" | translate }}
+  </a>
+
+  <mat-icon *ngIf="pageEle && tagStatistics">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, 'statistics', tagError, website, 'statistics', websiteError, page, pageEle]" routerLinkActive="active" *ngIf="pageEle && tagStatistics">
+    {{ pageEle }}
+  </a>
+
+  <mat-icon *ngIf="pageEle && !tagStatistics && websiteStatistics">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, website, 'statistics', websiteError, page, pageEle]" routerLinkActive="active" *ngIf="pageEle && !tagStatistics && websiteStatistics">
+    {{ pageEle }}
+  </a>
+
+  <mat-icon *ngIf="pageEle && !tagStatistics && !websiteStatistics">arrow_forward</mat-icon>
+  <a [routerLink]="['/user', tag, website, page, pageEle]" routerLinkActive="active" *ngIf="pageEle && !tagStatistics && !websiteStatistics">
     {{ pageEle }}
   </a>
 </nav>

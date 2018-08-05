@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
@@ -35,7 +36,10 @@ export class PagesTableComponent implements OnInit {
   dataSource: MatTableDataSource<Page>;
   selection: SelectionModel<Page>;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private location: Location
+  ) { }
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.pages);
@@ -66,5 +70,16 @@ export class PagesTableComponent implements OnInit {
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  getUriRoute(uri: string): Array<string> {
+    let path = this.location.path();
+    let segments = _.split(path, '/');
+    segments[0] = '/user';
+    segments.splice(1, 1);
+    segments.push(uri);
+    segments = _.map(segments, s => decodeURIComponent(s));
+
+    return segments;
   }
 }

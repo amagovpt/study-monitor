@@ -49,7 +49,7 @@
           {{ "PAGES.table.score" | translate }}
         </mat-header-cell>
         <mat-cell *matCellDef="let element" fxFlex="10" fxHide.lt-sm>
-          {{element.Score}}
+          {{element.Score | toFixed }}
         </mat-cell>
       </ng-container>
 
@@ -92,7 +92,7 @@
       <ng-container matColumnDef="See">
         <mat-header-cell *matHeaderCellDef fxFlex="10"></mat-header-cell>
         <mat-cell *matCellDef="let element" fxFlex="10">
-          <button mat-icon-button matTooltip="{{ 'PAGES.table.see_tooltip' | translate }}" [routerLink]="['/user', tag, website, element.Uri]" fxFlex>
+          <button mat-icon-button matTooltip="{{ 'PAGES.table.see_tooltip' | translate }}" [routerLink]="getUriRoute(element.Uri)" fxFlex>
             <mat-icon class="md-24" aria-label="">visibility</mat-icon>
           </button>
         </mat-cell>

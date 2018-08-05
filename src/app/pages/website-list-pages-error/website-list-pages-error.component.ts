@@ -22,7 +22,10 @@ export class WebsiteListPagesErrorComponent implements OnInit, OnDestroy {
 
   tag: string;
   website: string;
+  websiteError: string;
   eleError: string;
+  qLower: number;
+  qUpper: number;
 
   pages: Array<Page>;
   list: any[];
@@ -35,13 +38,25 @@ export class WebsiteListPagesErrorComponent implements OnInit, OnDestroy {
     this.list = [];
     this.error = false;
     this.loading = true;
+
+    this.eleError= null;
+    this.websiteError = null;
+    this.qLower = 0;
+    this.qUpper = 0;
   }
 
   ngOnInit(): void {
     this.sub = this.activatedRoute.params.subscribe(params => {
       this.tag = params.tag;
       this.website = params.website;
-      this.eleError = params.websiteError;
+
+      this.websiteError = params.websiteError;
+      const error = _.split(params.websiteError, ':');
+      this.eleError = error[0];
+
+      let range = _.split(error[1], '-');
+      this.qLower = range[0];
+      this.qUpper = range[1];
 
       this.studies.getUserTagWebsitePagesData(this.tag, this.website)
         .subscribe(pages => {
@@ -51,9 +66,9 @@ export class WebsiteListPagesErrorComponent implements OnInit, OnDestroy {
             this.pages = pages;
             let tmp = [];
             for (let p of this.pages) {
-              let e = JSON.parse(atob(p.Errors));
+              let e = JSON.parse(atob(p.Tot)).elems;
 
-              if (e[this.eleError] && e[this.eleError] > 0) {
+              if (e[this.eleError] && e[this.eleError] >= this.qLower && e[this.eleError] <= this.qUpper) {
                 tmp.push({
                   url: p.Uri,
                   n: e[this.eleError]
@@ -73,12 +88,24 @@ export class WebsiteListPagesErrorComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  getUriRoute(uri: string): Array<string> {
+    let path = this.location.path();
+    let segments = _.split(path, '/');
+    segments[0] = '/user';
+    segments.splice(1, 1);
+    segments.push(uri);
+    segments = _.map(segments, s => decodeURIComponent(s));
+
+    return segments;
+  }
+
   goBack(): Array<string> {
     let path = this.location.path();
     let segments = _.split(path, '/');
     segments[0] = '/user';
     segments.splice(1, 1);
     segments.splice(_.size(segments)-1, 1);
+    segments = _.map(segments, s => decodeURIComponent(s));
     
     return segments;
   }

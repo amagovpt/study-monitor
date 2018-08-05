@@ -56,22 +56,31 @@
     }
   },
   "ADD_WEBSITE": {
-    "title": "Adicionar website",
-    "subtitle": "Adicione um website a esta categoria",
-    "name_label": "Nome",
-    "domain_label": "Domain",
-    "urls_label": "Urls",
-    "required": "Este campo é <strong>obrigatório</strong>",
-    "taken_name": "Já <strong>tem</strong> um website com este nome",
-    "taken_name_error": "Ocorreu um erro ao tentar validar este nome",
-    "invalid_domain": "Domínio <strong>inválido</strong>",
-    "taken_domain": "Já <strong>tem</strong> um website com este domínio",
-    "taken_domain_error": "Ocorreu um erro ao tentar validar este domínio",
-    "invalid_url": "Um dos urls é <strong>inválido</strong>",
-    "url_match_error": "Um dos urls não coincide com o domínio",
-    "button": "Adicionar website",
-    "error_message": "Ocorreu um erro ao tentar adicionar o website",
-    "success_message": "Website adicionado com sucesso"
+    "existing": {
+      "title": "Adicionar um website existente",
+      "subtitle": "Adicione um website de outra categoria a esta categoria",
+      "label": "Websites",
+      "option": "<strong>Categoria</strong>: {{tag}}, <strong>Website</strong>: {{website}} - {{url}}",
+      "button": "Adicionar websites"
+    },
+    "new": {
+      "title": "Adicionar novo website",
+      "subtitle": "Adicione um novo website a esta categoria",
+      "name_label": "Nome",
+      "domain_label": "Domain",
+      "urls_label": "Urls",
+      "required": "Este campo é <strong>obrigatório</strong>",
+      "taken_name": "Já <strong>tem</strong> um website com este nome",
+      "taken_name_error": "Ocorreu um erro ao tentar validar este nome",
+      "invalid_domain": "Domínio <strong>inválido</strong>",
+      "taken_domain": "Já <strong>tem</strong> um website com este domínio",
+      "taken_domain_error": "Ocorreu um erro ao tentar validar este domínio",
+      "invalid_url": "Um dos urls é <strong>inválido</strong>",
+      "url_match_error": "Um dos urls não coincide com o domínio",
+      "button": "Adicionar website",
+      "error_message": "Ocorreu um erro ao tentar adicionar o website",
+      "success_message": "Website adicionado com sucesso"
+    }
   },
   "WEBSITES": {
     "title": "Websites da categoria {{value}}",
@@ -111,7 +120,7 @@
     "error": "Um dos urls é <strong>inválido</strong>",
     "button": "Adicionar páginas",
     "error_message": "Ocorreu um erro ao tentar adicionar as páginas",
-    "success_message": "Páginas adicionado com sucesso"
+    "success_message": "Páginas adicionadas com sucesso"
   },
   "PAGES": {
     "title": "Páginas do website {{value}}",
@@ -159,6 +168,7 @@
     "tags": "Nº de categorias",
     "websites": "Nº de websites",
     "pages": "Nº de páginas",
+    "tag_conform": "Comformidade da categoria:",
     "website_conform": "Comformidade do website:",
     "conform_veredict_a": "Não passa nível A",
     "conform_veredict_aa": "Não passa nível AA",
@@ -170,14 +180,17 @@
     },
     "score": "Pontuação",
     "scores": {
-      "title": "Distribuição de pontuações",
-      "frequencie": "Frequência (nº de páginas)",
-      "percentage": "Percentagem (nº de páginas)",
+      "title": "Distribuição de pontuações (páginas)",
+      "title2": "Distribuição de pontuações (websites)",
+      "frequencie_p": "Frequência (nº de páginas)",
+      "percentage_p": "Percentagem (nº de páginas)",
+      "frequencie_w": "Frequência (nº de websites)",
+      "percentage_w": "Percentagem (nº de websites)",
       "range": "Intervalo",
       "cumulative": "Frequência cumulativa"
     },
-    "mean": "Mean",
-    "median": "Median",
+    "mean": "Média",
+    "median": "Mediana",
     "median_desc": "Trata-se do valor que corresponde a 50% da distribuição das pontuações.",
     "variance": "Variância amostral",
     "variance_desc": "Mede a dispersão dos valores (pontuações) com relação ao valor central (média).",
@@ -185,23 +198,41 @@
     "amplitude_desc": "A amplitude amostral é a diferença entre o valor máximo e o valor mínimo das pontuações. A amplitude amostral permite ter uma noção de dispersão dos dados.",
     "note": "<strong>Nota:</strong> Websites sem páginas não serão usados durante os cálculos estatísticos",
     "table": {
-      "title": "Nº de páginas que falharam os testes por prioridade"
+      "title": "Nº de páginas que falharam os testes por prioridade",
+      "title2": "Nº de websites que falharam os testes por prioridade"
     },
     "table2": {
       "title": "Distribuição detalhada de erros",
-      "error_label": "Erro (descrição)",
+      "error_label": "Teste (descrição)",
       "n_errors_label": "Nº de ocurrências",
       "n_pages_label": "Nº de páginas afetadas",
+      "n_websites_label": "Nº de websites afetados",
       "details_label": "Existem",
       "details": {
-        "single_error": "erro em",
-        "multi_error": "erros em",
+        "single_error": "ocurrência em",
+        "multi_error": "ocurrências em",
         "single_page": "página",
         "multi_page": "páginas",
+        "single_page2": "página em",
+        "multi_page2": "páginas em",
+        "single_website": "website",
+        "multi_website": "websites",
         "from": "de",
         "to": "a"
       },
-      "lvl_label": "Nível"
+      "lvl_label": "Nível",
+      "veredict_label": "Resultado",
+      "scoreok": "Sucesso",
+      "scorewar": "Aviso",
+      "scorerror": "Erro"
+    },
+    "table3": {
+      "title": "Resultados por websites",
+      "conform_label": "Conformidade",
+      "nc": "Não conforme",
+      "A": "Nível A",
+      "AA": "Nível AA",
+      "AAA": "Nível AAA"
     },
     "newest_page_updated": "Avaliação mais recente duma página",
     "oldest_page_updated": "Avaliação mais antiga duma página",
@@ -215,6 +246,14 @@
     "pages_without_errors_a_aa": "Páginas sem erros A+AA",
     "pages_without_errors_a_aa_aaa": "Páginas sem erros A+AA+AAA",
     "details_button": "Mais detalhes"
+  },
+  "WEBSITES_ERROR": {
+    "title": "Categoria",
+    "subtitle": "Erro",
+    "list": {
+      "title": "Lista de websites",
+      "subtitle": "Nº de resultados"
+    }
   },
   "PAGES_ERROR": {
     "title": "Website",
@@ -308,6 +347,31 @@
       "data_error": "Ocorreu um erro ao obter os dados",
       "data_table_error": "Ocorreu um erro ao tentar carregar a tabela de dados"
     }
+  },
+  "ELEMS_HEADERS": {
+    "altImg": "Texto alternativo em imagens",
+    "altArea": "Marcação de mapas de imagem",
+    "altInput": "Marcação de botões gráficos",
+    "media": "Inserção de Multimedia (embed, object, iframe, applet)",
+    "js": "Uso de Javascript",
+    "head": "Marcação de cabeçalhos",
+    "links": "Marcação de Links, menus e texto dos links",
+    "jumps": "Links para contornar blocos de informação",
+    "tData": "Tabelas de dados",
+    "tLayout": "Tabelas Layout",
+    "frame": "Marcação de Molduras e respectivos equivalentes alternativos",
+    "form": "Marcação de formulários",
+    "w3c": "Standards W3C: (X)HTML + CSS",
+    "deprec": "Elementos e atributos de apresentação/obsoletos",
+    "abs": "Uso de unidades absolutas",
+    "meta": "Metadados (título, navegação, redireccionamento, reinicialização)",
+    "lang": "Marcação do idioma principal da página",
+    "text": "Formatação do texto (espaçamento entre linhas e texto justificado)",
+    "color": "Contraste da informação",
+    "abbr": "Marcação de abreviaturas",
+    "aKey": "Marcação de teclas de atalho",
+    "nWin": "Abertura de novas janelas",
+    "pagalt": "Página alternativa"
   },
   "ELEMS": {
         "a": "Links",

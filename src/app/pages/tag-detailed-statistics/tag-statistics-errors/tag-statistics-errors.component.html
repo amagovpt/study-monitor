@@ -1,0 +1,52 @@
+<section fxLayout="column" fxLayoutAlign="start center">
+  <br>
+  <table class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th colspan="3">{{ "STATISTICS.table.title" | translate }}</th>
+      </tr>
+      <tr>
+        <th>A</th>
+        <th>AA</th>
+        <th>AAA</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ pagesErrorsA }}</td>
+        <td>{{ pagesErrorsAA }}</td>
+        <td>{{ pagesErrorsAAA }}</td>
+      </tr>
+      <tr>
+        <td>{{ (pagesErrorsA / pages.length) * 100 | toFixed }}%</td>
+        <td>{{ (pagesErrorsAA / pages.length) * 100 | toFixed }}%</td>
+        <td>{{ (pagesErrorsAAA / pages.length) * 100 | toFixed }}%</td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <table class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th colspan="3">{{ "STATISTICS.table.title2" | translate }}</th>
+      </tr>
+      <tr>
+        <th>A</th>
+        <th>AA</th>
+        <th>AAA</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ websitesErrorsA }}</td>
+        <td>{{ websitesErrorsAA }}</td>
+        <td>{{ websitesErrorsAAA }}</td>
+      </tr>
+      <tr>
+        <td>{{ (websitesErrorsA / n_websites) * 100 | toFixed }}%</td>
+        <td>{{ (websitesErrorsAA / n_websites) * 100 | toFixed }}%</td>
+        <td>{{ (websitesErrorsAAA / n_websites) * 100 | toFixed }}%</td>
+      </tr>
+    </tbody>
+  </table>
+</section>

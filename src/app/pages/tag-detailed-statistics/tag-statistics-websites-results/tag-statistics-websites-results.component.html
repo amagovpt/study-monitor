@@ -1,0 +1,81 @@
+<mat-card class="mat-typography">
+  <mat-card-content>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>{{ "STATISTICS.table2.error_label" | translate }}</th>
+          <th>{{ "STATISTICS.table2.lvl_label" | translate }}</th>
+          <th>{{ "STATISTICS.table2.veredict_label" | translate }}</th>
+          <th>{{ "STATISTICS.table2.n_errors_label" | translate }}</th>
+          <th>{{ "STATISTICS.table2.n_websites_label" | translate }}</th>
+          <th>{{ "STATISTICS.table2.details_label" | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-template ngFor let-t [ngForOf]="resultsKeys" let-i="index">
+          <tr>
+            <th class="elem_header" colspan="6">{{ "ELEMS_HEADERS." + t | translate }}</th>
+          </tr>
+          <tr *ngFor="let test of results[t]" class="{{test._class}}">
+            <td *ngIf="test.n_elems === 1" innerHTML="{{ 'TESTS_RESULTS.' + test.desc +'.s' | translate:{value: test['n_elems']} }}"></td>
+            <td *ngIf="test.n_elems !== 1" innerHTML="{{ 'TESTS_RESULTS.' + test.desc +'.p' | translate:{value: test['n_elems']} }}"></td>
+            <td>{{ test.lvl }}</td>
+            <td>{{ "STATISTICS.table2."+test._class | translate }}</td>
+            <td>{{ test.n_pages }}</td>
+            <td>{{ test.n_websites }}</td>
+            <td>
+              <span *ngFor="let q of test.quartiles" fxLayout="column">
+                <a [routerLink]="[test['test']+':'+q.int.lower+'-'+q.int.upper]">
+                  <span *ngIf="q.int.lower === q.int.upper && q.int.lower === 1 && q.tot === 1">
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.single_error" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.single_website" | translate }}
+                  </span>
+                  <span *ngIf="q.int.lower === q.int.upper && q.int.lower === 1 && q.tot > 1">
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.single_error" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.multi_website" | translate }}
+                  </span>
+
+                  <span *ngIf="q.int.lower === q.int.upper && q.int.lower !== 1 && q.tot === 1">
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.multi_error" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.single_website" | translate }}
+                  </span>
+                  <span *ngIf="q.int.lower === q.int.upper && q.int.lower !== 1 && q.tot > 1">
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.multi_error" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.multi_website" | translate }}
+                  </span>
+
+                  <span *ngIf="q.int.lower !== q.int.upper && q.tot === 1">
+                    {{ "STATISTICS.table2.details.from" | translate }}
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.to" | translate }}
+                    {{ q.int.upper }}
+                    {{ "STATISTICS.table2.details.multi_error" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.single_website" | translate }}
+                  </span>
+                  <span *ngIf="q.int.lower !== q.int.upper && q.tot > 1">
+                    {{ "STATISTICS.table2.details.from" | translate }}
+                    {{ q.int.lower }}
+                    {{ "STATISTICS.table2.details.to" | translate }}
+                    {{ q.int.upper }}
+                    {{ "STATISTICS.table2.details.multi_error" | translate }}
+                    {{ q.tot }}
+                    {{ "STATISTICS.table2.details.multi_website" | translate }}
+                  </span>
+                </a>
+              </span>
+            </td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+  </mat-card-content>
+</mat-card>
