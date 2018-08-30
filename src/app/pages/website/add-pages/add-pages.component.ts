@@ -59,7 +59,7 @@ export class AddPagesComponent implements OnInit {
 
   @Input('tag') tag: string;
   @Input('website') website: string;
-  @Output('addPages') addTagWebsitePages = new EventEmitter<Array<string>>();
+  @Output('addPages') addTagWebsitePages = new EventEmitter<any>();
 
   matcher: ErrorStateMatcher;
 
@@ -70,7 +70,7 @@ export class AddPagesComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.pagesForm = this.fb.group({
-      domain: new FormControl({ value: '', disabled: true}),
+      domain: new FormControl({value: '', disabled: true}),
       pages: new FormControl('', [Validators.required, urlValidator])
     }, { validator: DomainUrlValidation.UrlMatchDomain });
     this.matcher = new MyErrorStateMatcher();
@@ -94,7 +94,7 @@ export class AddPagesComponent implements OnInit {
       p = _.replace(p, 'www.', '');
       return p;
     });
-    this.addTagWebsitePages.next(pages);
+    this.addTagWebsitePages.next({ domain: this.pagesForm.value.domain, urls: pages});
   }
 }
 

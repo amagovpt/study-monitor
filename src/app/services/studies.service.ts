@@ -423,7 +423,7 @@ export class StudiesService {
           throw new AsError(response.success, response.message);
         }
 
-        return <Array<Page>> response.result;
+        return <string> response.result;
       }),
       catchError(err => {
         console.log(err);
@@ -435,8 +435,8 @@ export class StudiesService {
     );
   }
 
-  addTagWebsitePages(tag: string, website: string, pages: Array<string>): Observable<Array<Page>> {
-    return ajax.post(this.getServer('/studies/user/tag/website/addPages'), {tag, website, pages: JSON.stringify(pages), cookie: this.user.getUserData()}).pipe(
+  addTagWebsitePages(tag: string, website: string, domain: string, pages: Array<string>): Observable<Array<Page>> {
+    return ajax.post(this.getServer('/studies/user/tag/website/addPages'), {tag, website, domain, pages: JSON.stringify(pages), cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;

@@ -61,9 +61,9 @@ export class WebsiteComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  addPages(urls): void {
+  addPages(data): void {
     this.loading = true;
-    this.studies.addTagWebsitePages(this.tag, this.website, urls)
+    this.studies.addTagWebsitePages(this.tag, this.website, data.domain, data.urls)
       .subscribe(pages => {
         if (pages) {
           this.message.show('ADD_PAGES.success_message');
