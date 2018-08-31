@@ -1,4 +1,4 @@
-\{
+{
   "LOGIN": {
     "title": "Login",
     "password_label": "Password",
@@ -105,7 +105,8 @@
     }
   },
   "WEBSITE": {
-    "title": "Website",
+    "title": "Website:",
+    "subtitle": "Category:",
     "no_pages": {
       "message1": "This website doesn't have any pages.",
       "message2": "Please click above to add a pages to this website."

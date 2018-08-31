@@ -49,7 +49,6 @@ class DomainUrlValidation {
   }
 }
 
-
 @Component({
   selector: 'app-add-pages',
   templateUrl: './add-pages.component.html',

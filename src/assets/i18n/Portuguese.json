@@ -105,7 +105,8 @@
     }
   },
   "WEBSITE": {
-    "title": "Website",
+    "title": "Website:",
+    "subtitle": "Categoria:",
     "no_pages": {
       "message1": "Este website não tem páginas.",
       "message2": "Carregue acima para adicionar páginas a este website."

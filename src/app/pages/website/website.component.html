@@ -4,6 +4,9 @@
       <mat-card-title>
         <h1>{{ "WEBSITE.title" | translate }} {{ website }}</h1>
       </mat-card-title>
+      <mat-card-subtitle>
+        <h2>{{ "WEBSITE.subtitle" | translate }} {{ tag }}</h2>
+      </mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions>
       <a mat-icon-button class="tools" [routerLink]="goBack()" matTooltip="{{ 'RESULTS.actions.back' | translate }}">

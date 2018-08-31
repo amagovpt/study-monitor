@@ -83,7 +83,7 @@ export class UserService {
   logout(location: string = '/'): void {
     const host = this.getEnv();
 
-    sessionStorage.removeItem('email');
+    sessionStorage.removeItem('AS-email');
     this.cookieService.delete('AS-SSID');
     this.router.navigateByUrl(location);
   }
