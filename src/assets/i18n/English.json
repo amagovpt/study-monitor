@@ -20,7 +20,7 @@
     "NAV": {
       "location": "You are in",
       "access": "Access",
-      "home": "Access Studies",
+      "home": "Study Monitor",
       "add_category": "Add category",
       "code": "Code",
       "statistics": "Statistics"
@@ -166,6 +166,13 @@
     "gauge": {
       "label": "Average score"
     },
+    "menu": {
+      "summary": "Summary",
+      "errors": "Errors",
+      "score_distribution": "Score distribution",
+      "websites_results": "Websites results",
+      "pages_results": "Pages results"
+    },
     "tags": "Nº of categories",
     "websites": "Nº of websites",
     "pages": "Nº of pages",
@@ -282,6 +289,15 @@
         "n_elements_label": "Nº of (x)HTML elements",
         "page_size_label": "Page size",
         "last_update_label": "Last update"
+      },
+      "table": {
+        "title": "Nº practices found",
+        "labels": {
+          "p": "P",
+          "ok": "Acceptable",
+          "err": "Non Acceptable",
+          "warn": "To view manually"
+        }
       }
     },
     "results": {
@@ -298,7 +314,9 @@
         "score_table": "Score board"
       },
       "sc": "Success criteria",
+      "practice": "Practice found",
       "lvl": "Level",
+      "details": "Details",
       "understanding": "Understanding"
     },
     "scoreboard": {

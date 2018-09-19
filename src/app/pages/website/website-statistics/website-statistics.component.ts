@@ -12,7 +12,7 @@ export class WebsiteStatisticsComponent implements OnInit {
 
   @Input('tag') tag: string;
   @Input('website') website: string;
-  @Input('pages') pages: Array<Page>
+  @Input('pages') pages: Array<Page>;
 
   n_cols: number;
   colspan: number;
@@ -94,6 +94,6 @@ export class WebsiteStatisticsComponent implements OnInit {
       this.variance = 0;
     }
 
-    this.amplitude = scores[size-1] - scores[0];
+    this.amplitude = scores[size - 1] - scores[0];
   }
 }

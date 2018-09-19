@@ -162,7 +162,7 @@ export class StudiesService {
   }
 
   getOfficialTags(): Observable<Array<Tag>> {
-    return ajax.post(this.getServer('/tags/allOfficial'), {cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.getServer('/studies/tags/allOfficial'), {cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -461,7 +461,7 @@ export class StudiesService {
         return of(null);
       })
     );
-  } 
+  }
 
   removePages(tag: string, website: string, pagesId: Array<number>): Observable<Array<Page>> {
     return ajax.post(this.getServer('/studies/user/tag/website/removePages'), {tag, website, pagesId, cookie: this.user.getUserData()}).pipe(
@@ -494,6 +494,6 @@ export class StudiesService {
   private getServer(service: string): string {
     const host = location.host;
 
-    return 'http://' + _.split(host, ':')[0] + ':3000' + service;
+    return 'https://' + _.split(host, ':')[0] + ':3001' + service;
   }
 }

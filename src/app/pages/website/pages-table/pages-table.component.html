@@ -10,7 +10,8 @@
   <mat-card-content>
     <div class="page-table-header">
       <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.table.filter' | translate}}">
+        <label for="pages_filter">{{ 'PAGES.table.filter' | translate}}</label>
+        <input id="pages_filter" matInput (keyup)="applyFilter($event.target.value)">
       </mat-form-field>
     </div>
 
@@ -101,6 +102,7 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
+    <mat-paginator [pageSizeOptions]="[20, 50, 100, 250, 500]" showFirstLastButtons></mat-paginator>
     <small><strong>{{ "PAGES.table.note" | translate }}</strong></small>
   </mat-card-content>
 </mat-card>

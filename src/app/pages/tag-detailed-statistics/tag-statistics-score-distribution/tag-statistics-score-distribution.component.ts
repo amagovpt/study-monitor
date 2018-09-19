@@ -40,11 +40,11 @@ export class TagStatisticsScoreDistributionComponent implements OnInit {
   }
 
   calculatePagesScoreChart(): void {
-    let frequencies = new Array<number>(10).fill(0);
+    const frequencies = new Array<number>(10).fill(0);
     _.map(this.pages, p => {
       frequencies[_.floor(p.Score) - 1]++;
     });
-    let data = {
+    const data = {
       frequencie: frequencies,
       number: this.pages.length
     };
@@ -52,15 +52,15 @@ export class TagStatisticsScoreDistributionComponent implements OnInit {
     this.translate.get(['STATISTICS.scores.percentage_p', 'STATISTICS.scores.frequencie_p'])
       .subscribe(res => {
 
-      let values = data.frequencie;
+      const values = data.frequencie;
       const total = _.sum(values);
 
-      let percentageValues = _.map(values, (v) => {
+      const percentageValues = _.map(values, (v) => {
         return (v / total) * 100;
       });
 
-      let freq = [];
-      let freqPer = [];
+      const freq = [];
+      const freqPer = [];
       let tmp = 0;
       for (let i = 0 ; i < 10 ; i++) {
         freq[i] = tmp += values[i];
@@ -130,15 +130,15 @@ export class TagStatisticsScoreDistributionComponent implements OnInit {
   }
 
   calculateWebsitesScoreChart(): void {
-    let frequencies = new Array<number>(10).fill(0);
-    let websites = _.groupBy(this.pages, 'Name');
+    const frequencies = new Array<number>(10).fill(0);
+    const websites = _.groupBy(this.pages, 'Name');
 
-    for (let w in websites) {
-      let m = _.meanBy(websites[w], 'Score');
+    for (const w in websites) {
+      const m = _.meanBy(websites[w], 'Score');
       frequencies[_.floor(m) - 1]++;
     }
 
-    let data = {
+    const data = {
       frequencie: frequencies,
       number: _.size(websites)
     };
@@ -146,15 +146,15 @@ export class TagStatisticsScoreDistributionComponent implements OnInit {
     this.translate.get(['STATISTICS.scores.percentage_w', 'STATISTICS.scores.frequencie_w'])
       .subscribe(res => {
 
-      let values = data.frequencie;
+      const values = data.frequencie;
       const total = _.sum(values);
 
-      let percentageValues = _.map(values, (v) => {
+      const percentageValues = _.map(values, (v) => {
         return (v / total) * 100;
       });
 
-      let freq = [];
-      let freqPer = [];
+      const freq = [];
+      const freqPer = [];
       let tmp = 0;
       for (let i = 0 ; i < 10 ; i++) {
         freq[i] = tmp += values[i];

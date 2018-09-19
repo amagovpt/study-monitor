@@ -88,7 +88,7 @@ const appRoutes: Routes = [
     { path: ':tag/:website/statistics/:websiteError/:url', component: EvaluationResultsComponent },
     { path: ':tag/:website/statistics/:websiteError/:url/code', component: WebpageCodeComponent },
     { path: ':tag/:website/statistics/:websiteError/:url/:ele', component: ElementResultComponent },
-    
+
     { path: ':tag/:website/:url', component: EvaluationResultsComponent },
     { path: ':tag/:website/:url/code', component: WebpageCodeComponent },
     { path: ':tag/:website/:url/:ele', component: ElementResultComponent }

@@ -1,7 +1,7 @@
 <header class="drop_content">
   <mat-toolbar color="primary">
     <mat-toolbar-row fxHide.lt-md>
-      <span fxFlex>Access Studies <span *ngIf="user.getEmail()">- {{ user.getEmail() }}</span></span>
+      <span fxFlex>Study Monitor <span *ngIf="user.getEmail()">- {{ user.getEmail() }}</span></span>
       <button mat-button *ngIf="user.isUserLoggedIn()" (click)="user.logout()">
         {{ "LOGIN.logout" | translate }}
       </button>

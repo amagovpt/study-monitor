@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
 
@@ -33,6 +33,8 @@ export class PagesTableComponent implements OnInit {
 
   // column sorter
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   dataSource: MatTableDataSource<Page>;
   selection: SelectionModel<Page>;
 
@@ -44,6 +46,7 @@ export class PagesTableComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.pages);
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
     this.selection = new SelectionModel<Page>(true, []);
   }
 
@@ -73,7 +76,7 @@ export class PagesTableComponent implements OnInit {
   }
 
   getUriRoute(uri: string): Array<string> {
-    let path = this.location.path();
+    const path = this.location.path();
     let segments = _.split(path, '/');
     segments[0] = '/user';
     segments.splice(1, 1);

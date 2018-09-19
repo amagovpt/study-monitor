@@ -26,7 +26,7 @@ export class UserService {
 
   login(email: string, password: string): Observable<boolean> {
     const app = 'studies';
-    return ajax.post(this.getServer('/users/login'), {email, password, app}).pipe(
+    return ajax.post(this.getServer('/session/login'), {email, password, app}).pipe(
       retry(3),
       map(res => {
         if (!res.response || res.status === 404) {
@@ -84,7 +84,7 @@ export class UserService {
     const host = this.getEnv();
 
     sessionStorage.removeItem('AS-email');
-    this.cookieService.delete('AS-SSID');
+    this.cookieService.delete('AS-SSID', '/', this.getEnv());
     this.router.navigateByUrl(location);
   }
 
@@ -95,6 +95,6 @@ export class UserService {
   private getServer(service: string): string {
     const host = location.host;
 
-    return 'http://' + _.split(host, ':')[0] + ':3000' + service;
+    return 'https://' + _.split(host, ':')[0] + ':3001' + service;
   }
 }

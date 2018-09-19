@@ -75,7 +75,7 @@ export class TagStatisticsComponent implements OnInit {
     }
 
     this.score /= n;
-    
+
     if (n === 0) {
       this.median = 0;
     } else if (n === 1) {

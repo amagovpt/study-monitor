@@ -22,7 +22,7 @@ class DomainUrlValidation {
     domain = _.replace(domain, 'https://', '');
     domain = _.replace(domain, 'www.', '');
 
-    const urls =_.uniq(_.without(_.split(AC.get('pages').value, '\n'), ''));
+    const urls = _.uniq(_.without(_.split(AC.get('pages').value, '\n'), ''));
 
     let invalid = false;
     const size = _.size(urls);
@@ -30,7 +30,7 @@ class DomainUrlValidation {
     if (!size) {
       return null;
     }
-     
+
     for (let i = 0 ; i < size ; i++) {
       let url = _.trim(urls[i]);
       url = _.replace(url, 'http://', '');
@@ -63,7 +63,7 @@ export class AddNewWebsiteComponent implements OnInit {
   matcher: ErrorStateMatcher;
 
   websiteForm: FormGroup;
-  
+
   constructor(private studies: StudiesService, private fb: FormBuilder) {
     this.websiteForm = this.fb.group({
       name: new FormControl('', [Validators.required], this.nameValidator.bind(this)),
@@ -95,7 +95,12 @@ export class AddNewWebsiteComponent implements OnInit {
       p = _.replace(p, 'http://', '');
       p = _.replace(p, 'https://', '');
       p = _.replace(p, 'www.', '');
-      return p;
+
+      if (p[_.size(p)-1] === '/') {
+        p = p.substring(0, _.size(p)-1);
+      }
+
+      return _.trim(p);
     });
 
     this.addTagWebsite.next({name, domain, pages});
@@ -103,7 +108,7 @@ export class AddNewWebsiteComponent implements OnInit {
 
   nameValidator(control: AbstractControl): Observable<any> {
     const name = _.trim(control.value);
-    
+
     if (name !== '') {
       return this.studies.checkWebsiteNameExists(this.tag, name);
     } else {
@@ -116,7 +121,7 @@ export class AddNewWebsiteComponent implements OnInit {
     domain = _.replace(domain, 'http://', '');
     domain = _.replace(domain, 'https://', '');
     domain = _.replace(domain, 'www.', '');
-    
+
     if (domain !== '') {
       return this.studies.checkWebsiteDomainExists(this.tag, domain);
     } else {

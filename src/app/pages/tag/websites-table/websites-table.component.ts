@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
 
@@ -28,6 +28,8 @@ export class WebsitesTableComponent implements OnInit {
 
   // column sorter
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   dataSource: MatTableDataSource<Website>;
   selection: SelectionModel<Website>;
 
@@ -36,6 +38,7 @@ export class WebsitesTableComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.websites);
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
     this.selection = new SelectionModel<Website>(true, []);
   }
 

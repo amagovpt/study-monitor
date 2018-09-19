@@ -33,8 +33,8 @@ export class TagStatisticsErrorsComponent implements OnInit {
     const websites = _.groupBy(this.pages, 'Name');
     this.n_websites = _.size(websites);
     let countA = true, countAA = true, countAAA = true;
-    for (let w in websites) {
-      for (let p of websites[w]) {
+    for (const w in websites) {
+      for (const p of websites[w]) {
         if (p.A > 0) {
           this.pagesErrorsA++;
           if (countA) {

@@ -37,7 +37,7 @@ export class TagListWebsitesErrorComponent implements OnInit {
     this.error = false;
     this.loading = true;
 
-    this.eleError= null;
+    this.eleError = null;
     this.websiteError = null;
     this.qLower = 0;
     this.qUpper = 0;
@@ -51,7 +51,7 @@ export class TagListWebsitesErrorComponent implements OnInit {
       const error = _.split(params.tagError, ':');
       this.eleError = error[0];
 
-      let range = _.split(error[1], '-');
+      const range = _.split(error[1], '-');
       this.qLower = range[0];
       this.qUpper = range[1];
 
@@ -63,13 +63,13 @@ export class TagListWebsitesErrorComponent implements OnInit {
           } else {
             this.pages = pages;
 
-            let websites = _.groupBy(this.pages, 'Name');
+            const websites = _.groupBy(this.pages, 'Name');
 
-            let list = {};
+            const list = {};
 
-            for (let w in websites) {
-              for (let p of websites[w]) {
-                let e = JSON.parse(atob(p.Tot)).elems;
+            for (const w in websites) {
+              for (const p of websites[w]) {
+                const e = JSON.parse(atob(p.Tot)).elems;
 
                 if (e[this.eleError]) {
                   if (!list[p.Name]) {
@@ -84,15 +84,15 @@ export class TagListWebsitesErrorComponent implements OnInit {
               }
             }
 
-            for (let w in list) {
-              let l = list[w].length;
+            for (const w in list) {
+              const l = list[w].length;
               if (l < this.qLower || l > this.qUpper) {
                 delete list[w];
               }
             }
 
             this.listKeys = _.keys(list);
-            this.list = list; 
+            this.list = list;
           }
 
           this.loading = false;
@@ -105,13 +105,13 @@ export class TagListWebsitesErrorComponent implements OnInit {
   }
 
   goBack(): Array<string> {
-    let path = this.location.path();
+    const path = this.location.path();
     let segments = _.split(path, '/');
     segments[0] = '/user';
     segments.splice(1, 1);
-    segments.splice(_.size(segments)-1, 1);
+    segments.splice(_.size(segments) - 1, 1);
     segments = _.map(segments, s => decodeURIComponent(s));
-    
+
     return segments;
   }
 }

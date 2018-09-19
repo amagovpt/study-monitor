@@ -10,7 +10,7 @@ export class AddWebsiteComponent implements OnInit {
   @Input('tag') tag: string;
   @Output('addExistingWebsite') addExistingTagWebsite = new EventEmitter<any>();
   @Output('addNewWebsite') addNewTagWebsite = new EventEmitter<any>();
-  
+
   constructor() { }
 
   ngOnInit(): void {

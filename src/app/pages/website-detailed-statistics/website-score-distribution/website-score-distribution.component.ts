@@ -43,7 +43,7 @@ export class WebsiteScoreDistributionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let frequencies = new Array<number>(10).fill(0);
+    const frequencies = new Array<number>(10).fill(0);
     _.map(this.pages, p => {
       frequencies[_.floor(p.Score) - 1]++;
     });

@@ -115,17 +115,20 @@ export class WebsiteMetadataComponent implements OnInit {
       this.variance = 0;
     }
 
-    this.amplitude = scores[size-1] - scores[0];
+    this.amplitude = scores[size - 1] - scores[0];
 
-    for (let p of this.pages) {
-      if (p.A > 0)
+    for (const p of this.pages) {
+      if (p.A > 0) {
         this.tablePagesErrorsA++;
+      }
 
-      if (p.AA > 0)
+      if (p.AA > 0) {
         this.tablePagesErrorsAA++;
+      }
 
-      if (p.AAA > 0)
+      if (p.AAA > 0) {
         this.tablePagesErrorsAAA++;
+      }
 
       if (p.A === 0) {
         if (p.AA === 0) {

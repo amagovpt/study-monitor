@@ -14,19 +14,19 @@
   <br>
   <div *ngIf="!loading && !error">
     <mat-tab-group mat-stretch-tabs dynamicHeight>
-      <mat-tab label="Sumário">
+      <mat-tab label="{{ 'STATISTICS.menu.summary' | translate }}">
         <app-tag-statistics-summary [pages]="pages"></app-tag-statistics-summary>
       </mat-tab>
-      <mat-tab label="Erros">
+      <mat-tab label="{{ 'STATISTICS.menu.errors' | translate }}">
         <app-tag-statistics-errors [pages]="pages"></app-tag-statistics-errors>
       </mat-tab>
-      <mat-tab label="Distribuição de pontuações">
+      <mat-tab label="{{ 'STATISTICS.menu.score_distribution' | translate }}">
         <app-tag-statistics-score-distribution [pages]="pages"></app-tag-statistics-score-distribution>
       </mat-tab>
-      <mat-tab label="Resultados por websites">
+      <mat-tab label="{{ 'STATISTICS.menu.websites_results' | translate }}">
         <app-tag-statistics-websites-results [tag]="tag" [pages]="pages"></app-tag-statistics-websites-results>
       </mat-tab>
-      <mat-tab label="Resultados por páginas">
+      <mat-tab label="{{ 'STATISTICS.menu.pages_results' | translate }}">
         <app-tag-statistics-pages-results [tag]="tag" [pages]="pages"></app-tag-statistics-pages-results>
       </mat-tab>
     </mat-tab-group>

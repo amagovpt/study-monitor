@@ -111,9 +111,9 @@ export class TagStatisticsSummaryComponent implements OnInit {
       this.variance = 0;
     }
 
-    this.amplitude = scores[size-1] - scores[0];
+    this.amplitude = scores[size - 1] - scores[0];
 
-    for (let p of this.pages) {
+    for (const p of this.pages) {
       if (p.A === 0) {
         if (p.AA === 0) {
           if (p.AAA === 0) {
@@ -129,7 +129,7 @@ export class TagStatisticsSummaryComponent implements OnInit {
       }
     }
 
-    let results = {
+    const results = {
       nc: {
         websites: []
       },
@@ -144,12 +144,12 @@ export class TagStatisticsSummaryComponent implements OnInit {
       }
     };
 
-    let websites = _.groupBy(this.pages, 'Name');
+    const websites = _.groupBy(this.pages, 'Name');
 
-    for (let w in websites) {
-      let sumA = _.sumBy(websites[w], 'A');
-      let sumAA = _.sumBy(websites[w], 'AA');
-      let sumAAA = _.sumBy(websites[w], 'AAA');
+    for (const w in websites) {
+      const sumA = _.sumBy(websites[w], 'A');
+      const sumAA = _.sumBy(websites[w], 'AA');
+      const sumAAA = _.sumBy(websites[w], 'AAA');
 
       if (sumA === 0) {
         if (sumAA === 0) {
@@ -163,43 +163,43 @@ export class TagStatisticsSummaryComponent implements OnInit {
         }
       } else {
         results['nc']['websites'].push(w);
-      } 
+      }
     }
 
     console.log(results);
 
-    for (let c in results) {
-      for (let w in results[c]) {
+    for (const c in results) {
+      for (const w in results[c]) {
         this.table[c] = this.calculateQuartiles(this.getErrorOcurrenceByWebsite(c));
       }
     }
   }
 
   getErrorOcurrenceByWebsite(conform: string): Array<number> {
-    let ocur = new Array<number>();
-    let websites = _.groupBy(this.pages, 'Name');
-    for (let w in websites) {
+    const ocur = new Array<number>();
+    const websites = _.groupBy(this.pages, 'Name');
+    for (const w in websites) {
       let n = 0;
-      for (let p of websites[w]) {
+      for (const p of websites[w]) {
         if (p['A'] !== 0 && conform === 'nc') {
           n++;
         }
 
-        if(p['A'] === 0 && p['AA'] !== 0 && conform === 'A') {
+        if (p['A'] === 0 && p['AA'] !== 0 && conform === 'A') {
           n++;
         }
 
-        if(p['A'] === 0 && p['AA'] === 0 && p['AAA'] !== 0 && conform === 'AA') {
+        if (p['A'] === 0 && p['AA'] === 0 && p['AAA'] !== 0 && conform === 'AA') {
           n++;
         }
 
-        if(p['A'] === 0 && p['AA'] === 0 && p['AAA'] === 0 && conform === 'AA') {
+        if (p['A'] === 0 && p['AA'] === 0 && p['AAA'] === 0 && conform === 'AA') {
           n++;
         }
       }
       ocur.push(n);
     }
-    
+
     return _.without(ocur, 0);
   }
 
