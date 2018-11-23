@@ -4,6 +4,7 @@ import { ajax } from 'rxjs/ajax';
 import { map, retry, catchError } from 'rxjs/operators';
 import * as _ from 'lodash';
 
+import { ConfigService } from './config.service';
 import { UserService } from './user.service';
 import { MessageService } from './message.service';
 
@@ -20,11 +21,12 @@ export class StudiesService {
 
   constructor(
     private user: UserService,
-    private message: MessageService
+    private message: MessageService,
+    private config: ConfigService
   ) { }
 
   getUserTags(): Observable<Array<Tag>> {
-    return ajax.post(this.getServer('/studies/user/tags'), {cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/studies/user/tags'), {cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -47,7 +49,7 @@ export class StudiesService {
   }
 
   getUserTagWebsites(tag: string): Observable<Array<Website>> {
-    return ajax.post(this.getServer('/studies/user/tag/websites'), {tag, cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/studies/user/tag/websites'), {tag, cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -70,7 +72,7 @@ export class StudiesService {
   }
 
   getUserTagWebsitesData(tag: string): Observable<Array<any>> {
-    return ajax.post(this.getServer('/studies/user/tag/websitesData'), {tag, cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/studies/user/tag/websitesData'), {tag, cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -93,7 +95,7 @@ export class StudiesService {
   }
 
   getUserTagWebsitePages(tag: string, website: string): Observable<Array<Page>> {
-    return ajax.post(this.getServer('/studies/user/tag/website/pages'), {tag, website, cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/studies/user/tag/website/pages'), {tag, website, cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -116,7 +118,7 @@ export class StudiesService {
   }
 
   getUserTagWebsitePagesData(tag: string, website: string): Observable<Array<Page>> {
-    return ajax.post(this.getServer('/studies/user/tag/website/pagesData'), {tag, website, cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/studies/user/tag/website/pagesData'), {tag, website, cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -139,7 +141,7 @@ export class StudiesService {
   }
 
   getUserWebsitesFromOtherTags(tag: string): Observable<Array<Website>> {
-    return ajax.post(this.getServer('/studies/user/websites/otherTags'), {tag, cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/studies/user/websites/otherTags'), {tag, cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -162,7 +164,7 @@ export class StudiesService {
   }
 
   getOfficialTags(): Observable<Array<Tag>> {
-    return ajax.post(this.getServer('/studies/tags/allOfficial'), {cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/studies/tags/allOfficial'), {cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -191,7 +193,7 @@ export class StudiesService {
       user_tag_name,
       cookie: this.user.getUserData()
     };
-    return ajax.post(this.getServer('/studies/create/tag'), body).pipe(
+    return ajax.post(this.config.getServer('/studies/create/tag'), body).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -219,7 +221,7 @@ export class StudiesService {
   }
 
   userTagNameExists(name: string): Observable<any> {
-    return ajax.post(this.getServer('/studies/user/tag/nameExists'), {name, cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/studies/user/tag/nameExists'), {name, cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -246,7 +248,7 @@ export class StudiesService {
   }
 
   removeTags(tagsId: Array<number>): Observable<Array<Tag>> {
-    return ajax.post(this.getServer('/studies/user/removeTags'), {tagsId, cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/studies/user/removeTags'), {tagsId, cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -274,7 +276,7 @@ export class StudiesService {
   }
 
   checkWebsiteNameExists(tag: string, name: string): Observable<any> {
-    return ajax.post(this.getServer('/studies/user/tag/website/nameExists'), {tag, name, cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/studies/user/tag/website/nameExists'), {tag, name, cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -300,7 +302,7 @@ export class StudiesService {
   }
 
   checkWebsiteDomainExists(tag: string, domain: string): Observable<any> {
-    return ajax.post(this.getServer('/studies/user/tag/website/domainExists'), {tag, domain, cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/studies/user/tag/website/domainExists'), {tag, domain, cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -326,7 +328,7 @@ export class StudiesService {
   }
 
   addExistingTagWebsite(tag: string, websitesId: Array<number>): Observable<Array<Website>> {
-    return ajax.post(this.getServer('/studies/user/tag/addExistingWebsite'), {tag, websitesId: JSON.stringify(websitesId), cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/studies/user/tag/addExistingWebsite'), {tag, websitesId: JSON.stringify(websitesId), cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -354,7 +356,7 @@ export class StudiesService {
   }
 
   addNewTagWebsite(tag: string, name: string, domain: string, pages: Array<string>): Observable<Array<Website>> {
-    return ajax.post(this.getServer('/studies/user/tag/addNewWebsite'), {tag, name, domain, pages: JSON.stringify(pages), cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/studies/user/tag/addNewWebsite'), {tag, name, domain, pages: JSON.stringify(pages), cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -382,7 +384,7 @@ export class StudiesService {
   }
 
   removeWebsites(tag: string, websitesId: Array<number>): Observable<Array<Website>> {
-    return ajax.post(this.getServer('/studies/user/tag/removeWebsites'), {tag, websitesId, cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/studies/user/tag/removeWebsites'), {tag, websitesId, cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -410,7 +412,7 @@ export class StudiesService {
   }
 
   getWebsiteDomain(tag: string, website: string): Observable<string> {
-    return ajax.post(this.getServer('/studies/user/tag/website/domain'), {tag, website, cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/studies/user/tag/website/domain'), {tag, website, cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -436,7 +438,7 @@ export class StudiesService {
   }
 
   addTagWebsitePages(tag: string, website: string, domain: string, pages: Array<string>): Observable<Array<Page>> {
-    return ajax.post(this.getServer('/studies/user/tag/website/addPages'), {tag, website, domain, pages: JSON.stringify(pages), cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/studies/user/tag/website/addPages'), {tag, website, domain, pages: JSON.stringify(pages), cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -464,7 +466,7 @@ export class StudiesService {
   }
 
   removePages(tag: string, website: string, pagesId: Array<number>): Observable<Array<Page>> {
-    return ajax.post(this.getServer('/studies/user/tag/website/removePages'), {tag, website, pagesId, cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/studies/user/tag/website/removePages'), {tag, website, pagesId, cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -491,9 +493,29 @@ export class StudiesService {
     );
   }
 
-  private getServer(service: string): string {
-    const host = location.host;
+  changePassword(password: string, newPassword: string, confirmPassword: string): Observable<boolean> {
+    return ajax.post(this.config.getServer('/studies/user/changePassword'), {password, newPassword, confirmPassword, cookie: this.user.getUserData()}).pipe(
+      retry(3),
+      map(res => {
+        const response = <Response> res.response;
 
-    return 'https://' + _.split(host, ':')[0] + ':3001' + service;
+        if (!res.response || res.status === 404) {
+          throw new AsError(404, 'Service not found', 'SERIOUS');
+        }
+
+        if (response.success !== 1) {
+          throw new AsError(response.success, response.message);
+        }
+
+        return <boolean> response.result;
+      }),
+      catchError(err => {
+        if (err.code === -1) {
+          this.message.show('SETTINGS.change_password.old_password_match_error');
+        }
+        console.log(err);
+        return of(null);
+      })
+    );
   }
 }

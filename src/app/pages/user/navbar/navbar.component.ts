@@ -14,6 +14,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   sub: Subscription;
 
   addCategory: boolean;
+  settings: boolean;
   tag: string;
   tagStatistics: boolean;
   website: string;
@@ -29,6 +30,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private location: Location
   ) {
     this.addCategory = false;
+    this.settings = false;
     this.tag = null;
     this.tagStatistics = false;
     this.website = null;
@@ -44,6 +46,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.sub = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.addCategory = false;
+        this.settings = false;
         this.tag = null;
         this.tagStatistics = false;
         this.website = null;
@@ -60,6 +63,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         if (_.size(segments) > 2) {
           if (segments[2] === 'add-category') {
             this.addCategory = true;
+          } else if (segments[2] === 'settings') {
+            this.settings = true;
           } else if (segments[3] === 'statistics') {
             if (segments[6] === 'statistics') {
               switch (_.size(segments)) {

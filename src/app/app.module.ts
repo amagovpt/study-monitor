@@ -62,36 +62,36 @@ import { TagStatisticsPagesResultsComponent } from './pages/tag-detailed-statist
 import { TagListWebsitesErrorComponent } from './pages/tag-list-websites-error/tag-list-websites-error.component';
 import { AddExistingWebsiteComponent } from './pages/tag/add-website/add-existing-website/add-existing-website.component';
 import { AddNewWebsiteComponent } from './pages/tag/add-website/add-new-website/add-new-website.component';
+import { UserAuthErrorDialogComponent } from './dialogs/user-auth-error-dialog/user-auth-error-dialog.component';
+import { SettingsComponent } from './pages/settings/settings.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent, canActivate: [NoAuthGuard] },
   { path: 'user', component: UserComponent, canActivate: [UserAuthGuard], children: [
-    { path: '', component: UserStudiesComponent },
-    { path: 'add-category', component: AddCategoryComponent },
-
-    { path: ':tag', component: TagComponent },
-    { path: ':tag/statistics', component: TagDetailedStatisticsComponent },
-    { path: ':tag/statistics/:tagError', component: TagListWebsitesErrorComponent },
-    { path: ':tag/statistics/:tagError/:website', component: WebsiteComponent },
-    { path: ':tag/statistics/:tagError/:website/statistics', component: WebsiteDetailedStatisticsComponent },
-    { path: ':tag/statistics/:tagError/:website/statistics/:websiteError', component: WebsiteListPagesErrorComponent },
-    { path: ':tag/statistics/:tagError/:website/statistics/:websiteError/:url', component: EvaluationResultsComponent },
-    { path: ':tag/statistics/:tagError/:website/statistics/:websiteError/:url/code', component: WebpageCodeComponent },
-    { path: ':tag/statistics/:tagError/:website/statistics/:websiteError/:url/:ele', component: ElementResultComponent },
-    { path: ':tag/statistics/:tagError/:website/:url', component: EvaluationResultsComponent },
-    { path: ':tag/statistics/:tagError/:website/:url/code', component: WebpageCodeComponent },
-    { path: ':tag/statistics/:tagError/:website/:url/:ele', component: ElementResultComponent },
-
-    { path: ':tag/:website', component: WebsiteComponent },
-    { path: ':tag/:website/statistics', component: WebsiteDetailedStatisticsComponent },
-    { path: ':tag/:website/statistics/:websiteError', component: WebsiteListPagesErrorComponent },
-    { path: ':tag/:website/statistics/:websiteError/:url', component: EvaluationResultsComponent },
-    { path: ':tag/:website/statistics/:websiteError/:url/code', component: WebpageCodeComponent },
-    { path: ':tag/:website/statistics/:websiteError/:url/:ele', component: ElementResultComponent },
-
-    { path: ':tag/:website/:url', component: EvaluationResultsComponent },
-    { path: ':tag/:website/:url/code', component: WebpageCodeComponent },
-    { path: ':tag/:website/:url/:ele', component: ElementResultComponent }
+    { path: '', component: UserStudiesComponent, canActivate: [UserAuthGuard] },
+    { path: 'add-category', component: AddCategoryComponent, canActivate: [UserAuthGuard] },
+    { path: 'settings', component: SettingsComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag', component: TagComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag/statistics', component: TagDetailedStatisticsComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag/statistics/:tagError', component: TagListWebsitesErrorComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag/statistics/:tagError/:website', component: WebsiteComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag/statistics/:tagError/:website/statistics', component: WebsiteDetailedStatisticsComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag/statistics/:tagError/:website/statistics/:websiteError', component: WebsiteListPagesErrorComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag/statistics/:tagError/:website/statistics/:websiteError/:url', component: EvaluationResultsComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag/statistics/:tagError/:website/statistics/:websiteError/:url/code', component: WebpageCodeComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag/statistics/:tagError/:website/statistics/:websiteError/:url/:ele', component: ElementResultComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag/statistics/:tagError/:website/:url', component: EvaluationResultsComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag/statistics/:tagError/:website/:url/code', component: WebpageCodeComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag/statistics/:tagError/:website/:url/:ele', component: ElementResultComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag/:website', component: WebsiteComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag/:website/statistics', component: WebsiteDetailedStatisticsComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag/:website/statistics/:websiteError', component: WebsiteListPagesErrorComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag/:website/statistics/:websiteError/:url', component: EvaluationResultsComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag/:website/statistics/:websiteError/:url/code', component: WebpageCodeComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag/:website/statistics/:websiteError/:url/:ele', component: ElementResultComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag/:website/:url', component: EvaluationResultsComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag/:website/:url/code', component: WebpageCodeComponent, canActivate: [UserAuthGuard] },
+    { path: ':tag/:website/:url/:ele', component: ElementResultComponent, canActivate: [UserAuthGuard] }
   ] },
   { path: '**', component: NotFound404Component }
 ];
@@ -149,7 +149,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     TagStatisticsPagesResultsComponent,
     TagListWebsitesErrorComponent,
     AddExistingWebsiteComponent,
-    AddNewWebsiteComponent
+    AddNewWebsiteComponent,
+    UserAuthErrorDialogComponent,
+    SettingsComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -180,7 +182,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     CreateCategoryDialogComponent,
     RemoveTagsConfirmationDialogComponent,
     RemoveWebsitesConfirmationDialogComponent,
-    RemovePagesConfirmationDialogComponent
+    RemovePagesConfirmationDialogComponent,
+    UserAuthErrorDialogComponent
   ],
   providers: [
     CookieService,
