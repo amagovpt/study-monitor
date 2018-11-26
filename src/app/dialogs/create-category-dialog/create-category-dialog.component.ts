@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, FormControlName, FormBuilder, Validators, FormGroupDirective, NgForm } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { Router } from '@angular/router';
+import { MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs';
 import * as _ from 'lodash';
 
@@ -34,13 +36,16 @@ export class CreateCategoryDialogComponent implements OnInit {
 
   constructor(
     private studies: StudiesService,
-    private message: MessageService
+    private message: MessageService,
+    private router: Router,
+    private dialogRef: MatDialogRef<CreateCategoryDialogComponent>
   ) {
     this.matcher = new MyErrorStateMatcher();
 
     this.tagForm = new FormGroup({
       type: new FormControl('official'),
-      officialTag: new FormControl(),
+      tags: new FormControl(),
+      newName: new FormControl('', [], this.categoryNameValidator.bind(this)),
       userTag: new FormControl({value: '', disabled: true}, [], this.categoryNameValidator.bind(this))
     });
 
@@ -58,14 +63,33 @@ export class CreateCategoryDialogComponent implements OnInit {
 
   changeType(): void {
     if (this.tagForm.value.type === 'official') {
-      this.tagForm.controls.officialTag.enable();
+      this.tagForm.controls.tags.enable();
+      this.tagForm.controls.newName.enable();
       this.tagForm.controls.userTag.disable();
       this.tagForm.controls.userTag.reset();
     } else {
-      this.tagForm.controls.officialTag.disable();
+      this.tagForm.controls.tags.disable();
       this.tagForm.controls.userTag.enable();
-      this.tagForm.controls.officialTag.reset();
+      this.tagForm.controls.tags.reset();
+      this.tagForm.controls.newName.disable();
+      this.tagForm.controls.newName.reset();
     }
+  }
+
+  canSubmit(): boolean {
+    if (this.tagForm.value.type === 'official') {
+      if (this.tagForm.value.newName && this.tagForm.value.newName !== ''
+        && !this.tagForm.controls.newName.errors && this.tagForm.value.tags
+        && this.tagForm.value.tags.length > 0) {
+        return false;
+      }
+    } else {
+      if (this.tagForm.value.userTag && this.tagForm.value.userTag !== '' && !this.tagForm.controls.userTag.errors) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   createCategory(e): void {
@@ -74,20 +98,22 @@ export class CreateCategoryDialogComponent implements OnInit {
     this.loading = true;
 
     const type = this.tagForm.value.type;
-    let id = null;
-    let name;
+    let tagsId = null;
+    let name = null;
 
     if (type === 'official') {
-      name = this.tagForm.value.officialTag;
-      id = _.find(this.officialTags, ['Name', name]).TagId;
+      name = this.tagForm.value.newName;
+      tagsId = this.tagForm.value.tags;
     } else {
       name = this.tagForm.value.userTag;
     }
 
-    this.studies.createTag(type, id, name)
+    this.studies.createTag(type, tagsId, name)
       .subscribe(success => {
         if (success) {
-          this.message.show('CREATE_TAG.message', 5000, {message: 'CREATE_TAG.action', path: '/user/' + name});
+          this.message.show('CREATE_TAG.message', 5000);
+          this.dialogRef.close();
+          this.router.navigateByUrl('/user/' + name);
         }
 
         this.loading = false;

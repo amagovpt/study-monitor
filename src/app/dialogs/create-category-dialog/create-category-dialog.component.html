@@ -4,12 +4,20 @@
     <mat-radio-group fxLayout="column" formControlName="type" (change)="changeType()" required>
       <mat-radio-button value="official">{{ "CREATE_TAG.radio_button_choose" | translate }}</mat-radio-button>
       <mat-form-field>
-        <label for="create_tag_name_select">{{ "CREATE_TAG.choose_category_label" | translate }}</label>
-        <mat-select id="create_tag_name_select" formControlName="officialTag">
-          <mat-option *ngFor="let tag of officialTags" [value]="tag.Name">
-            {{ tag.Name }}
-          </mat-option>
+        <label for="tags">Categories</label>
+        <mat-select id="tags" formControlName="tags" multiple>
+          <mat-option *ngFor="let tag of officialTags" [value]="tag.TagId">{{tag.Name}}</mat-option>
         </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <label for="new_tag_name">{{ "CREATE_TAG.create_category_label" | translate }}</label>
+        <input id="new_tag_name" matInput formControlName="newName" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="tagForm.controls.newName.status === 'PENDING'">
+          <mat-progress-bar mode="buffer"></mat-progress-bar>
+        </mat-error>
+        <mat-error *ngIf="tagForm.controls.newName.hasError('notTakenName')">
+          {{ "CREATE_TAG.name_exists" | translate}}
+        </mat-error>
       </mat-form-field>
       <mat-radio-button value="user">{{ "CREATE_TAG.radio_button_create" | translate }}</mat-radio-button>
       <mat-form-field>
@@ -26,7 +34,7 @@
   </mat-dialog-content>
   <mat-dialog-actions fxLayout="row">
     <span fxFlex></span>
-    <button mat-raised-button color="primary" type="submit" *ngIf="!loading" [disabled]=" tagForm.controls.userTag.invalid || (!tagForm.value.userTag && !tagForm.value.officialTag)">
+    <button mat-raised-button color="primary" type="submit" *ngIf="!loading" [disabled]="canSubmit()">
       {{ "CREATE_TAG.create_button" | translate }}
     </button>
     <mat-spinner *ngIf="loading" [diameter]="40"></mat-spinner>

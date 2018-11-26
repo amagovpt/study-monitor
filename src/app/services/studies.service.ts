@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { map, retry, catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import * as _ from 'lodash';
 
 import { ConfigService } from './config.service';
@@ -20,6 +21,7 @@ import { AsError } from '../models/error';
 export class StudiesService {
 
   constructor(
+    private router: Router,
     private user: UserService,
     private message: MessageService,
     private config: ConfigService
@@ -65,6 +67,9 @@ export class StudiesService {
         return <Array<Website>> response.result;
       }),
       catchError(err => {
+        if (err.code === -1) {
+          this.router.navigateByUrl('/user');
+        }
         console.log(err);
         return of(null);
       })
@@ -111,6 +116,9 @@ export class StudiesService {
         return <Array<Page>> response.result;
       }),
       catchError(err => {
+        if (err.code === -1) {
+          this.router.navigateByUrl('/user/' + tag);
+        }
         console.log(err);
         return of(null);
       })
@@ -186,10 +194,10 @@ export class StudiesService {
     );
   }
 
-  createTag(type, official_tag_id, user_tag_name): Observable<number> {
+  createTag(type, tagsId, user_tag_name): Observable<number> {
     const body = {
       type,
-      official_tag_id,
+      tagsId: JSON.stringify(tagsId),
       user_tag_name,
       cookie: this.user.getUserData()
     };
@@ -248,7 +256,7 @@ export class StudiesService {
   }
 
   removeTags(tagsId: Array<number>): Observable<Array<Tag>> {
-    return ajax.post(this.config.getServer('/studies/user/removeTags'), {tagsId, cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/studies/user/removeTags'), {tagsId: JSON.stringify(tagsId), cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -384,7 +392,7 @@ export class StudiesService {
   }
 
   removeWebsites(tag: string, websitesId: Array<number>): Observable<Array<Website>> {
-    return ajax.post(this.config.getServer('/studies/user/tag/removeWebsites'), {tag, websitesId, cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/studies/user/tag/removeWebsites'), {tag, websitesId: JSON.stringify(websitesId), cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;
@@ -466,7 +474,7 @@ export class StudiesService {
   }
 
   removePages(tag: string, website: string, pagesId: Array<number>): Observable<Array<Page>> {
-    return ajax.post(this.config.getServer('/studies/user/tag/website/removePages'), {tag, website, pagesId, cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/studies/user/tag/website/removePages'), {tag, website, pagesId: JSON.stringify(pagesId), cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;

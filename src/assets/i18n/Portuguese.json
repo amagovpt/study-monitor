@@ -14,7 +14,7 @@
   "SIDEBAR": {
     "menu": "Menu",
     "categories": "Categorias",
-    "add_category": "Adicionar categoria"
+    "add_category": "Criar categoria"
   },
   "HEADER": {
     "NAV": {
@@ -164,7 +164,7 @@
   },
   "CREATE_TAG": {
     "title": "Crie uma categoria",
-    "radio_button_choose": "Escolha uma categoria existente",
+    "radio_button_choose": "Escolha a partir de categorias existentes",
     "choose_category_label": "Categoria",
     "radio_button_create": "Crie uma nova categoria",
     "create_category_label": "Nome da categoria",

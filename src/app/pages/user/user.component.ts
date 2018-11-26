@@ -17,7 +17,7 @@ export class UserComponent implements OnInit {
 
   openCreateCategoryDialog(): void {
     this.dialog.open(CreateCategoryDialogComponent, {
-      width: '30vw',
+      width: '40vw',
       disableClose: false,
       hasBackdrop: true
     });

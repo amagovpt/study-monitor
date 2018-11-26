@@ -71,7 +71,9 @@ export class UserStudiesComponent implements OnInit {
   }
 
   openCreateCategoryDialog(): void {
-    this.dialog.open(CreateCategoryDialogComponent);
+    this.dialog.open(CreateCategoryDialogComponent, {
+      width: '40vw'
+    });
   }
 
   deleteTags(): void {
