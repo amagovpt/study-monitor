@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { map, retry, catchError } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
 
@@ -15,6 +16,7 @@ import { Website } from '../models/website';
 import { Page } from '../models/page';
 import { AsError } from '../models/error';
 
+import { AddPagesErrorsDialogComponent } from '../dialogs/add-pages-errors-dialog/add-pages-errors-dialog.component';
 @Injectable({
   providedIn: 'root'
 })
@@ -24,7 +26,8 @@ export class StudiesService {
     private router: Router,
     private user: UserService,
     private message: MessageService,
-    private config: ConfigService
+    private config: ConfigService,
+    private dialog: MatDialog
   ) { }
 
   getUserTags(): Observable<Array<Tag>> {
@@ -374,19 +377,22 @@ export class StudiesService {
         }
 
         if (response.success !== 1) {
-          throw new AsError(response.success, response.message);
+          throw new AsError(response.success, response.message, 'NORMAL', response.errors, response.result);
         }
 
         return <Array<Website>> response.result;
       }),
       catchError(err => {
-        console.log(err);
-        if (err.code === -17) {
-          this.message.show('MISC.unexpected_error');
+        if (err.code === 0) {
+          this.dialog.open(AddPagesErrorsDialogComponent, {
+            data: err.errors
+          });
+          return of(err.result);
         } else {
-          this.message.show('ADD_WEBSITE.new.error_message');
+          console.log(err);
+          this.message.show('MISC.unexpected_error');
+          return of(null);
         }
-        return of(null);
       })
     );
   }
@@ -456,19 +462,22 @@ export class StudiesService {
         }
 
         if (response.success !== 1) {
-          throw new AsError(response.success, response.message);
+          throw new AsError(response.success, response.message, 'NORMAL', response.errors, response.result);
         }
 
         return <Array<Page>> response.result;
       }),
       catchError(err => {
-        console.log(err);
-        if (err.code === -17) {
-          this.message.show('MISC.unexpected_error');
+        if (err.code === 0) {
+          this.dialog.open(AddPagesErrorsDialogComponent, {
+            data: err.errors
+          });
+          return of(err.result);
         } else {
-          this.message.show('ADD_PAGES.error_message');
+          console.log(err);
+          this.message.show('MISC.unexpected_error');
+          return of(null);
         }
-        return of(null);
       })
     );
   }

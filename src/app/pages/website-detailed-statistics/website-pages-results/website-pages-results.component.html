@@ -9,25 +9,25 @@
       <thead>
         <tr>
           <th>{{ "STATISTICS.table2.error_label" | translate }}</th>
-          <th>{{ "STATISTICS.table2.lvl_label" | translate }}</th>
+          <th fxHide.lt-sm>{{ "STATISTICS.table2.lvl_label" | translate }}</th>
           <th>{{ "STATISTICS.table2.veredict_label" | translate }}</th>
-          <th>{{ "STATISTICS.table2.n_errors_label" | translate }}</th>
-          <th>{{ "STATISTICS.table2.n_pages_label" | translate }}</th>
+          <th fxHide.lt-sm>{{ "STATISTICS.table2.n_errors_label" | translate }}</th>
+          <th fxHide.lt-sm>{{ "STATISTICS.table2.n_pages_label" | translate }}</th>
           <th>{{ "STATISTICS.table2.details_label" | translate }}</th>
         </tr>
       </thead>
       <tbody>
         <ng-template ngFor let-t [ngForOf]="resultsKeys" let-i="index">
-          <tr>
+          <tr *ngIf="results[t].length > 0">
             <th class="elem_header" colspan="6">{{ "ELEMS_HEADERS." + t | translate }}</th>
           </tr>
           <tr *ngFor="let test of results[t]" class="{{test._class}}">
-            <td *ngIf="test.n_elems === 1" innerHTML="{{ 'TESTS_RESULTS.' + test.desc +'.s' | translate:{value: test['n_elems']} }}"></td>
-            <td *ngIf="test.n_elems !== 1" innerHTML="{{ 'TESTS_RESULTS.' + test.desc +'.p' | translate:{value: test['n_elems']} }}"></td>
-            <td>{{ test.lvl }}</td>
+            <td *ngIf="test.n_elems === 1" innerHTML="{{ 'TESTS_RESULTS.' + test.desc +'.s' | translate:{value: test['lang'] ? test['lang'] : test['n_elems']} }}"></td>
+            <td *ngIf="test.n_elems !== 1" innerHTML="{{ 'TESTS_RESULTS.' + test.desc +'.p' | translate:{value: test['lang'] ? test['lang'] : test['n_elems']} }}"></td>
+            <td fxHide.lt-sm>{{ test.lvl }}</td>
             <td>{{ "STATISTICS.table2."+test._class | translate }}</td>
-            <td>{{ test.n_elems }}</td>
-            <td>{{ test.n_pages }}</td>
+            <td fxHide.lt-sm>{{ test.n_elems }}</td>
+            <td fxHide.lt-sm>{{ test.n_pages }}</td>
             <td>
               <span *ngFor="let q of test.quartiles" fxLayout="column">
                 <a [routerLink]="[test['test']+':'+q.int.lower+'-'+q.int.upper]">

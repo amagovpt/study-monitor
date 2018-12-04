@@ -94,6 +94,10 @@
       "button": "Adicionar website",
       "error_message": "Ocorreu um erro ao tentar adicionar o website",
       "success_message": "Website adicionado com sucesso"
+    },
+    "error_dialog": {
+      "title": "Erros",
+      "message": "Ocorreram alguns erros ao tentar adicionar as seguintes páginas:"
     }
   },
   "WEBSITES": {
@@ -204,9 +208,10 @@
     "scores": {
       "title": "Distribuição de pontuações (páginas)",
       "title2": "Distribuição de pontuações (websites)",
-      "frequencie_p": "Frequência (nº de páginas)",
+      "frequency_p": "Frequência (nº de páginas)",
       "percentage_p": "Percentagem (nº de páginas)",
-      "frequencie_w": "Frequência (nº de websites)",
+      "percentage": "Percentagem (%)",
+      "frequency_w": "Frequência (nº de websites)",
       "percentage_w": "Percentagem (nº de websites)",
       "range": "Intervalo",
       "cumulative": "Frequência cumulativa"
@@ -331,7 +336,11 @@
       "practice": "Prática encontrada",
       "lvl": "Nível",
       "details": "Detalhes",
-      "understanding": "Compreensível"
+      "understanding": "Compreensível",
+      "alt_rowerr": "Não aceitável:",
+      "alt_rowwar": "Para ver manualmente:",
+      "alt_rowok": "Aceitável:",
+      "alt_see": "Ver resultados da prática:"
     },
     "scoreboard": {
       "level": "Nível",

@@ -22,13 +22,13 @@
     <mat-table #table [dataSource]="dataSource" matSort matSortActive="Score" matSortDisableClear matSortDirection="desc">
 
       <ng-container matColumnDef="Select">
-        <mat-header-cell *matHeaderCellDef fxFlex="10" fxHide.xs>
+        <mat-header-cell *matHeaderCellDef fxFlex="10" fxFlex.xs="20">
           <mat-checkbox (change)="$event ? masterToggle() : null"
                         [checked]="selection.hasValue() && isAllSelected()"
                         [indeterminate]="selection.hasValue() && !isAllSelected()">
           </mat-checkbox>
         </mat-header-cell>
-        <mat-cell *matCellDef="let row" fxFlex="10" fxHide.xs>
+        <mat-cell *matCellDef="let row" fxFlex="10" fxFlex.xs="20">
           <mat-checkbox (click)="$event.stopPropagation()"
                         (change)="$event ? selection.toggle(row) : null"
                         [checked]="selection.isSelected(row)">
@@ -46,10 +46,10 @@
       </ng-container>
 
       <ng-container matColumnDef="Url">
-        <mat-header-cell *matHeaderCellDef mat-sort-header fxFlex>
+        <mat-header-cell *matHeaderCellDef mat-sort-header fxHide.xs fxFlex>
           {{ "WEBSITES.table.domain" | translate }}
         </mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex>
+        <mat-cell *matCellDef="let element" fxHide.xs fxFlex>
           <strong>{{element.Url}}</strong>
         </mat-cell>
       </ng-container>

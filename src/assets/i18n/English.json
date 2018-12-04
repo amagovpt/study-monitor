@@ -94,6 +94,10 @@
       "button": "Add website",
       "error_message": "There was an error while trying to add the website",
       "success_message": "Website added successfully"
+    },
+    "error_dialog": {
+      "title": "Errors",
+      "message": "Some errors ocurred while trying to add the following pages:"
     }
   },
   "WEBSITES": {
@@ -204,12 +208,13 @@
     "scores": {
       "title": "Score distribution (pages)",
       "title2": "Score distribution (websites)",
-      "frequencie_p": "Frequencie (nº of pages)",
+      "frequency_p": "Frequency (nº of pages)",
+      "percentage": "Percentage (%)",
       "percentage_p": "Percentage (nº of pages)",
-      "frequencie_w": "Frequencie (nº of websites)",
+      "frequency_w": "Frequency (nº of websites)",
       "percentage_w": "Percentage (nº of websites)",
       "range": "Range",
-      "cumulative": "Cumulative frequencie"
+      "cumulative": "Cumulative frequency"
     },
     "mean": "Mean",
     "median": "Median",
@@ -331,7 +336,11 @@
       "practice": "Practice found",
       "lvl": "Level",
       "details": "Details",
-      "understanding": "Understanding"
+      "understanding": "Understanding",
+      "alt_rowerr": "Non acceptable:",
+      "alt_rowwar": "To view manually:",
+      "alt_rowok": "Acceptable:",
+      "alt_see": "See results from the practice:"
     },
     "scoreboard": {
       "level": "Level",

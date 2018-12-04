@@ -64,6 +64,7 @@ import { AddExistingWebsiteComponent } from './pages/tag/add-website/add-existin
 import { AddNewWebsiteComponent } from './pages/tag/add-website/add-new-website/add-new-website.component';
 import { UserAuthErrorDialogComponent } from './dialogs/user-auth-error-dialog/user-auth-error-dialog.component';
 import { SettingsComponent } from './pages/settings/settings.component';
+import { AddPagesErrorsDialogComponent } from './dialogs/add-pages-errors-dialog/add-pages-errors-dialog.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent, canActivate: [NoAuthGuard] },
@@ -151,7 +152,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddExistingWebsiteComponent,
     AddNewWebsiteComponent,
     UserAuthErrorDialogComponent,
-    SettingsComponent
+    SettingsComponent,
+    AddPagesErrorsDialogComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -183,7 +185,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     RemoveTagsConfirmationDialogComponent,
     RemoveWebsitesConfirmationDialogComponent,
     RemovePagesConfirmationDialogComponent,
-    UserAuthErrorDialogComponent
+    UserAuthErrorDialogComponent,
+    AddPagesErrorsDialogComponent
   ],
   providers: [
     CookieService,

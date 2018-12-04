@@ -89,17 +89,11 @@
   </a>
 
   <mat-icon *ngIf="pageEle && tagStatistics">arrow_forward</mat-icon>
-  <a [routerLink]="['/user', tag, 'statistics', tagError, website, 'statistics', websiteError, page, pageEle]" routerLinkActive="active" *ngIf="pageEle && tagStatistics">
-    {{ pageEle }}
-  </a>
+  <a [routerLink]="['/user', tag, 'statistics', tagError, website, 'statistics', websiteError, page, pageEle]" routerLinkActive="active" *ngIf="pageEle && tagStatistics" [innerHtml]="'ELEMS.' + pageEle | translate"></a>
 
   <mat-icon *ngIf="pageEle && !tagStatistics && websiteStatistics">arrow_forward</mat-icon>
-  <a [routerLink]="['/user', tag, website, 'statistics', websiteError, page, pageEle]" routerLinkActive="active" *ngIf="pageEle && !tagStatistics && websiteStatistics">
-    {{ pageEle }}
-  </a>
+  <a [routerLink]="['/user', tag, website, 'statistics', websiteError, page, pageEle]" routerLinkActive="active" *ngIf="pageEle && !tagStatistics && websiteStatistics" [innerHtml]="'ELEMS.' + pageEle | translate"></a>
 
   <mat-icon *ngIf="pageEle && !tagStatistics && !websiteStatistics">arrow_forward</mat-icon>
-  <a [routerLink]="['/user', tag, website, page, pageEle]" routerLinkActive="active" *ngIf="pageEle && !tagStatistics && !websiteStatistics">
-    {{ pageEle }}
-  </a>
+  <a [routerLink]="['/user', tag, website, page, pageEle]" routerLinkActive="active" *ngIf="pageEle && !tagStatistics && !websiteStatistics" [innerHtml]="'ELEMS.' + pageEle | translate"></a>
 </nav>

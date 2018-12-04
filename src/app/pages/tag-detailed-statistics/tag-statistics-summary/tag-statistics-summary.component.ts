@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as _ from 'lodash';
 
 @Component({
@@ -9,11 +9,6 @@ import * as _ from 'lodash';
 export class TagStatisticsSummaryComponent implements OnInit {
 
   @Input('pages') pages: Array<any>;
-
-  n_cols: number;
-  colspan: number;
-  colspan2: number;
-  rowHeight: string;
 
   thresholdConfig: any;
 
@@ -38,18 +33,6 @@ export class TagStatisticsSummaryComponent implements OnInit {
       '7.5': {color: 'green'}
     };
 
-    if (window.innerWidth < 960) {
-      this.n_cols = 1;
-      this.colspan = 1;
-      this.colspan2 = 1;
-      this.rowHeight = '1:0.5';
-    } else {
-      this.n_cols = 3;
-      this.colspan = 2;
-      this.colspan2 = 3;
-      this.rowHeight = '1:0.8';
-    }
-
     this.score = 0;
     this.median = 0;
     this.variance = 0;
@@ -61,21 +44,6 @@ export class TagStatisticsSummaryComponent implements OnInit {
     this.pagesWithoutErrors = 0;
 
     this.table = {};
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    if (event.target.innerWidth < 960) {
-      this.n_cols = 1;
-      this.colspan = 1;
-      this.colspan2 = 1;
-      this.rowHeight = '1:0.5';
-    } else {
-      this.n_cols = 3;
-      this.colspan = 2;
-      this.colspan2 = 3;
-      this.rowHeight = '1:0.8';
-    }
   }
 
   ngOnInit(): void {
@@ -166,7 +134,7 @@ export class TagStatisticsSummaryComponent implements OnInit {
       }
     }
 
-    console.log(results);
+
 
     for (const c in results) {
       for (const w in results[c]) {

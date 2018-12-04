@@ -48,14 +48,14 @@ export class WebsiteScoreDistributionComponent implements OnInit {
       frequencies[_.floor(p.Score) - 1]++;
     });
     this.data = {
-      frequencie: frequencies,
+      frequency: frequencies,
       number: this.pages.length
     };
 
-    this.translate.get(['STATISTICS.scores.percentage', 'STATISTICS.scores.frequencie'])
+    this.translate.get(['STATISTICS.scores.percentage_p', 'STATISTICS.scores.frequency_p', 'STATISTICS.scores.percentage', 'STATISTICS.scores.range'])
       .subscribe(res => {
 
-      this.values = this.data.frequencie;
+      this.values = this.data.frequency;
       const total = _.sum(this.values);
 
       this.percentageValues = _.map(this.values, (v) => {
@@ -78,7 +78,7 @@ export class WebsiteScoreDistributionComponent implements OnInit {
           labels: this.labels,
           datasets: [
             {
-              label: res['STATISTICS.scores.percentage'],
+              label: res['STATISTICS.scores.percentage_p'],
               data: this.freqPer,
               type: 'line',
               backgroundColor: 'lightgray',
@@ -89,7 +89,7 @@ export class WebsiteScoreDistributionComponent implements OnInit {
               borderColor: 'blue'
             },
             {
-              label: res['STATISTICS.scores.frequencie'],
+              label: res['STATISTICS.scores.frequency_p'],
               data: this.percentageValues,
               backgroundColor: [
                 'red',
@@ -115,13 +115,24 @@ export class WebsiteScoreDistributionComponent implements OnInit {
                 steps: 1,
                 stepValue: 1,
                 max: 100
+              },
+              scaleLabel: {
+                display: true,
+                labelString: res['STATISTICS.scores.percentage']
+              }
+            }],
+            xAxes: [{
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: res['STATISTICS.scores.range']
               }
             }]
           },
           tooltips: {
             callbacks: {
               label: (tooltipItem) => {
-                return [res['STATISTICS.scores.percentage'] + ': ' + tooltipItem.yLabel.toFixed(1) + '%', res['STATISTICS.scores.frequencie'] + ': ' + this.values[tooltipItem.index]];
+                return [res['STATISTICS.scores.percentage_p'] + ': ' + tooltipItem.yLabel.toFixed(1) + '%', res['STATISTICS.scores.frequency_p'] + ': ' + this.values[tooltipItem.index]];
               }
             }
           }

@@ -9,6 +9,98 @@
           <h4 mat-line>{{ "SIDEBAR.categories" | translate }}</h4>
         </mat-list-item>
 
+        <mat-list-item *ngIf="tag" [routerLink]="['/user', tag]" (click)="sidenav.close()">
+          <mat-icon mat-list-icon>category</mat-icon>
+          <h4 mat-line>{{ tag }}</h4>
+        </mat-list-item>
+
+        <mat-list-item *ngIf="tagStatistics" [routerLink]="['/user', tag, 'statistics']" (click)="sidenav.close()">
+          <mat-icon mat-list-icon>assessment</mat-icon>
+          <h4 mat-line>{{ "TAG.title" | translate }}: {{ "HEADER.NAV.statistics" | translate }}</h4>
+        </mat-list-item>
+
+        <mat-list-item *ngIf="tagError" [routerLink]="['/user', tag, 'statistics', tagError]" (click)="sidenav.close()">
+          <mat-icon mat-list-icon>error</mat-icon>
+          <h4 mat-line>{{ "TAG.title" | translate }}: {{ tagError }}</h4>
+        </mat-list-item>
+
+        <mat-list-item *ngIf="website && tagStatistics" [routerLink]="['/user', tag, 'statistics', tagError, website]" (click)="sidenav.close()">
+          <mat-icon mat-list-icon>language</mat-icon>
+          <h4 mat-line>{{ website }}</h4>
+        </mat-list-item>
+
+        <mat-list-item *ngIf="website && !tagStatistics" [routerLink]="['/user', tag, website]" (click)="sidenav.close()">
+          <mat-icon mat-list-icon>language</mat-icon>
+          <h4 mat-line>{{ website }}</h4>
+        </mat-list-item>
+
+        <mat-list-item *ngIf="websiteStatistics && tagStatistics" [routerLink]="['/user', tag, 'statistics', tagError, website, 'statistics']" (click)="sidenav.close()">
+          <mat-icon mat-list-icon>assessment</mat-icon>
+          <h4 mat-line>Website: {{ "HEADER.NAV.statistics" | translate }}</h4>
+        </mat-list-item>
+
+        <mat-list-item *ngIf="websiteStatistics && !tagStatistics" [routerLink]="['/user', tag, website, 'statistics']" (click)="sidenav.close()">
+          <mat-icon mat-list-icon>assessment</mat-icon>
+          <h4 mat-line>Website: {{ "HEADER.NAV.statistics" | translate }}</h4>
+        </mat-list-item>
+
+        <mat-list-item *ngIf="websiteError && tagStatistics" [routerLink]="['/user', tag, 'statistics', tagError, website, 'statistics', websiteError]" (click)="sidenav.close()">
+          <mat-icon mat-list-icon>error</mat-icon>
+          <h4 mat-line>Website: {{ websiteError }}</h4>
+        </mat-list-item>
+
+        <mat-list-item *ngIf="websiteError && !tagStatistics" [routerLink]="['/user', tag, website, 'statistics', websiteError]" (click)="sidenav.close()">
+          <mat-icon mat-list-icon>error</mat-icon>
+          <h4 mat-line>Website: {{ websiteError }}</h4>
+        </mat-list-item>
+
+        <mat-list-item *ngIf="page && tagStatistics" [routerLink]="['/user', tag, 'statistics', tagError, website, 'statistics', websiteError, page]" (click)="sidenav.close()">
+          <mat-icon mat-list-icon>web</mat-icon>
+          <h4 mat-line>{{ page }}</h4>
+        </mat-list-item>
+
+        <mat-list-item *ngIf="page && !tagStatistics && websiteStatistics" [routerLink]="['/user', tag, website, 'statistics', websiteError, page]" (click)="sidenav.close()">
+          <mat-icon mat-list-icon>web</mat-icon>
+          <h4 mat-line>{{ page }}</h4>
+        </mat-list-item>
+
+        <mat-list-item *ngIf="page && !tagStatistics && !websiteStatistics" [routerLink]="['/user', tag, website, page]" (click)="sidenav.close()">
+          <mat-icon mat-list-icon>web</mat-icon>
+          <h4 mat-line>{{ page }}</h4>
+        </mat-list-item>
+
+        <mat-list-item *ngIf="pageCode && tagStatistics" [routerLink]="['/user', tag, 'statistics', tagError, website, 'statistics', websiteError, page, 'code']" (click)="sidenav.close()">
+          <mat-icon mat-list-icon>code</mat-icon>
+          <h4 mat-line>{{ "HEADER.NAV.code" | translate }}</h4>
+        </mat-list-item>
+
+        <mat-list-item *ngIf="pageCode && !tagStatistics && websiteStatistics" [routerLink]="['/user', tag, website, 'statistics', websiteError, page, 'code']" (click)="sidenav.close()">
+          <mat-icon mat-list-icon>code</mat-icon>
+          <h4 mat-line>{{ "HEADER.NAV.code" | translate }}</h4>
+        </mat-list-item>
+
+        <mat-list-item *ngIf="pageCode && !tagStatistics && !websiteStatistics" [routerLink]="['/user', tag, website, page, 'code']" (click)="sidenav.close()">
+          <mat-icon mat-list-icon>code</mat-icon>
+          <h4 mat-line>{{ "HEADER.NAV.code" | translate }}</h4>
+        </mat-list-item>
+
+        <mat-list-item *ngIf="pageEle && tagStatistics" [routerLink]="['/user', tag, 'statistics', tagError, website, 'statistics', websiteError, page, pageEle]" (click)="sidenav.close()">
+          <mat-icon mat-list-icon>code</mat-icon>
+          <h4 mat-line [innerHtml]="'ELEMS.' + pageEle | translate"></h4>
+        </mat-list-item>
+
+        <mat-list-item *ngIf="pageEle && !tagStatistics && websiteStatistics" [routerLink]="['/user', tag, website, 'statistics', websiteError, page, pageEle]" (click)="sidenav.close()">
+          <mat-icon mat-list-icon>code</mat-icon>
+          <h4 mat-line [innerHtml]="'ELEMS.' + pageEle | translate"></h4>
+        </mat-list-item>
+
+        <mat-list-item *ngIf="pageEle && !tagStatistics && !websiteStatistics" [routerLink]="['/user', tag, website, page, pageEle]" (click)="sidenav.close()">
+          <mat-icon mat-list-icon>code</mat-icon>
+          <h4 mat-line [innerHtml]="'ELEMS.' + pageEle | translate"></h4>
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+
         <mat-list-item routerLink="/user/add-category" (click)="sidenav.close()">
           <mat-icon mat-list-icon>add</mat-icon>
           <h4 mat-line>{{ "SIDEBAR.add_category" | translate }}</h4>

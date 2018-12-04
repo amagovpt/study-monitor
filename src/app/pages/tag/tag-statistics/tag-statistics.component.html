@@ -8,26 +8,19 @@
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <mat-grid-list cols="{{ n_cols }}" rowHeight="{{ rowHeight }}">
-      <mat-grid-tile>
-        <ngx-gauge 
-          [type]="'semi'"
-          [thick]="'10'"
-          [value]="score | toFixed" 
-          [label]="'STATISTICS.gauge.label' | translate" 
-          [min]="0" 
-          [max]="10"
-          [duration]="2000"
-          [thresholds]="thresholdConfig">
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-around center">
+      <div>
+        <ngx-gauge [type]="'semi'" [thick]="'10'" [value]="score | toFixed" [label]="'STATISTICS.gauge.label' | translate"
+          [min]="0" [max]="10" [duration]="2000" [thresholds]="thresholdConfig">
         </ngx-gauge>
-      </mat-grid-tile>
-      <mat-grid-tile colspan="{{ colspan }}">
+      </div>
+      <div>
         <mat-list>
           <mat-list-item>
-           <span><strong>{{ "STATISTICS.websites" | translate }}:</strong> {{ websites.length }}</span>
+            <span><strong>{{ "STATISTICS.websites" | translate }}:</strong> {{ websites.length }}</span>
           </mat-list-item>
           <mat-list-item>
-           <span><strong>{{ "STATISTICS.pages" | translate }}:</strong> {{ n_pages }}</span>
+            <span><strong>{{ "STATISTICS.pages" | translate }}:</strong> {{ n_pages }}</span>
           </mat-list-item>
           <mat-list-item>
             <span><strong>Median:</strong> {{ median | toFixed:{places: 3} }}</span>
@@ -39,8 +32,8 @@
             <span><strong>Standard deviation:</strong> {{ standardDeviation | toFixed:{places: 3} }}</span>
           </mat-list-item>
         </mat-list>
-      </mat-grid-tile>
-    </mat-grid-list>
+      </div>
+    </div>
     <div fxLayout="row" fxLayoutAlign="center center">
       <span [innerHTML]="'STATISTICS.note' | translate"></span>
     </div>

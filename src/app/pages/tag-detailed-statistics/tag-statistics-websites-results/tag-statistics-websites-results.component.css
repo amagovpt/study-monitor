@@ -6,6 +6,10 @@ table td a {
   color: purple;
 }
 
+.hide {
+  display: none;
+}
+
 .scorerror {
   background-color: #fcc;
 }

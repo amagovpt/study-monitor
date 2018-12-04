@@ -4,113 +4,91 @@
       <h1>{{ "STATISTICS.subtitle" | translate }}</h1>
     </mat-card-title>
   </mat-card-header>
-  <mat-card-content>
-    <mat-grid-list cols="{{ n_cols }}" rowHeight="{{ rowHeight }}">
-      <mat-grid-tile>
-        <ngx-gauge 
-          [type]="'semi'"
-          [thick]="'10'"
-          [value]="score | toFixed" 
-          [label]="'STATISTICS.gauge.label' | translate" 
-          [min]="0" 
-          [max]="10"
-          [duration]="2000"
-          [thresholds]="thresholdConfig">
-        </ngx-gauge>
-      </mat-grid-tile>
-      <mat-grid-tile colspan="{{ colspan }}">
-        <mat-list>
-          <mat-list-item>
-            <span><strong>WCAG 2.0</strong></span>
-          </mat-list-item>
-          <mat-list-item>
-            <span mat-line>
-              <strong>{{ "STATISTICS.website_conform" | translate }} </strong>
-              <span *ngIf="pagesWithErrorsA > 0">{{ "STATISTICS.conform_veredict_a" | translate }}</span>
-              <span *ngIf="pagesWithErrorsA === 0 && pagesWithErrorsAA > 0">{{ "STATISTICS.conform_veredict_aa" | translate }}</span>
-              <span *ngIf="pagesWithErrorsA === 0 && pagesWithErrorsAA === 0 && pagesWithErrorsAAA > 0">{{ "STATISTICS.conform_veredict_aaa" | translate }}</span>
-              <span *ngIf="pagesWithErrorsA === 0 && pagesWithErrorsAA === 0 && pagesWithErrorsAAA === 0">{{ "STATISTICS.conform_veredict_success" | translate }}</span>
+  <mat-card-content fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-around center">
+    <div>
+      <ngx-gauge [type]="'semi'" [thick]="'10'" [value]="score | toFixed" [label]="'STATISTICS.gauge.label' | translate"
+        [min]="0" [max]="10" [duration]="2000" [thresholds]="thresholdConfig">
+      </ngx-gauge>
+    </div>
+    <div>
+      <mat-list>
+        <mat-list-item>
+          <span><strong>WCAG 2.0</strong></span>
+        </mat-list-item>
+        <mat-list-item>
+          <span mat-line>
+            <strong>{{ "STATISTICS.website_conform" | translate }} </strong>
+            <span *ngIf="pagesWithErrorsA > 0">{{ "STATISTICS.conform_veredict_a" | translate }}</span>
+            <span *ngIf="pagesWithErrorsA === 0 && pagesWithErrorsAA > 0">{{ "STATISTICS.conform_veredict_aa" |
+              translate }}</span>
+            <span *ngIf="pagesWithErrorsA === 0 && pagesWithErrorsAA === 0 && pagesWithErrorsAAA > 0">{{
+              "STATISTICS.conform_veredict_aaa" | translate }}</span>
+            <span *ngIf="pagesWithErrorsA === 0 && pagesWithErrorsAA === 0 && pagesWithErrorsAAA === 0">{{
+              "STATISTICS.conform_veredict_success" | translate }}</span>
+          </span>
+          <div class="pages_conform" mat-line fxLayout="column">
+            <span>
+              {{ (pagesWithErrorsA / pages.length) * 100 | toFixed }}% A
+              <em *ngIf="pagesWithErrorsA === 1">
+                ({{ pagesWithErrorsA }} {{ "STATISTICS.n_pages.s" | translate }})
+              </em>
+              <em *ngIf="pagesWithErrorsA !== 1">
+                ({{ pagesWithErrorsA }} {{ "STATISTICS.n_pages.p" | translate }})
+              </em>
             </span>
-            <div class="pages_conform" mat-line fxLayout="column">
-              <span>
-                {{ (pagesWithErrorsA / pages.length) * 100 | toFixed }}% A 
-                <em *ngIf="pagesWithErrorsA === 1">
-                  ({{ pagesWithErrorsA }} {{ "STATISTICS.n_pages.s" | translate }})
-                </em>
-                <em *ngIf="pagesWithErrorsA !== 1">
-                  ({{ pagesWithErrorsA }} {{ "STATISTICS.n_pages.p" | translate }})
-                </em>
-              </span>
-              <span>
-                {{ (pagesWithErrorsAA / pages.length) * 100 | toFixed }}% AA
-                <em *ngIf="pagesWithErrorsAA === 1">
-                  ({{ pagesWithErrorsAA }} {{ "STATISTICS.n_pages.s" | translate }})
-                </em>
-                <em *ngIf="pagesWithErrorsAA !== 1">
-                  ({{ pagesWithErrorsAA }} {{ "STATISTICS.n_pages.p" | translate }})
-                </em>
-              </span>
-              <span>
-                {{ (pagesWithErrorsAAA / pages.length) * 100 | toFixed }}% AA
-                <em *ngIf="pagesWithErrorsAAA === 1">
-                  ({{ pagesWithErrorsAAA }} {{ "STATISTICS.n_pages.s" | translate }})
-                </em>
-                <em *ngIf="pagesWithErrorsAAA !== 1">
-                  ({{ pagesWithErrorsAAA }} {{ "STATISTICS.n_pages.p" | translate }})
-                </em>
-              </span>
-            </div>
-          </mat-list-item>
-          <mat-list-item>
-            <span><strong>{{ "STATISTICS.mean" | translate }}:</strong> {{ score | toFixed:{places: 3} }}</span>
-          </mat-list-item>
-          <mat-list-item>
-           <span><strong>{{ "STATISTICS.pages" | translate }}:</strong> {{ pages.length }}</span>
-          </mat-list-item>
-        </mat-list>
-      </mat-grid-tile>
-      <mat-grid-tile colspan="{{ colspan2 }}">
-        <mat-list>
-          <mat-list-item>
-            <span mat-line><strong>{{ "STATISTICS.median" | translate }}:</strong> {{ median | toFixed:{places: 3} }}</span>
-            <p mat-line fxHide.lt-md>{{ "STATISTICS.median_desc" | translate }}</p>
-          </mat-list-item>
-          <mat-list-item>
-            <span mat-line><strong>{{ "STATISTICS.amplitude" | translate }}:</strong> {{ amplitude | toFixed:{places: 3} }}</span>
-            <p mat-line fxHide.lt-md>{{ "STATISTICS.amplitude_desc" | translate }}</p>
-          </mat-list-item>
-          <mat-list-item>
-            <span mat-line><strong>{{ "STATISTICS.variance" | translate }}:</strong> {{ variance | toFixed:{places: 3} }}</span>
-            <p mat-line fxHide.lt-md>{{ "STATISTICS.variance_desc" | translate }}</p>
-          </mat-list-item>
-        </mat-list>
-      </mat-grid-tile>
-      <mat-grid-tile colspan="{{ colspan2 }}" fxLayout="column" fxLayoutAlign="center center">
-        <table class="table table-bordered table-sm">
-          <thead>
-            <tr>
-              <th colspan="3">{{ "STATISTICS.table.title" | translate }}</th>
-            </tr>
-            <tr>
-              <th>A</th>
-              <th>AA</th>
-              <th>AAA</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{{ tablePagesErrorsA }}</td>
-              <td>{{ tablePagesErrorsAA }}</td>
-              <td>{{ tablePagesErrorsAAA }}</td>
-            </tr>
-            <tr>
-              <td>{{ (tablePagesErrorsA / pages.length) * 100 | toFixed }}%</td>
-              <td>{{ (tablePagesErrorsAA / pages.length) * 100 | toFixed }}%</td>
-              <td>{{ (tablePagesErrorsAAA / pages.length) * 100 | toFixed }}%</td>
-            </tr>
-          </tbody>
-        </table>
-      </mat-grid-tile>
-    </mat-grid-list>
+            <span>
+              {{ (pagesWithErrorsAA / pages.length) * 100 | toFixed }}% AA
+              <em *ngIf="pagesWithErrorsAA === 1">
+                ({{ pagesWithErrorsAA }} {{ "STATISTICS.n_pages.s" | translate }})
+              </em>
+              <em *ngIf="pagesWithErrorsAA !== 1">
+                ({{ pagesWithErrorsAA }} {{ "STATISTICS.n_pages.p" | translate }})
+              </em>
+            </span>
+            <span>
+              {{ (pagesWithErrorsAAA / pages.length) * 100 | toFixed }}% AA
+              <em *ngIf="pagesWithErrorsAAA === 1">
+                ({{ pagesWithErrorsAAA }} {{ "STATISTICS.n_pages.s" | translate }})
+              </em>
+              <em *ngIf="pagesWithErrorsAAA !== 1">
+                ({{ pagesWithErrorsAAA }} {{ "STATISTICS.n_pages.p" | translate }})
+              </em>
+            </span>
+          </div>
+        </mat-list-item>
+        <mat-list-item>
+          <span><strong>{{ "STATISTICS.mean" | translate }}:</strong> {{ score | toFixed:{places: 3} }}</span>
+        </mat-list-item>
+        <mat-list-item>
+          <span><strong>{{ "STATISTICS.pages" | translate }}:</strong> {{ pages.length }}</span>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <div>
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th colspan="3">{{ "STATISTICS.table.title" | translate }}</th>
+          </tr>
+          <tr>
+            <th>A</th>
+            <th>AA</th>
+            <th>AAA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ tablePagesErrorsA }}</td>
+            <td>{{ tablePagesErrorsAA }}</td>
+            <td>{{ tablePagesErrorsAAA }}</td>
+          </tr>
+          <tr>
+            <td>{{ (tablePagesErrorsA / pages.length) * 100 | toFixed }}%</td>
+            <td>{{ (tablePagesErrorsAA / pages.length) * 100 | toFixed }}%</td>
+            <td>{{ (tablePagesErrorsAAA / pages.length) * 100 | toFixed }}%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </mat-card-content>
 </mat-card>

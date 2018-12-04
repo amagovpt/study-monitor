@@ -35,7 +35,7 @@ export class AddCategoryComponent implements OnInit {
 
   constructor(
     private studies: StudiesService,
-    private message: MessageService
+    private message: MessageService,
     private router: Router
   ) {
     this.matcher = new MyErrorStateMatcher();

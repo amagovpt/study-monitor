@@ -45,14 +45,14 @@ export class TagStatisticsScoreDistributionComponent implements OnInit {
       frequencies[_.floor(p.Score) - 1]++;
     });
     const data = {
-      frequencie: frequencies,
+      frequency: frequencies,
       number: this.pages.length
     };
 
-    this.translate.get(['STATISTICS.scores.percentage_p', 'STATISTICS.scores.frequencie_p'])
+    this.translate.get(['STATISTICS.scores.percentage_p', 'STATISTICS.scores.frequency_p', 'STATISTICS.scores.percentage', 'STATISTICS.scores.range'])
       .subscribe(res => {
 
-      const values = data.frequencie;
+      const values = data.frequency;
       const total = _.sum(values);
 
       const percentageValues = _.map(values, (v) => {
@@ -88,7 +88,7 @@ export class TagStatisticsScoreDistributionComponent implements OnInit {
               borderColor: 'blue'
             },
             {
-              label: res['STATISTICS.scores.frequencie_p'],
+              label: res['STATISTICS.scores.frequency_p'],
               data: percentageValues,
               backgroundColor: [
                 'red',
@@ -114,13 +114,24 @@ export class TagStatisticsScoreDistributionComponent implements OnInit {
                 steps: 1,
                 stepValue: 1,
                 max: 100
+              },
+              scaleLabel: {
+                display: true,
+                labelString: res['STATISTICS.scores.percentage']
+              }
+            }],
+            xAxes: [{
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: res['STATISTICS.scores.range']
               }
             }]
           },
           tooltips: {
             callbacks: {
               label: (tooltipItem) => {
-                return [res['STATISTICS.scores.percentage_p'] + ': ' + tooltipItem.yLabel.toFixed(1) + '%', res['STATISTICS.scores.frequencie_p'] + ': ' + values[tooltipItem.index]];
+                return [res['STATISTICS.scores.percentage_p'] + ': ' + tooltipItem.yLabel.toFixed(1) + '%', res['STATISTICS.scores.frequency_p'] + ': ' + values[tooltipItem.index]];
               }
             }
           }
@@ -139,14 +150,14 @@ export class TagStatisticsScoreDistributionComponent implements OnInit {
     }
 
     const data = {
-      frequencie: frequencies,
+      frequency: frequencies,
       number: _.size(websites)
     };
 
-    this.translate.get(['STATISTICS.scores.percentage_w', 'STATISTICS.scores.frequencie_w'])
+    this.translate.get(['STATISTICS.scores.percentage_w', 'STATISTICS.scores.frequency_w', 'STATISTICS.scores.percentage', 'STATISTICS.scores.range'])
       .subscribe(res => {
 
-      const values = data.frequencie;
+      const values = data.frequency;
       const total = _.sum(values);
 
       const percentageValues = _.map(values, (v) => {
@@ -182,7 +193,7 @@ export class TagStatisticsScoreDistributionComponent implements OnInit {
               borderColor: 'blue'
             },
             {
-              label: res['STATISTICS.scores.frequencie_w'],
+              label: res['STATISTICS.scores.frequency_w'],
               data: percentageValues,
               backgroundColor: [
                 'red',
@@ -208,13 +219,24 @@ export class TagStatisticsScoreDistributionComponent implements OnInit {
                 steps: 1,
                 stepValue: 1,
                 max: 100
+              },
+              scaleLabel: {
+                display: true,
+                labelString: res['STATISTICS.scores.percentage']
+              }
+            }],
+            xAxes: [{
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: res['STATISTICS.scores.range']
               }
             }]
           },
           tooltips: {
             callbacks: {
               label: (tooltipItem) => {
-                return [res['STATISTICS.scores.percentage_w'] + ': ' + tooltipItem.yLabel.toFixed(1) + '%', res['STATISTICS.scores.frequencie_w'] + ': ' + values[tooltipItem.index]];
+                return [res['STATISTICS.scores.percentage_w'] + ': ' + tooltipItem.yLabel.toFixed(1) + '%', res['STATISTICS.scores.frequency_w'] + ': ' + values[tooltipItem.index]];
               }
             }
           }

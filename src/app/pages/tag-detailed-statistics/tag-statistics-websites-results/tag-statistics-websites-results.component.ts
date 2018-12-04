@@ -33,54 +33,92 @@ export class TagStatisticsWebsitesResultsComponent implements OnInit {
 
     const counted_websites = {};
     for (const w in websites) {
-      for (const p of websites[w]) {
-        const tot = JSON.parse(atob(p.Tot));
-        const perrors = tot.elems;
+      if (w) {
+        for (const p of websites[w]) {
+          const tot = JSON.parse(atob(p.Tot));
+          const perrors = tot.elems;
 
-        for (const t in tot.results) {
-          const v = tot.results[t];
-          if (!this.results[t]) {
-            this.results[t] = v;
+          for (const t in tot.results) {
+            if (t) {
+              const v = tot.results[t];
+              if (!this.results[t]) {
+                this.results[t] = v;
+              }
+            }
           }
-        }
 
-        for (let i = 0 ; i < size ; i++) {
-          const k = keys[i];
-          if (k === 'a' || k === 'hx') {
-            if (perrors[k]) {
-              if (_.includes(_.keys(this.errors), k)) {
-                this.errors[k]['n_elems']++;
-                this.errors[k]['n_pages']++;
-                if (!_.includes(counted_websites[k], p.Name)) {
-                  this.errors[k]['n_websites']++;
+          for (let i = 0 ; i < size ; i++) {
+            const k = keys[i];
+            /*if (k === 'a' || k === 'hx') {
+              if (perrors[k]) {
+                if (_.includes(_.keys(this.errors), k)) {
+                  this.errors[k]['n_elems']++;
+                  this.errors[k]['n_pages']++;
+                  if (!_.includes(counted_websites[k], p.Name)) {
+                    this.errors[k]['n_websites']++;
+                    counted_websites[k].push(p.Name);
+                  }
+                } else {
+                  this.errors[k] = { n_elems: 1, n_pages: 1, n_websites: 1 };
+                  counted_websites[k] = [];
                   counted_websites[k].push(p.Name);
                 }
-              } else {
-                this.errors[k] = { n_elems: 1, n_pages: 1, n_websites: 1 };
+              } else if (!this.errors[k]) {
                 counted_websites[k] = [];
-                counted_websites[k].push(p.Name);
+                this.errors[k] = { n_elems: 0, n_pages: 0, n_websites: 0 };
               }
-            } else if (!this.errors[k]) {
-              counted_websites[k] = [];
-              this.errors[k] = { n_elems: 0, n_pages: 0, n_websites: 0 };
-            }
-          } else {
+            } else {
+              if (perrors[k]) {
+                let n = 0;
+                if (k === 'langNo' || k === 'langCodeNo' || k === 'langExtra' || k === 'titleNo') {
+                  n = 1;
+                } else {
+                  n = parseInt(perrors[k]);
+                }
+                if (_.includes(_.keys(this.errors), k)) {
+                  this.errors[k]['n_elems'] += n;
+                  this.errors[k]['n_pages']++;
+                  if (!_.includes(counted_websites[k], p.Name)) {
+                    this.errors[k]['n_websites']++;
+                    counted_websites[k].push(p.Name);
+                  }
+                } else {
+                  this.errors[k] = { n_elems: n, n_pages: 1, n_websites: 1 };
+                  counted_websites[k] = [];
+                  counted_websites[k].push(p.Name);
+                }
+              } else if (!this.errors[k]) {
+                counted_websites[k] = [];
+                this.errors[k] = { n_elems: 0, n_pages: 0, n_websites: 0 };
+              }
+            }*/
             if (perrors[k]) {
               let n = 0;
+              let lang = null;
               if (k === 'langNo' || k === 'langCodeNo' || k === 'langExtra' || k === 'titleNo') {
                 n = 1;
+              } else if (k === 'lang') {
+                n = 1;
+                lang = _.split(tot.results['lang_01'], '@')[3];
               } else {
-                n = parseInt(perrors[k]);
+                n = parseInt(perrors[k], 0);
               }
               if (_.includes(_.keys(this.errors), k)) {
                 this.errors[k]['n_elems'] += n;
                 this.errors[k]['n_pages']++;
+                if (lang) {
+                  this.errors[k]['lang'].push(lang);
+                }
                 if (!_.includes(counted_websites[k], p.Name)) {
                   this.errors[k]['n_websites']++;
                   counted_websites[k].push(p.Name);
                 }
               } else {
                 this.errors[k] = { n_elems: n, n_pages: 1, n_websites: 1 };
+                if (lang) {
+                  this.errors[k]['lang'] = [];
+                  this.errors[k]['lang'].push(lang);
+                }
                 counted_websites[k] = [];
                 counted_websites[k].push(p.Name);
               }
@@ -96,41 +134,49 @@ export class TagStatisticsWebsitesResultsComponent implements OnInit {
     const results = {};
 
     for (const h in this.comboio) {
-      for (const t in this.comboio[h]) {
-        if (!this.tests[t] || !this.results[t]) {
-          continue;
+      if (h) {
+        for (const t in this.comboio[h]) {
+          if (!this.tests[t] || !this.results[t]) {
+            continue;
+          }
+
+          if (!results[h]) {
+            results[h] = [];
+          }
+
+          const desc = t;
+          const result = this.results[t];
+          const test = this.tests[t]['test'];
+          const langs = this.errors[test]['lang'];
+          const n_elems = this.errors[test]['n_elems'];
+          const n_pages = this.errors[test]['n_pages'];
+          const n_websites = this.errors[test]['n_websites'];
+
+          if (n_elems === 0 && n_pages === 0 && n_websites === 0) {
+            continue;
+          }
+
+          const lvl = _.toUpper(this.tests[t]['level']);
+
+          const s = _.split(result, '@');
+
+          const _class = parseInt(s[0], 0) === 10 ? 'scoreok' : parseInt(s[0], 0) < 6 ? 'scorerror' : 'scorewar';
+          const prio = parseInt(s[0], 0) === 10 ? 3 : parseInt(s[0], 0) < 6 ? 1 : 2;
+          const quartiles = this.calculateQuartiles(this.getErrorOcurrenceByWebsite(test));
+
+          results[h].push({
+            desc,
+            test,
+            lang: _.join(_.uniq(langs), ', '),
+            n_elems,
+            n_pages,
+            n_websites,
+            lvl,
+            _class,
+            prio,
+            quartiles
+          });
         }
-
-        if (!results[h]) {
-          results[h] = [];
-        }
-
-        const desc = t;
-        const result = this.results[t];
-        const test = this.tests[t]['test'];
-
-        const n_elems = this.errors[test]['n_elems'];
-        const n_pages = this.errors[test]['n_pages'];
-        const n_websites = this.errors[test]['n_websites'];
-        const lvl = _.toUpper(this.tests[t]['level']);
-
-        const s = _.split(result, '@');
-
-        const _class = parseInt(s[0], 0) === 10 ? 'scoreok' : parseInt(s[0], 0) < 6 ? 'scorerror' : 'scorewar';
-        const prio = parseInt(s[0], 0) === 10 ? 3 : parseInt(s[0], 0) < 6 ? 1 : 2;
-        const quartiles = this.calculateQuartiles(this.getErrorOcurrenceByWebsite(test));
-
-        results[h].push({
-          desc,
-          test,
-          n_elems,
-          n_pages,
-          n_websites,
-          lvl,
-          _class,
-          prio,
-          quartiles
-        });
       }
     }
 
@@ -142,23 +188,23 @@ export class TagStatisticsWebsitesResultsComponent implements OnInit {
     const ocur = new Array<number>();
     const websites = _.groupBy(this.pages, 'Name');
     for (const w in websites) {
-      let n = 0;
-      for (const p of websites[w]) {
-        const e = JSON.parse(atob(p.Tot)).elems;
-        if (e[error]) {
-          n++;
+      if (w) {
+        let n = 0;
+        for (const p of websites[w]) {
+          const e = JSON.parse(atob(p.Tot)).elems;
+          if (e[error]) {
+            n++;
+          }
         }
+        ocur.push(_.clone(n));
       }
-      ocur.push(_.clone(n));
     }
 
     return _.without(ocur, 0);
   }
 
   calculateQuartiles(errors: any): Array<any> {
-    const values = errors.sort((a, b) => {
-      return a - b;
-    });
+    const values = _.without(errors, undefined).sort((a, b) => a - b);
 
     let q1, q2, q3, q4;
 
@@ -202,19 +248,21 @@ export class TagStatisticsWebsitesResultsComponent implements OnInit {
     const final = new Array<any>();
 
     for (const k in tmp) {
-      const v = tmp[k];
-      const sum = v.length;
+      if (k) {
+        const v = tmp[k];
+        const sum = v.length;
 
-      if (sum > 0) {
-        const test = {
-          tot: sum,
-          por: Math.round((sum * 100) / values.length),
-          int: {
-            lower: v[0],
-            upper: v[v.length - 1]
-          }
-        };
-        final.push(test);
+        if (sum > 0) {
+          const test = {
+            tot: sum,
+            por: Math.round((sum * 100) / values.length),
+            int: {
+              lower: v[0],
+              upper: v[v.length - 1]
+            }
+          };
+          final.push(test);
+        }
       }
     }
 
