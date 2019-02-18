@@ -26,9 +26,9 @@ export class UserService {
     private dialog: MatDialog
   ) { }
 
-  login(email: string, password: string): Observable<boolean> {
+  login(username: string, password: string): Observable<boolean> {
     const app = 'studies';
-    return ajax.post(this.config.getServer('/session/login'), {email, password, app}).pipe(
+    return ajax.post(this.config.getServer('/session/login'), {username, password, app}).pipe(
       retry(3),
       map(res => {
         if (!res.response || res.status === 404) {
@@ -46,7 +46,7 @@ export class UserService {
         const tomorrow = new Date();
         tomorrow.setTime(tomorrow.getTime() + 1 * 86400000);
 
-        sessionStorage.setItem('SM-email', email);
+        sessionStorage.setItem('SM-username', username);
         this.cookieService.set('SM-SSID', btoa(cookie), tomorrow, '/', host, false);
         this.router.navigateByUrl('/user');
         return true;
@@ -78,14 +78,14 @@ export class UserService {
     return atob(this.cookieService.get('SM-SSID'));
   }
 
-  getEmail(): string {
-    return sessionStorage.getItem('SM-email');
+  getUsername(): string {
+    return sessionStorage.getItem('SM-username');
   }
 
   logout(location: string = '/'): void {
     const host = this.getEnv();
 
-    sessionStorage.removeItem('SM-email');
+    sessionStorage.removeItem('SM-username');
     this.cookieService.delete('SM-SSID', '/', this.getEnv());
     this.router.navigateByUrl(location);
   }

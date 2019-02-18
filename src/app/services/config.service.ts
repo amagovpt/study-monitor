@@ -7,13 +7,13 @@ import * as _ from 'lodash';
 export class ConfigService {
 
   PROTOCOL: string = 'http://';
-  PORT: number = 80;
+  PORT: number = 3443;
 
   constructor() { }
 
   getServer(service: string): string {
     const host = _.split(location.host, ':')[0];
 
-    return `${this.PROTOCOL}${host}:${this.PORT}/server${service}`;
+    return `${this.PROTOCOL}${host}:${this.PORT}${service}`;
   }
 }
