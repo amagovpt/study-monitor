@@ -7,7 +7,7 @@
     </mat-card-header>
     <mat-card-content *ngIf="!loading && !error && tags.length > 0">
       <div class="page-table-header">
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <label for="tags_filter">{{ "TAGS.table.filter" | translate}}</label>
           <input id="tags_filter" matInput (keyup)="applyFilter($event.target.value)">
         </mat-form-field>
@@ -33,7 +33,9 @@
 
         <ng-container matColumnDef="Name">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{ "TAGS.table.name" | translate }} </mat-header-cell>
-          <mat-cell *matCellDef="let element"> <strong>{{element.Name}}</strong> </mat-cell>
+          <mat-cell *matCellDef="let element">
+            <a [routerLink]="[element.Name]"><strong>{{element.Name}}</strong></a>
+          </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="Websites">
@@ -46,7 +48,7 @@
           <mat-cell *matCellDef="let element" fxHide.xs>{{element.Pages}}</mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="See">
+        <!--<ng-container matColumnDef="See">
           <mat-header-cell *matHeaderCellDef fxFlex="10"></mat-header-cell>
           <mat-cell *matCellDef="let element" fxFlex="10">
             <button mat-icon-button matTooltip="{{ 'TAGS.table.see_tooltip' | translate }}" [routerLink]="['/user', element.Name]"
@@ -54,7 +56,7 @@
               <mat-icon class="md-24" aria-label="">visibility</mat-icon>
             </button>
           </mat-cell>
-        </ng-container>
+        </ng-container>-->
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

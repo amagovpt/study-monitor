@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
@@ -11,7 +11,7 @@ import { StudiesService } from '../../services/studies.service';
   templateUrl: './tag-list-websites-error.component.html',
   styleUrls: ['./tag-list-websites-error.component.css']
 })
-export class TagListWebsitesErrorComponent implements OnInit {
+export class TagListWebsitesErrorComponent implements OnInit, OnDestroy {
 
   sub: Subscription;
 
@@ -31,7 +31,8 @@ export class TagListWebsitesErrorComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private location: Location,
-    private studies: StudiesService
+    private studies: StudiesService,
+    private cd: ChangeDetectorRef
   ) {
     this.list = {};
     this.error = false;
@@ -52,8 +53,8 @@ export class TagListWebsitesErrorComponent implements OnInit {
       this.eleError = error[0];
 
       const range = _.split(error[1], '-');
-      this.qLower = range[0];
-      this.qUpper = range[1];
+      this.qLower = parseInt(range[0], 0);
+      this.qUpper = parseInt(range[1], 0);
 
       this.studies.getUserTagWebsitesData(this.tag)
         .subscribe(pages => {
@@ -68,26 +69,28 @@ export class TagListWebsitesErrorComponent implements OnInit {
             const list = {};
 
             for (const w in websites) {
-              for (const p of websites[w]) {
-                const e = JSON.parse(atob(p.Tot)).elems;
-
-                if (e[this.eleError]) {
-                  if (!list[p.Name]) {
-                    list[p.Name] = [];
+              if (w) {
+                for (const p of websites[w]) {
+                  const e = JSON.parse(atob(p.Tot)).elems;
+                  if (e[this.eleError]) {
+                    if (!list[p.Name]) {
+                      list[p.Name] = [];
+                    }
+                    list[p.Name].push({
+                      url: p.Uri,
+                      n: e[this.eleError]
+                    });
                   }
-                  list[p.Name].push({
-                    url: p.Uri,
-                    n: e[this.eleError]
-                  });
-
                 }
               }
             }
 
             for (const w in list) {
-              const l = list[w].length;
-              if (l < this.qLower || l > this.qUpper) {
-                delete list[w];
+              if (w) {
+                const l = list[w].length;
+                if (l < this.qLower || l > this.qUpper) {
+                  delete list[w];
+                }
               }
             }
 
@@ -96,6 +99,7 @@ export class TagListWebsitesErrorComponent implements OnInit {
           }
 
           this.loading = false;
+          this.cd.detectChanges();
         });
     });
   }

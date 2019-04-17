@@ -1,8 +1,8 @@
-import { OnInit, OnDestroy, Component, Injectable, ViewChild, ElementRef } from '@angular/core';
+import { OnInit, OnDestroy, Component, Injectable, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Location } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
-import { merge, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
 
 import { UserService } from './services/user.service';
@@ -11,7 +11,8 @@ import { UserService } from './services/user.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit, OnDestroy {
 

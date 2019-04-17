@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
@@ -28,7 +28,8 @@ export class WebsiteDetailedStatisticsComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private location: Location,
-    private studies: StudiesService
+    private studies: StudiesService,
+    private cd: ChangeDetectorRef
   ) {
     this.error = false;
     this.loading = true;
@@ -48,6 +49,7 @@ export class WebsiteDetailedStatisticsComponent implements OnInit, OnDestroy {
           }
 
           this.loading = false;
+          this.cd.detectChanges();
         });
     });
   }

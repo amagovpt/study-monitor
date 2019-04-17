@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
@@ -33,7 +33,8 @@ export class WebsiteListPagesErrorComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private location: Location,
-    private studies: StudiesService
+    private studies: StudiesService,
+    private cd: ChangeDetectorRef
   ) {
     this.list = [];
     this.error = false;
@@ -55,8 +56,8 @@ export class WebsiteListPagesErrorComponent implements OnInit, OnDestroy {
       this.eleError = error[0];
 
       const range = _.split(error[1], '-');
-      this.qLower = range[0];
-      this.qUpper = range[1];
+      this.qLower = parseInt(range[0], 0);
+      this.qUpper = parseInt(range[1], 0);
 
       this.studies.getUserTagWebsitePagesData(this.tag, this.website)
         .subscribe(pages => {
@@ -80,6 +81,7 @@ export class WebsiteListPagesErrorComponent implements OnInit, OnDestroy {
           }
 
           this.loading = false;
+          this.cd.detectChanges();
         });
     });
   }

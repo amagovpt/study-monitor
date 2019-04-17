@@ -28,7 +28,7 @@ export class PagesTableComponent implements OnInit {
     'AA',
     'AAA',
     'Evaluation_Date',
-    'See'
+    //'See'
   ];
 
   // column sorter

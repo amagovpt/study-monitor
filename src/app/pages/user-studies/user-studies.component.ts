@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material';
@@ -30,7 +29,7 @@ export class UserStudiesComponent implements OnInit {
     'Name',
     'Websites',
     'Pages',
-    'See'
+    //'See'
   ];
 
   // column sorter
@@ -39,10 +38,10 @@ export class UserStudiesComponent implements OnInit {
   selection: SelectionModel<Tag>;
 
   constructor(
-    private router: Router,
     private studies: StudiesService,
     private message: MessageService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cd: ChangeDetectorRef
   ) {
     this.selection = new SelectionModel<Tag>(true, []);
     this.loading = true;
@@ -61,6 +60,7 @@ export class UserStudiesComponent implements OnInit {
         }
 
         this.loading = false;
+        this.cd.detectChanges();
       });
   }
 
@@ -97,6 +97,7 @@ export class UserStudiesComponent implements OnInit {
             }
 
             this.loading = false;
+            this.cd.detectChanges();
           });
       }
     });

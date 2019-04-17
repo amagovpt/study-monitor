@@ -23,7 +23,7 @@ export class WebsitesTableComponent implements OnInit {
     'Name',
     'Url',
     'Score',
-    'See'
+    //'See'
   ];
 
   // column sorter
