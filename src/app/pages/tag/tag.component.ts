@@ -92,6 +92,8 @@ export class TagComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'true') {
         this.loading = true;
+        this.cd.detectChanges();
+
         this.studies.removeWebsites(this.tag, websitesId)
           .subscribe(websites => {
             if (websites === null) {

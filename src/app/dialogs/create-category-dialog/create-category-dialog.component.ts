@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
@@ -38,7 +38,8 @@ export class CreateCategoryDialogComponent implements OnInit {
     private studies: StudiesService,
     private message: MessageService,
     private router: Router,
-    private dialogRef: MatDialogRef<CreateCategoryDialogComponent>
+    private dialogRef: MatDialogRef<CreateCategoryDialogComponent>,
+    private cd: ChangeDetectorRef
   ) {
     this.matcher = new MyErrorStateMatcher();
 
@@ -117,6 +118,7 @@ export class CreateCategoryDialogComponent implements OnInit {
         }
 
         this.loading = false;
+        this.cd.detectChanges();
       });
   }
 

@@ -43,7 +43,7 @@
         <button mat-raised-button color="primary" type="submit" *ngIf="!loading" [disabled]="canSubmit()">
           {{ "CREATE_TAG.create_button" | translate }}
         </button>
-        <mat-spinner *ngIf="loading" [diameter]="40"></mat-spinner>
+        <span *ngIf="loading"><strong>{{ "MISC.loading" | translate }}</strong></span>
       </mat-card-actions>
     </form>
   </mat-card>

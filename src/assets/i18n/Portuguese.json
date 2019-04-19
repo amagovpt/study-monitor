@@ -9,8 +9,8 @@
     "submit": "Iniciar sessão",
     "logout": "Sair",
     "messages": {
-      "password_match": "A palavra-chave está incorreta",
-      "no_user": "O utilizador não existe",
+      "password_match": "O utilizador ou palavra-chave incorretos",
+      "no_user": "O utilizador ou palavra-chave incorretos",
       "system_error": "Erro no sistema. Por favor tente mais tarde"
     }
   },

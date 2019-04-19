@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as _ from 'lodash';
@@ -28,7 +28,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private user: UserService,
-    private message: MessageService
+    private message: MessageService,
+    private cd: ChangeDetectorRef
   ) {
 
     this.hide = true;
@@ -57,6 +58,9 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm.value.password;
 
     this.user.login(username, password)
-      .subscribe(() => this.loginLoading = false);
+      .subscribe(() => {
+        this.loginLoading = false;
+        this.cd.detectChanges();
+      });
   }
 }

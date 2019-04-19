@@ -9,8 +9,8 @@
     "submit": "Login",
     "logout": "Logout",
     "messages": {
-      "password_match": "The password is incorrect",
-      "no_user": "The user doesn't exist",
+      "password_match": "Wrong username or password",
+      "no_user": "Wrong username or password",
       "system_error": "There was a system error. Please try later"
     }
   },

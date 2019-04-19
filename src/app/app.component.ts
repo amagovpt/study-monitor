@@ -167,7 +167,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 this.tag = decodeURIComponent(segments[2]);
                 break;
             }
-          } else {
+          } else if (segments[2] !== 'settings') {
             switch (_.size(segments)) {
               case 6:
                 if (segments[5] === 'code') {
