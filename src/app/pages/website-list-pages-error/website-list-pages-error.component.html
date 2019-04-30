@@ -26,10 +26,10 @@
     </mat-card-header>
     <mat-card-content>
       <mat-list>
-        <mat-list-item *ngFor="let item of list; let i= index;">
+        <mat-list-item *ngFor="let item of list; let i = index;">
           <h3 mat-line>
             <strong>{{ i+1 }}. </strong>
-            <a [routerLink]="getUriRoute(item.url)">{{ item.url }}</a> 
+            <a [routerLink]="getUriRoute(item.url)">{{ item.url }}</a>
             ({{ item.n }})
           </h3>
           <mat-divider></mat-divider>

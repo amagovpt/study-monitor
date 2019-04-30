@@ -58,8 +58,13 @@
     {{ websiteError }}
   </a>
 
-  <mat-icon *ngIf="page && tagStatistics">keyboard_arrow_right</mat-icon>
-  <a [routerLink]="['/user', tag, 'statistics', tagError, website, 'statistics', websiteError, page]" routerLinkActive="active" *ngIf="page && tagStatistics">
+  <mat-icon *ngIf="page && tagStatistics && websiteStatistics">keyboard_arrow_right</mat-icon>
+  <a [routerLink]="['/user', tag, 'statistics', tagError, website, 'statistics', websiteError, page]" routerLinkActive="active" *ngIf="page && tagStatistics && websiteStatistics">
+    {{ page }}
+  </a>
+
+  <mat-icon *ngIf="page && tagStatistics && !websiteStatistics">keyboard_arrow_right</mat-icon>
+  <a [routerLink]="['/user', tag, 'statistics', tagError, website, page]" routerLinkActive="active" *ngIf="page && tagStatistics && !websiteStatistics">
     {{ page }}
   </a>
 
@@ -73,8 +78,13 @@
     {{ page }}
   </a>
 
-  <mat-icon *ngIf="pageCode && tagStatistics">keyboard_arrow_right</mat-icon>
-  <a [routerLink]="['/user', tag, 'statistics', tagError, website, 'statistics', websiteError, page, 'code']" routerLinkActive="active" *ngIf="pageCode && tagStatistics">
+  <mat-icon *ngIf="pageCode && tagStatistics && websiteStatistics">keyboard_arrow_right</mat-icon>
+  <a [routerLink]="['/user', tag, 'statistics', tagError, website, 'statistics', websiteError, page, 'code']" routerLinkActive="active" *ngIf="pageCode && tagStatistics && websiteStatistics">
+    {{ "HEADER.NAV.code" | translate }}
+  </a>
+
+  <mat-icon *ngIf="pageCode && tagStatistics && !websiteStatistics">keyboard_arrow_right</mat-icon>
+  <a [routerLink]="['/user', tag, 'statistics', tagError, website, page, 'code']" routerLinkActive="active" *ngIf="pageCode && tagStatistics && !websiteStatistics">
     {{ "HEADER.NAV.code" | translate }}
   </a>
 
@@ -88,8 +98,11 @@
     {{ "HEADER.NAV.code" | translate }}
   </a>
 
-  <mat-icon *ngIf="pageEle && tagStatistics">keyboard_arrow_right</mat-icon>
-  <a [routerLink]="['/user', tag, 'statistics', tagError, website, 'statistics', websiteError, page, pageEle]" routerLinkActive="active" *ngIf="pageEle && tagStatistics" [innerHtml]="'ELEMS.' + pageEle | translate"></a>
+  <mat-icon *ngIf="pageEle && tagStatistics && websiteStatistics">keyboard_arrow_right</mat-icon>
+  <a [routerLink]="['/user', tag, 'statistics', tagError, website, 'statistics', websiteError, page, pageEle]" routerLinkActive="active" *ngIf="pageEle && tagStatistics && websiteStatistics" [innerHtml]="'ELEMS.' + pageEle | translate"></a>
+
+  <mat-icon *ngIf="pageEle && tagStatistics && !websiteStatistics">keyboard_arrow_right</mat-icon>
+  <a [routerLink]="['/user', tag, 'statistics', tagError, website, page, pageEle]" routerLinkActive="active" *ngIf="pageEle && tagStatistics && !websiteStatistics" [innerHtml]="'ELEMS.' + pageEle | translate"></a>
 
   <mat-icon *ngIf="pageEle && !tagStatistics && websiteStatistics">keyboard_arrow_right</mat-icon>
   <a [routerLink]="['/user', tag, website, 'statistics', websiteError, page, pageEle]" routerLinkActive="active" *ngIf="pageEle && !tagStatistics && websiteStatistics" [innerHtml]="'ELEMS.' + pageEle | translate"></a>
