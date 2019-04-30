@@ -50,7 +50,7 @@ export class EvaluationService {
         this.evaluation = <Evaluation> JSON.parse(sessionStorage.getItem('evaluation'));
         return of(this.evaluation.processed);
       } else {
-        return ajax.post(this.config.getServer('/studies/evaluation'), {tag, website, url: encodeURIComponent(url) , cookie: this.user.getUserData()}).pipe(
+        return ajax.post(this.config.getServer('/study/evaluation'), {tag, website, url: encodeURIComponent(url) , cookie: this.user.getUserData()}).pipe(
           retry(3),
           map(res => {
             const response = <Response> res.response;
@@ -81,7 +81,7 @@ export class EvaluationService {
   }
 
   evaluateUrl(url: string): Observable<any> {
-    return ajax.post(this.config.getServer('/studies/evaluate/'), {url: encodeURIComponent(url), cookie: this.user.getUserData()}).pipe(
+    return ajax.post(this.config.getServer('/study/evaluate/'), {url: encodeURIComponent(url), cookie: this.user.getUserData()}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.response;

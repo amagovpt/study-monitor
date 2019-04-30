@@ -3,8 +3,8 @@
   <p>{{ "ADD_WEBSITE.error_dialog.message" | translate }}</p>
   <span *ngFor="let page of pages"><strong>{{ page }}</strong></span>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-raised-button color="accent" mat-dialog-close>
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="center center">
+  <button mat-raised-button color="primary" mat-dialog-close>
     {{ "MISC.message_close" | translate }}
   </button>
 </mat-dialog-actions>

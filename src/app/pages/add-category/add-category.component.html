@@ -9,9 +9,9 @@
     <form (submit)="createCategory($event)" [formGroup]="tagForm" novalidate>
       <mat-card-content>
         <mat-radio-group fxLayout="column" formControlName="type" (change)="changeType()" required>
-          <mat-radio-button value="official">{{ "CREATE_TAG.radio_button_choose" | translate }}</mat-radio-button>
+          <mat-radio-button color="primary" value="official">{{ "CREATE_TAG.radio_button_choose" | translate }}</mat-radio-button>
           <mat-form-field>
-            <label for="tags">Categories</label>
+            <label for="tags">{{ "CREATE_TAG.categories_label" | translate }}</label>
             <mat-select id="tags" formControlName="tags" multiple>
               <mat-option *ngFor="let tag of officialTags" [value]="tag.TagId">{{tag.Name}}</mat-option>
             </mat-select>
@@ -26,7 +26,7 @@
               {{ "CREATE_TAG.name_exists" | translate}}
             </mat-error>
           </mat-form-field>
-          <mat-radio-button value="user">{{ "CREATE_TAG.radio_button_create" | translate }}</mat-radio-button>
+          <mat-radio-button color="primary" value="user">{{ "CREATE_TAG.radio_button_create" | translate }}</mat-radio-button>
           <mat-form-field>
             <label for="create_tag_name">{{ "CREATE_TAG.create_category_label" | translate }}</label>
             <input id="create_tag_name" matInput formControlName="userTag" [errorStateMatcher]="matcher">
