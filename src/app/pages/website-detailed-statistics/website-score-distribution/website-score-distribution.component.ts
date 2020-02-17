@@ -14,7 +14,7 @@ export class WebsiteScoreDistributionComponent implements OnInit {
 
   @Input('pages') pages: Array<Page>;
 
-  @ViewChild('scoreChart') scoreChart: any;
+  @ViewChild('scoreChart', { static: true }) scoreChart: any;
   chart: any;
 
   data: any;

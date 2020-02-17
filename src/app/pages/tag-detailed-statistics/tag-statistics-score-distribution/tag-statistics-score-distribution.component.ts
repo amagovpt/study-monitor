@@ -12,10 +12,10 @@ export class TagStatisticsScoreDistributionComponent implements OnInit {
 
   @Input('pages') pages: Array<any>;
 
-  @ViewChild('pagesScoreChart') pagesScoreChart: any;
+  @ViewChild('pagesScoreChart', { static: true }) pagesScoreChart: any;
   pagesChart: any;
 
-  @ViewChild('websitesScoreChart') websitesScoreChart: any;
+  @ViewChild('websitesScoreChart', { static: true }) websitesScoreChart: any;
   websitesChart: any;
 
   labels: string[];

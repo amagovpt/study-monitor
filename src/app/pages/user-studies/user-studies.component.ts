@@ -33,7 +33,7 @@ export class UserStudiesComponent implements OnInit {
   ];
 
   // column sorter
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   dataSource: MatTableDataSource<Tag>;
   selection: SelectionModel<Tag>;
 

@@ -16,7 +16,7 @@ import { UserService } from './services/user.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  @ViewChild('sidenav') sidenav: ElementRef;
+  @ViewChild('sidenav', { static: true }) sidenav: ElementRef;
 
   selectedLang: string;
 

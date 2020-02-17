@@ -32,8 +32,8 @@ export class PagesTableComponent implements OnInit {
   ];
 
   // column sorter
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   dataSource: MatTableDataSource<Page>;
   selection: SelectionModel<Page>;
