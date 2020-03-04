@@ -10,8 +10,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
 import { NgxGaugeModule } from 'ngx-gauge';
-
-import { CookieService } from 'ngx-cookie-service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/auth.interceptor';
 
 import { UserAuthGuard } from './guards/user-auth.guard';
 import { NoAuthGuard } from './guards/no-auth.guard';
@@ -178,7 +178,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserAuthErrorDialogComponent,
     AddPagesErrorsDialogComponent
   ],
-  providers: [ CookieService ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

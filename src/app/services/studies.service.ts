@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { map, retry, catchError } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import * as _ from 'lodash';
 
 import { ConfigService } from './config.service';
 import { UserService } from './user.service';
@@ -23,20 +23,21 @@ import { AddPagesErrorsDialogComponent } from '../dialogs/add-pages-errors-dialo
 export class StudiesService {
 
   constructor(
-    private router: Router,
-    private user: UserService,
-    private message: MessageService,
-    private config: ConfigService,
-    private dialog: MatDialog
+    private readonly router: Router,
+    private readonly user: UserService,
+    private readonly http: HttpClient,
+    private readonly message: MessageService,
+    private readonly config: ConfigService,
+    private readonly dialog: MatDialog
   ) { }
 
   getUserTags(): Observable<Array<Tag>> {
-    return ajax.post(this.config.getServer('/study/user/tags'), {cookie: this.user.getUserData()}).pipe(
+    return this.http.get<any>(this.config.getServer('/tag/studyMonitor'), {observe: 'response'}).pipe(
       retry(3),
       map(res => {
-        const response = <Response> res.response;
+        const response = <Response> res.body;
 
-        if (!res.response || res.status === 404) {
+        if (!res.body || res.status === 404) {
           throw new AsError(404, 'Service not found', 'SERIOUS');
         }
 
@@ -175,12 +176,12 @@ export class StudiesService {
   }
 
   getOfficialTags(): Observable<Array<Tag>> {
-    return ajax.post(this.config.getServer('/study/tags/allOfficial'), {cookie: this.user.getUserData()}).pipe(
+    return this.http.get<any>(this.config.getServer('/tag/allOfficial'), {observe: 'response'}).pipe(
       retry(3),
       map(res => {
-        const response = <Response> res.response;
+        const response = <Response> res.body;
 
-        if (!res.response || res.status === 404) {
+        if (!res.body || res.status === 404) {
           throw new AsError(404, 'Service not found', 'SERIOUS');
         }
 
@@ -201,15 +202,14 @@ export class StudiesService {
     const body = {
       type,
       tagsId: JSON.stringify(tagsId),
-      user_tag_name,
-      cookie: this.user.getUserData()
+      user_tag_name
     };
-    return ajax.post(this.config.getServer('/study/create/tag'), body).pipe(
+    return this.http.post(this.config.getServer('/tag/user/create'), body, {observe: 'response'}).pipe(
       retry(3),
       map(res => {
-        const response = <Response> res.response;
+        const response = <Response> res.body;
 
-        if (!res.response || res.status === 404) {
+        if (!res.body || res.status === 404) {
           throw new AsError(404, 'Service not found', 'SERIOUS');
         }
 
@@ -232,12 +232,12 @@ export class StudiesService {
   }
 
   userTagNameExists(name: string): Observable<any> {
-    return ajax.post(this.config.getServer('/study/user/tag/nameExists'), {name, cookie: this.user.getUserData()}).pipe(
+    return this.http.get<any>(this.config.getServer('/user/tag/nameExists/' + name), {observe: 'response'}).pipe(
       retry(3),
       map(res => {
-        const response = <Response> res.response;
+        const response = <Response> res.body;
 
-        if (!res.response || res.status === 404) {
+        if (!res.body || res.status === 404) {
           throw new AsError(404, 'Service not found', 'SERIOUS');
         }
 

@@ -3,7 +3,7 @@ import { AbstractControl, FormControl, FormGroup, FormGroupDirective, NgForm } f
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import * as _ from 'lodash';
 
 import { MessageService } from '../../services/message.service';
@@ -124,6 +124,10 @@ export class CreateCategoryDialogComponent implements OnInit {
 
   categoryNameValidator(control: AbstractControl): Observable<any> {
     const name = control.value;
-    return this.studies.userTagNameExists(name);
+    if (name !== '') {
+      return this.studies.userTagNameExists(name);
+    } else {
+      return of(false);
+    }
   }
 }
