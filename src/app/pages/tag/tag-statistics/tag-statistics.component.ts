@@ -36,6 +36,11 @@ export class TagStatisticsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.websites = this.websites.map(w => {
+      console.log(typeof w.Pages);
+      w.Pages = parseInt(w.Pages);
+      return w;
+    })
     this.n_pages = _.sumBy(this.websites, 'Pages');
     const scores = _.without(_.map(this.websites, 'Score'), null);
     scores.sort();

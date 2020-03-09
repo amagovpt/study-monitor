@@ -55,12 +55,12 @@ export class StudiesService {
   }
 
   getUserTagWebsites(tag: string): Observable<Array<Website>> {
-    return ajax.post(this.config.getServer('/study/user/tag/websites'), {tag, cookie: this.user.getUserData()}).pipe(
+    return this.http.get<any>(this.config.getServer('/website/studyMonitor/tag/' + tag), {observe: 'response'}).pipe(
       retry(3),
       map(res => {
-        const response = <Response> res.response;
+        const response = <Response> res.body;
 
-        if (!res.response || res.status === 404) {
+        if (!res.body || res.status === 404) {
           throw new AsError(404, 'Service not found', 'SERIOUS');
         }
 
@@ -153,12 +153,12 @@ export class StudiesService {
   }
 
   getUserWebsitesFromOtherTags(tag: string): Observable<Array<Website>> {
-    return ajax.post(this.config.getServer('/study/user/websites/otherTags'), {tag, cookie: this.user.getUserData()}).pipe(
+    return this.http.get<any>(this.config.getServer('/website/studyMonitor/otherTags/' + tag), {observe: 'response'}).pipe(
       retry(3),
       map(res => {
-        const response = <Response> res.response;
+        const response = <Response> res.body;
 
-        if (!res.response || res.status === 404) {
+        if (!res.body || res.status === 404) {
           throw new AsError(404, 'Service not found', 'SERIOUS');
         }
 
@@ -259,19 +259,19 @@ export class StudiesService {
   }
 
   removeTags(tagsId: Array<number>): Observable<Array<Tag>> {
-    return ajax.post(this.config.getServer('/study/user/removeTags'), {tagsId: JSON.stringify(tagsId), cookie: this.user.getUserData()}).pipe(
+    return this.http.post(this.config.getServer('/tag/user/remove'), {tagsId: JSON.stringify(tagsId)}, {observe: 'response'}).pipe(
       retry(3),
       map(res => {
-        const response = <Response> res.response;
+        const response = <Response> res.body;
 
-        if (!res.response || res.status === 404) {
+        if (!res.body || res.status === 404) {
           throw new AsError(404, 'Service not found', 'SERIOUS');
         }
 
         if (response.success !== 1) {
           throw new AsError(response.success, response.message);
         }
-
+        
         return <Array<Tag>> response.result;
       }),
       catchError(err => {
@@ -287,12 +287,12 @@ export class StudiesService {
   }
 
   checkWebsiteNameExists(tag: string, name: string): Observable<any> {
-    return ajax.post(this.config.getServer('/study/user/tag/website/nameExists'), {tag, name, cookie: this.user.getUserData()}).pipe(
+    return this.http.get<any>(this.config.getServer(`/website/studyMonitor/tag/${tag}/website/nameExists/${name}`), {observe: 'response'}).pipe(
       retry(3),
       map(res => {
-        const response = <Response> res.response;
+        const response = <Response> res.body;
 
-        if (!res.response || res.status === 404) {
+        if (!res.body || res.status === 404) {
           throw new AsError(404, 'Service not found', 'SERIOUS');
         }
 
@@ -300,7 +300,7 @@ export class StudiesService {
           throw new AsError(response.success, response.message);
         }
 
-        return response.result === true ? { takenName: true } : null;
+        return !!response.result ? { takenName: true } : null;
       }),
       catchError(err => {
         console.log(err);
@@ -313,20 +313,20 @@ export class StudiesService {
   }
 
   checkWebsiteDomainExists(tag: string, domain: string): Observable<any> {
-    return ajax.post(this.config.getServer('/study/user/tag/website/domainExists'), {tag, domain, cookie: this.user.getUserData()}).pipe(
+    return this.http.get<any>(this.config.getServer(`/website/studyMonitor/tag/${tag}/website/domainExists/${domain}`), {observe: 'response'}).pipe(
       retry(3),
       map(res => {
-        const response = <Response> res.response;
+        const response = <Response> res.body;
 
-        if (!res.response || res.status === 404) {
+        if (!res.body || res.status === 404) {
           throw new AsError(404, 'Service not found', 'SERIOUS');
         }
 
         if (response.success !== 1) {
           throw new AsError(response.success, response.message);
         }
-
-        return response.result === true ? { takenDomain: true } : null;
+        
+        return !!response.result ? { takenDomain: true } : null;
       }),
       catchError(err => {
         console.log(err);
@@ -367,12 +367,12 @@ export class StudiesService {
   }
 
   addNewTagWebsite(tag: string, name: string, domain: string, pages: Array<string>): Observable<Array<Website>> {
-    return ajax.post(this.config.getServer('/study/user/tag/addNewWebsite'), {tag, name, domain, pages: JSON.stringify(pages), cookie: this.user.getUserData()}).pipe(
+    return this.http.post<any>(this.config.getServer('/website/studyMonitor/create'), {tag, name, domain, pages: JSON.stringify(pages)}, {observe: 'response'}).pipe(
       retry(3),
       map(res => {
-        const response = <Response> res.response;
+        const response = <Response> res.body;
 
-        if (!res.response || res.status === 404) {
+        if (!res.body || res.status === 404) {
           throw new AsError(404, 'Service not found', 'SERIOUS');
         }
 

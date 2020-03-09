@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, FormControlName, FormBuilder, Validators, FormGroupDirective, NgForm, ValidationErrors } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, FormBuilder, Validators, FormGroupDirective, NgForm, ValidationErrors } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import * as _ from 'lodash';
 
 import { StudiesService } from '../../../../services/studies.service';
@@ -64,12 +64,16 @@ export class AddNewWebsiteComponent implements OnInit {
 
   websiteForm: FormGroup;
 
-  constructor(private studies: StudiesService, private fb: FormBuilder) {
+  constructor(
+    private readonly studies: StudiesService, 
+    private readonly fb: FormBuilder,
+    private readonly cd: ChangeDetectorRef
+  ) {
     this.websiteForm = this.fb.group({
       name: new FormControl('', [Validators.required], this.nameValidator.bind(this)),
       domain: new FormControl('', [
         Validators.required,
-        domainValidator
+        domainValidator2
       ], this.domainValidator.bind(this)),
       pages: new FormControl('', [
         urlValidator
@@ -107,44 +111,59 @@ export class AddNewWebsiteComponent implements OnInit {
   }
 
   nameValidator(control: AbstractControl): Observable<any> {
-    const name = _.trim(control.value);
+    try {
+      const name = _.trim(control.value);
 
-    if (name !== '') {
-      return this.studies.checkWebsiteNameExists(this.tag, name);
-    } else {
+      if (name !== '') {
+        return this.studies.checkWebsiteNameExists(this.tag, name);
+      } else {
+        return null;
+      }
+    } catch (err) {
+      console.log(err);
       return null;
     }
   }
 
   domainValidator(control: AbstractControl): Observable<any> {
-    let domain = _.trim(control.value);
-    domain = _.replace(domain, 'http://', '');
-    domain = _.replace(domain, 'https://', '');
-    domain = _.replace(domain, 'www.', '');
-
-    if (domain !== '') {
-      return this.studies.checkWebsiteDomainExists(this.tag, domain);
-    } else {
+    try {
+      let domain = _.trim(control.value);
+      domain = _.replace(domain, 'http://', '');
+      domain = _.replace(domain, 'https://', '');
+      domain = _.replace(domain, 'www.', '');
+      
+      if (domain !== '') {
+        return this.studies.checkWebsiteDomainExists(this.tag, domain);
+      } else {
+        return null;
+      }
+    } catch(err) {
+      console.log(err);
       return null;
     }
   }
 }
 
-function domainValidator(control: FormControl): ValidationErrors | null {
-  let domain = _.trim(control.value);
-  domain = _.replace(domain, 'http://', '');
-  domain = _.replace(domain, 'https://', '');
-  domain = _.replace(domain, 'www.', '');
+function domainValidator2(control: FormControl): ValidationErrors | null {
+  try {
+    let domain = _.trim(control.value);
+    domain = _.replace(domain, 'http://', '');
+    domain = _.replace(domain, 'https://', '');
+    domain = _.replace(domain, 'www.', '');
 
-  let invalid = false;
-  if (domain === '') {
+    let invalid = false;
+    if (domain === '') {
+      return null;
+    }
+
+    invalid = !_.includes(domain, '.');
+    invalid = invalid || _.includes(domain, '/');
+
+    return invalid ? { invalidDomain: true } : null;
+  } catch(err) {
+    console.log(err);
     return null;
   }
-
-  invalid = !_.includes(domain, '.');
-  invalid = invalid || _.includes(domain, '/');
-
-  return invalid ? { invalidDomain: true } : null;
 }
 
 function urlValidator(control: FormControl): ValidationErrors | null {
