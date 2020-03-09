@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import * as _ from 'lodash';
 
 import { Website } from '../../../models/website';
 
@@ -37,16 +36,17 @@ export class TagStatisticsComponent implements OnInit {
 
   ngOnInit() {
     this.websites = this.websites.map(w => {
-      console.log(typeof w.Pages);
-      w.Pages = parseInt(w.Pages);
+      w.Pages = Number(w.Pages);
+      w.Score = Number(w.Score);
       return w;
-    })
-    this.n_pages = _.sumBy(this.websites, 'Pages');
-    const scores = _.without(_.map(this.websites, 'Score'), null);
+    });
+    
+    this.n_pages = this.websites.reduce((p, w) => p += w.Pages, 0);
+    const scores = this.websites.map(w => w.Score);
     scores.sort();
 
     let n = 0;
-    const size = _.size(scores);
+    const size = scores.length;
     for (let i = 0 ; i < size ; i++) {
       this.score += scores[i];
       n++;

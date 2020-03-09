@@ -26,3 +26,15 @@ table td a {
 ::ng-deep mark {
   background-color: yellow;
 }
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+th, td {
+  padding: 0.5em;
+}

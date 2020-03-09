@@ -30,3 +30,7 @@ table td a {
 ::ng-deep mark {
   background-color: yellow;
 }
+
+th, td {
+  padding: 0.5em;
+}

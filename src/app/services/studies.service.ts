@@ -81,12 +81,12 @@ export class StudiesService {
   }
 
   getUserTagWebsitesData(tag: string): Observable<Array<any>> {
-    return ajax.post(this.config.getServer('/study/user/tag/websitesData'), {tag, cookie: this.user.getUserData()}).pipe(
+    return this.http.get<any>(this.config.getServer(`/tag/studyMonitor/${tag}/data`), {observe: 'response'}).pipe(
       retry(3),
       map(res => {
-        const response = <Response> res.response;
+        const response = <Response> res.body;
 
-        if (!res.response || res.status === 404) {
+        if (!res.body || res.status === 404) {
           throw new AsError(404, 'Service not found', 'SERIOUS');
         }
 
@@ -104,12 +104,12 @@ export class StudiesService {
   }
 
   getUserTagWebsitePages(tag: string, website: string): Observable<Array<Page>> {
-    return ajax.post(this.config.getServer('/study/user/tag/website/pages'), {tag, website, cookie: this.user.getUserData()}).pipe(
+    return this.http.get<any>(this.config.getServer(`/page/studyMonitor/tag/${tag}/website/${website}`), {observe: 'response'}).pipe(
       retry(3),
       map(res => {
-        const response = <Response> res.response;
+        const response = <Response> res.body;
 
-        if (!res.response || res.status === 404) {
+        if (!res.body || res.status === 404) {
           throw new AsError(404, 'Service not found', 'SERIOUS');
         }
 
@@ -130,12 +130,12 @@ export class StudiesService {
   }
 
   getUserTagWebsitePagesData(tag: string, website: string): Observable<Array<Page>> {
-    return ajax.post(this.config.getServer('/study/user/tag/website/pagesData'), {tag, website, cookie: this.user.getUserData()}).pipe(
+    return this.http.get<any>(this.config.getServer(`/tag/studyMonitor/${tag}/website/${website}/data`), {observe: 'response'}).pipe(
       retry(3),
       map(res => {
-        const response = <Response> res.response;
+        const response = <Response> res.body;
 
-        if (!res.response || res.status === 404) {
+        if (!res.body || res.status === 404) {
           throw new AsError(404, 'Service not found', 'SERIOUS');
         }
 
@@ -165,7 +165,7 @@ export class StudiesService {
         if (response.success !== 1) {
           throw new AsError(response.success, response.message);
         }
-
+        console.log(response)
         return <Array<Website>> response.result;
       }),
       catchError(err => {
@@ -339,12 +339,12 @@ export class StudiesService {
   }
 
   addExistingTagWebsite(tag: string, websitesId: Array<number>): Observable<Array<Website>> {
-    return ajax.post(this.config.getServer('/study/user/tag/addExistingWebsite'), {tag, websitesId: JSON.stringify(websitesId), cookie: this.user.getUserData()}).pipe(
+    return this.http.post<any>(this.config.getServer('/website/studyMonitor/link'), {tag, websitesId: JSON.stringify(websitesId)}, {observe: 'response'}).pipe(
       retry(3),
       map(res => {
-        const response = <Response> res.response;
+        const response = <Response> res.body;
 
-        if (!res.response || res.status === 404) {
+        if (!res.body || res.status === 404) {
           throw new AsError(404, 'Service not found', 'SERIOUS');
         }
 
@@ -398,12 +398,12 @@ export class StudiesService {
   }
 
   removeWebsites(tag: string, websitesId: Array<number>): Observable<Array<Website>> {
-    return ajax.post(this.config.getServer('/study/user/tag/removeWebsites'), {tag, websitesId: JSON.stringify(websitesId), cookie: this.user.getUserData()}).pipe(
+    return this.http.post<any>(this.config.getServer('/website/studyMonitor/remove'), {tag, websitesId: JSON.stringify(websitesId),}, {observe: 'response'}).pipe(
       retry(3),
       map(res => {
-        const response = <Response> res.response;
+        const response = <Response> res.body;
 
-        if (!res.response || res.status === 404) {
+        if (!res.body || res.status === 404) {
           throw new AsError(404, 'Service not found', 'SERIOUS');
         }
 
@@ -426,12 +426,12 @@ export class StudiesService {
   }
 
   getWebsiteDomain(tag: string, website: string): Observable<string> {
-    return ajax.post(this.config.getServer('/study/user/tag/website/domain'), {tag, website, cookie: this.user.getUserData()}).pipe(
+    return this.http.get<any>(this.config.getServer(`/domain/studyMonitor/tag/${tag}/website/${website}`), {observe: 'response'}).pipe(
       retry(3),
       map(res => {
-        const response = <Response> res.response;
+        const response = <Response> res.body;
 
-        if (!res.response || res.status === 404) {
+        if (!res.body || res.status === 404) {
           throw new AsError(404, 'Service not found', 'SERIOUS');
         }
 
@@ -452,12 +452,12 @@ export class StudiesService {
   }
 
   addTagWebsitePages(tag: string, website: string, domain: string, pages: Array<string>): Observable<Array<Page>> {
-    return ajax.post(this.config.getServer('/study/user/tag/website/addPages'), {tag, website, domain, pages: JSON.stringify(pages), cookie: this.user.getUserData()}).pipe(
+    return this.http.post<any>(this.config.getServer('/page/studyMonitor/create'), {tag, website, domain, pages: JSON.stringify(pages)}, {observe: 'response'}).pipe(
       retry(3),
       map(res => {
-        const response = <Response> res.response;
+        const response = <Response> res.body;
 
-        if (!res.response || res.status === 404) {
+        if (!res.body || res.status === 404) {
           throw new AsError(404, 'Service not found', 'SERIOUS');
         }
 
@@ -483,12 +483,12 @@ export class StudiesService {
   }
 
   removePages(tag: string, website: string, pagesId: Array<number>): Observable<Array<Page>> {
-    return ajax.post(this.config.getServer('/study/user/tag/website/removePages'), {tag, website, pagesId: JSON.stringify(pagesId), cookie: this.user.getUserData()}).pipe(
+    return this.http.post<any>(this.config.getServer('/page/studyMonitor/remove'), {tag, website, pagesId: JSON.stringify(pagesId)}, {observe: 'response'}).pipe(
       retry(3),
       map(res => {
-        const response = <Response> res.response;
+        const response = <Response> res.body;
 
-        if (!res.response || res.status === 404) {
+        if (!res.body || res.status === 404) {
           throw new AsError(404, 'Service not found', 'SERIOUS');
         }
 

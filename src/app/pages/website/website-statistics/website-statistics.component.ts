@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import * as _ from 'lodash';
 
 import { Page } from '../../../models/page';
 
@@ -36,9 +35,14 @@ export class WebsiteStatisticsComponent implements OnInit {
   }
 
   ngOnInit() {
-    const scores = _.map(this.pages, 'Score');
+    this.pages = this.pages.map(p => {
+      p.Score = Number(p.Score);
+      return p;
+    });
+
+    const scores = this.pages.map(p => p.Score);
     scores.sort();
-    const size = _.size(scores);
+    const size = scores.length;
 
     for (let i = 0 ; i < size ; i++) {
       this.score += scores[i];
