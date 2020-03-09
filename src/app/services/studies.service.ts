@@ -511,13 +511,13 @@ export class StudiesService {
   }
 
   changePassword(password: string, newPassword: string, confirmPassword: string): Observable<boolean> {
-    return ajax.post(this.config.getServer('/study/user/changePassword'), {password, newPassword, confirmPassword, cookie: this.user.getUserData()}).pipe(
+    return this.http.post<any>(this.config.getServer('/user/changePassword'), {password, newPassword, confirmPassword}, {observe: 'response'}).pipe(
       retry(3),
       map(res => {
-        const response = <Response> res.response;
+        const response = <Response> res.body;
 
-        if (!res.response || res.status === 404) {
-          throw new AsError(404, 'Service not found', 'SERIOUS');
+        if (!res.body || res.status !== 201) {
+          throw new Error('Invalid password');
         }
 
         if (response.success !== 1) {

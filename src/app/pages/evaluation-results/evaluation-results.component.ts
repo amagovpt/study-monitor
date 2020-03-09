@@ -70,7 +70,7 @@ export class EvaluationResultsComponent implements OnInit, OnDestroy {
   evaluate(): void {
     this.loading = true;
 
-    this.evaluation.evaluateUrl(this.url)
+    this.evaluation.evaluateUrl(this.tag, this.website, this.url)
       .subscribe(data => {
         if (!data) {
           this.error = true;

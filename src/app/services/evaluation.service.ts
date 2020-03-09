@@ -50,12 +50,12 @@ export class EvaluationService {
         this.evaluation = <Evaluation> JSON.parse(sessionStorage.getItem('evaluation'));
         return of(this.evaluation.processed);
       } else {
-        return ajax.post(this.config.getServer('/study/evaluation'), {tag, website, url: encodeURIComponent(url) , cookie: this.user.getUserData()}).pipe(
+        return this.http.get<any>(this.config.getServer(`/evaluation/studyMonitor/${tag}/${website}/${encodeURIComponent(url)}`), {observe: 'response'}).pipe(
           retry(3),
           map(res => {
-            const response = <Response> res.response;
+            const response = <Response> res.body;
 
-            if (!res.response || res.status === 404) {
+            if (!res.body || res.status === 404) {
               throw new AsError(404, 'Service not found', 'SERIOUS');
             }
 
@@ -80,13 +80,13 @@ export class EvaluationService {
     }
   }
 
-  evaluateUrl(url: string): Observable<any> {
-    return ajax.post(this.config.getServer('/study/evaluate/'), {url: encodeURIComponent(url), cookie: this.user.getUserData()}).pipe(
+  evaluateUrl(tag: string, website: string, url: string): Observable<any> {
+    return this.http.post<any>(this.config.getServer('/evaluation/studyMonitor/evaluate'), {tag, website, url: encodeURIComponent(url)}, {observe: 'response'}).pipe(
       retry(3),
       map(res => {
-        const response = <Response> res.response;
+        const response = <Response> res.body;
 
-        if (!res.response || res.status === 404) {
+        if (!res.body || res.status === 404) {
           throw new AsError(404, 'Service not found', 'SERIOUS');
         }
 
