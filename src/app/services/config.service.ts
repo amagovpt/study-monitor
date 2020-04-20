@@ -5,8 +5,19 @@ import { Injectable } from '@angular/core';
 })
 export class ConfigService {
 
+  private server: string;
+
+  constructor() {
+    const host = location.hostname;
+
+    if (host === 'localhost') {
+      this.server = 'http://localhost:3000';
+    } else {
+      this.server = '/api';
+    }
+  }
+
   getServer(service: string): string {
-    return '/api' + service;
-    //return 'http://localhost:3000' + service;
+    return this.server + service;
   }
 }

@@ -142,7 +142,12 @@
     "error": "Um dos urls é <strong>inválido</strong>",
     "button": "Adicionar páginas",
     "error_message": "Ocorreu um erro ao tentar adicionar as páginas",
-    "success_message": "Páginas adicionadas com sucesso"
+    "success_message": "Páginas adicionadas com sucesso",
+    "evaluations_dialog": {
+      "title": "Informação",
+      "message": "As páginas irão ser avaliadas em segundo plano, e a sua informação estará disponível assim que possível.",
+      "close": "Fechar"
+    }
   },
   "PAGES": {
     "title": "Páginas do website {{value}}",

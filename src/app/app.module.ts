@@ -62,6 +62,7 @@ import { AddNewWebsiteComponent } from './pages/tag/add-website/add-new-website/
 import { UserAuthErrorDialogComponent } from './dialogs/user-auth-error-dialog/user-auth-error-dialog.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { AddPagesErrorsDialogComponent } from './dialogs/add-pages-errors-dialog/add-pages-errors-dialog.component';
+import { BackgroundEvaluationsInformationDialogComponent } from './dialogs/background-evaluations-information-dialog/background-evaluations-information-dialog.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent, canActivate: [NoAuthGuard] },
@@ -145,7 +146,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddNewWebsiteComponent,
     UserAuthErrorDialogComponent,
     SettingsComponent,
-    AddPagesErrorsDialogComponent
+    AddPagesErrorsDialogComponent,
+    BackgroundEvaluationsInformationDialogComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -176,7 +178,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     RemoveWebsitesConfirmationDialogComponent,
     RemovePagesConfirmationDialogComponent,
     UserAuthErrorDialogComponent,
-    AddPagesErrorsDialogComponent
+    AddPagesErrorsDialogComponent,
+    BackgroundEvaluationsInformationDialogComponent
   ],
   providers: [
     {

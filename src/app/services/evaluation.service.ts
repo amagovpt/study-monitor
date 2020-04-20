@@ -18,7 +18,6 @@ import { UserService } from './user.service';
 import { MessageService } from './message.service';
 
 import tests from './tests.new';
-import techs from './techs';
 import scs from './scs';
 import xpath from './xpath';
 import tests_colors from './tests_colors';
@@ -81,7 +80,7 @@ export class EvaluationService {
   }
 
   evaluateUrl(tag: string, website: string, url: string): Observable<any> {
-    return this.http.post<any>(this.config.getServer('/evaluation/studyMonitor/evaluate'), {tag, website, url: encodeURIComponent(url)}, {observe: 'response'}).pipe(
+    return this.http.post<any>(this.config.getServer('/page/studyMonitor/evaluate'), {tag, website, url: encodeURIComponent(url)}, {observe: 'response'}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.body;
@@ -94,14 +93,7 @@ export class EvaluationService {
           throw new AsError(response.success, response.message);
         }
 
-        this.url = url;
-        this.evaluation = <Evaluation> response.result;
-        this.evaluation.processed = this.processData();
-
-        sessionStorage.setItem('url', url);
-        sessionStorage.setItem('evaluation', JSON.stringify(this.evaluation));
-
-        return this.evaluation.processed;
+        return response.result;
       }),
       catchError(err => {
         console.log(err);

@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import * as _ from 'lodash';
 
 import { RemovePagesConfirmationDialogComponent } from '../../dialogs/remove-pages-confirmation-dialog/remove-pages-confirmation-dialog.component';
+import { BackgroundEvaluationsInformationDialogComponent } from '../../dialogs/background-evaluations-information-dialog/background-evaluations-information-dialog.component';
 
 import { StudiesService } from '../../services/studies.service';
 import { MessageService } from '../../services/message.service';
@@ -64,7 +65,7 @@ export class WebsiteComponent implements OnInit, OnDestroy {
   }
 
   addPages(data): void {
-    this.loading = true;
+    /*this.loading = true;
     this.studies.addTagWebsitePages(this.tag, this.website, data.domain, data.urls)
       .subscribe(pages => {
         if (pages) {
@@ -74,6 +75,14 @@ export class WebsiteComponent implements OnInit, OnDestroy {
 
         this.loading = false;
         this.cd.detectChanges();
+      });*/
+      this.studies.addTagWebsitePages(this.tag, this.website, data.domain, data.urls)
+      .subscribe(result => {
+        if (result) {
+          this.dialog.open(BackgroundEvaluationsInformationDialogComponent, { width: '40vw' })
+        } else {
+          alert('Error');
+        }
       });
   }
 

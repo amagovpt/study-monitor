@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
 import { RemoveWebsitesConfirmationDialogComponent } from '../../dialogs/remove-websites-confirmation-dialog/remove-websites-confirmation-dialog.component';
+import { BackgroundEvaluationsInformationDialogComponent } from '../../dialogs/background-evaluations-information-dialog/background-evaluations-information-dialog.component';
 
 import { StudiesService } from '../../services/studies.service';
 import { MessageService } from '../../services/message.service';
@@ -77,6 +78,10 @@ export class TagComponent implements OnInit, OnDestroy {
     this.studies.addNewTagWebsite(this.tag, data.name, data.domain, data.pages)
       .subscribe(websites => {
         if (websites) {
+          if (data.pages.length > 0) {
+            this.dialog.open(BackgroundEvaluationsInformationDialogComponent, { width: '40vw' });
+          }
+
           this.message.show('ADD_WEBSITE.new.success_message');
           this.websites = websites;
         }

@@ -165,7 +165,7 @@ export class StudiesService {
         if (response.success !== 1) {
           throw new AsError(response.success, response.message);
         }
-        console.log(response)
+        
         return <Array<Website>> response.result;
       }),
       catchError(err => {
