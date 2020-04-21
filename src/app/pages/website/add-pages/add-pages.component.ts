@@ -16,27 +16,21 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 class DomainUrlValidation {
 
   static UrlMatchDomain(AC: AbstractControl) {
-    let domain = AC.get('domain').value;
-    domain = _.replace(domain, 'http://', '');
-    domain = _.replace(domain, 'https://', '');
-    domain = _.replace(domain, 'www.', '');
+    const domain = AC.get('domain').value;
 
-    const urls = _.uniq(_.without(_.split(AC.get('pages').value, '\n'), ''));
+    const urls = AC.get('pages').value.split('\n').filter(a => a !== '');
 
     let invalid = false;
-    const size = _.size(urls);
+    const size = urls.length;
 
     if (!size) {
       return null;
     }
 
     for (let i = 0 ; i < size ; i++) {
-      let url = _.trim(urls[i]);
-      url = _.replace(url, 'http://', '');
-      url = _.replace(url, 'https://', '');
-      url = _.replace(url, 'www.', '');
+      const url = urls[i].trim();
 
-      if (!_.startsWith(url, domain)) {
+      if (!url.startsWith(domain)) {
         invalid = true;
       }
     }
@@ -71,7 +65,7 @@ export class AddPagesComponent implements OnInit {
   ) {
     this.pagesForm = this.fb.group({
       domain: new FormControl({value: '', disabled: true}),
-      pages: new FormControl('', [Validators.required, urlValidator])
+      pages: new FormControl('', [Validators.required, urlValidator, missingProtocol])
     }, { validator: DomainUrlValidation.UrlMatchDomain });
     this.matcher = new MyErrorStateMatcher();
   }
@@ -90,62 +84,50 @@ export class AddPagesComponent implements OnInit {
     e.preventDefault();
 
     const pages = _.map(_.uniq(_.without(_.split(this.pagesForm.value.pages, '\n'), '')), p => {
-      p = _.replace(p, 'http://', '');
-      p = _.replace(p, 'https://', '');
-      p = _.replace(p, 'www.', '');
-
-      if (p[_.size(p)-1] === '/') {
-        p = p.substring(0, _.size(p)-1);
-      }
-
       return _.trim(p);
     });
     this.addTagWebsitePages.next({ domain: this.domain, urls: pages});
   }
 }
 
-function urlValidator(control: FormControl) {
-  const urls = _.uniq(_.without(_.split(control.value, '\n'), ''));
-
-  let invalid = true;
-  const size = _.size(urls);
+function missingProtocol(control: FormControl) {
+  const urls = control.value.split('\n').filter(a => a !== '');
+  
+  let invalid = false;
+  const size = urls.length;
 
   if (!size) {
     return null;
   }
 
   for (let i = 0 ; i < size ; i++) {
-    let url = _.trim(urls[i]);
-
-    if (!_.startsWith(url, 'http://') && !_.startsWith(url, 'https://') && !_.startsWith(url, 'www.')) {
-      if (_.includes(url, '.') && url[_.size(url) - 1] !== '.') {
-        invalid = false;
-      } else {
-        invalid = true;
-      }
-    } else if (_.startsWith(url, 'http://')) {
-      url = _.replace(url, 'http://', '');
-      if (_.includes(url, '.') && url[_.size(url) - 1] !== '.') {
-        invalid = false;
-      } else {
-        invalid = true;
-      }
-    } else if (_.startsWith(url, 'https://')) {
-      url = _.replace(url, 'https://', '');
-      if (_.includes(url, '.') && url[_.size(url) - 1] !== '.') {
-        invalid = false;
-      } else {
-        invalid = true;
-      }
-    } else if (_.startsWith(url, 'www.')) {
-      url = _.replace(url, 'www.', '');
-      if (_.includes(url, '.') && url[_.size(url) - 1] !== '.') {
-        invalid = false;
-      } else {
-        invalid = true;
-      }
-    } else {
+    const url = urls[i].trim();
+  
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
       invalid = true;
+      break;
+    }
+  }
+
+  return invalid ? { 'missingProtocol': { value: true } } : null;
+}
+
+function urlValidator(control: FormControl) {
+  const urls = control.value.split('\n').filter(a => a !== '');
+  
+  let invalid = false;
+  const size = urls.length;
+
+  if (!size) {
+    return null;
+  }
+
+  for (let i = 0 ; i < size ; i++) {
+    const url = urls[i].trim();
+
+    if (!url.includes(url, '.') || url[url.length - 1] === '.') {
+      invalid = true;
+      break;
     }
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormBuilder, Validators, FormGroupDirective, NgForm, ValidationErrors } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Observable, of } from 'rxjs';
@@ -17,27 +17,21 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 class DomainUrlValidation {
 
   static UrlMatchDomain(AC: AbstractControl) {
-    let domain = AC.get('domain').value;
-    domain = _.replace(domain, 'http://', '');
-    domain = _.replace(domain, 'https://', '');
-    domain = _.replace(domain, 'www.', '');
+    const domain = AC.get('domain').value;
 
-    const urls = _.uniq(_.without(_.split(AC.get('pages').value, '\n'), ''));
+    const urls = AC.get('pages').value.split('\n').filter(a => a !== '');
 
     let invalid = false;
-    const size = _.size(urls);
+    const size = urls.length;
 
     if (!size) {
       return null;
     }
 
     for (let i = 0 ; i < size ; i++) {
-      let url = _.trim(urls[i]);
-      url = _.replace(url, 'http://', '');
-      url = _.replace(url, 'https://', '');
-      url = _.replace(url, 'www.', '');
+      const url = urls[i].trim();
 
-      if (!_.startsWith(url, domain)) {
+      if (!url.startsWith(domain)) {
         invalid = true;
       }
     }
@@ -66,17 +60,18 @@ export class AddNewWebsiteComponent implements OnInit {
 
   constructor(
     private readonly studies: StudiesService, 
-    private readonly fb: FormBuilder,
-    private readonly cd: ChangeDetectorRef
+    private readonly fb: FormBuilder
   ) {
     this.websiteForm = this.fb.group({
       name: new FormControl('', [Validators.required], this.nameValidator.bind(this)),
       domain: new FormControl('', [
         Validators.required,
-        domainValidator2
+        domainValidator2,
+        domainMissingProtocol
       ], this.domainValidator.bind(this)),
       pages: new FormControl('', [
-        urlValidator
+        urlValidator,
+        missingProtocol
       ])
     }, { validator: DomainUrlValidation.UrlMatchDomain });
 
@@ -90,20 +85,9 @@ export class AddNewWebsiteComponent implements OnInit {
     e.preventDefault();
 
     const name = this.websiteForm.value.name;
-    let domain = this.websiteForm.value.domain;
-    domain = _.replace(domain, 'http://', '');
-    domain = _.replace(domain, 'https://', '');
-    domain = _.replace(domain, 'www.', '');
+    const domain = this.websiteForm.value.domain;
 
     const pages = _.map(_.uniq(_.without(_.split(this.websiteForm.value.pages, '\n'), '')), p => {
-      p = _.replace(p, 'http://', '');
-      p = _.replace(p, 'https://', '');
-      p = _.replace(p, 'www.', '');
-
-      if (p[_.size(p)-1] === '/') {
-        p = p.substring(0, _.size(p)-1);
-      }
-
       return _.trim(p);
     });
 
@@ -127,10 +111,7 @@ export class AddNewWebsiteComponent implements OnInit {
 
   domainValidator(control: AbstractControl): Observable<any> {
     try {
-      let domain = _.trim(control.value);
-      domain = _.replace(domain, 'http://', '');
-      domain = _.replace(domain, 'https://', '');
-      domain = _.replace(domain, 'www.', '');
+      const domain = _.trim(control.value);
       
       if (domain !== '') {
         return this.studies.checkWebsiteDomainExists(this.tag, domain);
@@ -146,18 +127,15 @@ export class AddNewWebsiteComponent implements OnInit {
 
 function domainValidator2(control: FormControl): ValidationErrors | null {
   try {
-    let domain = _.trim(control.value);
-    domain = _.replace(domain, 'http://', '');
-    domain = _.replace(domain, 'https://', '');
-    domain = _.replace(domain, 'www.', '');
+    const domain = _.trim(control.value);
 
     let invalid = false;
     if (domain === '') {
       return null;
     }
 
-    invalid = !_.includes(domain, '.');
-    invalid = invalid || _.includes(domain, '/');
+    invalid = domain.endsWith('.');
+    invalid = invalid || domain.endsWith('/');
 
     return invalid ? { invalidDomain: true } : null;
   } catch(err) {
@@ -166,48 +144,61 @@ function domainValidator2(control: FormControl): ValidationErrors | null {
   }
 }
 
-function urlValidator(control: FormControl): ValidationErrors | null {
-  const urls = _.uniq(_.without(_.split(control.value, '\n'), ''));
+function domainMissingProtocol(control: FormControl): ValidationErrors | null {
+  try {
+    const domain = _.trim(control.value);
 
-  let invalid = true;
-  const size = _.size(urls);
+    if (domain === '') {
+      return null;
+    }
+
+    const invalid = !domain.startsWith('http://') && !domain.startsWith('https://')
+
+    return invalid ? { invalidDomain: true } : null;
+  } catch(err) {
+    console.log(err);
+    return null;
+  }
+}
+
+function missingProtocol(control: FormControl) {
+  const urls = control.value.split('\n').filter(a => a !== '');
+  
+  let invalid = false;
+  const size = urls.length;
 
   if (!size) {
     return null;
   }
 
   for (let i = 0 ; i < size ; i++) {
-    let url = _.trim(urls[i]);
-
-    if (!_.startsWith(url, 'http://') && !_.startsWith(url, 'https://') && !_.startsWith(url, 'www.')) {
-      if (_.includes(url, '.') && url[_.size(url) - 1] !== '.') {
-        invalid = false;
-      } else {
-        invalid = true;
-      }
-    } else if (_.startsWith(url, 'http://')) {
-      url = _.replace(url, 'http://', '');
-      if (_.includes(url, '.') && url[_.size(url) - 1] !== '.') {
-        invalid = false;
-      } else {
-        invalid = true;
-      }
-    } else if (_.startsWith(url, 'https://')) {
-      url = _.replace(url, 'https://', '');
-      if (_.includes(url, '.') && url[_.size(url) - 1] !== '.') {
-        invalid = false;
-      } else {
-        invalid = true;
-      }
-    } else if (_.startsWith(url, 'www.')) {
-      url = _.replace(url, 'www.', '');
-      if (_.includes(url, '.') && url[_.size(url) - 1] !== '.') {
-        invalid = false;
-      } else {
-        invalid = true;
-      }
-    } else {
+    const url = urls[i].trim();
+  
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
       invalid = true;
+      break;
+    }
+  }
+
+  return invalid ? { 'missingProtocol': { value: true } } : null;
+}
+
+function urlValidator(control: FormControl) {
+  const urls = control.value.split('\n').filter(a => a !== '');
+  
+  let invalid = false;
+  const size = urls.length;
+
+  if (!size) {
+    return null;
+  }
+
+  for (let i = 0 ; i < size ; i++) {
+    const url = urls[i].trim();
+
+    if (!url.includes(url, '.') || url[url.length - 1] === '.') {
+      invalid = true;
+      break;
     }
   }
 

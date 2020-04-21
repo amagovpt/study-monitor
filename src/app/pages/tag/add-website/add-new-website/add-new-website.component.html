@@ -30,12 +30,15 @@
         <mat-error *ngIf="websiteForm.controls.domain.hasError('invalidDomain')" [innerHTML]="'ADD_WEBSITE.new.invalid_domain' | translate"></mat-error>
         <mat-error *ngIf="websiteForm.controls.domain.hasError('takenDomain')" [innerHTML]="'ADD_WEBSITE.new.taken_domain' | translate"></mat-error>
         <mat-error *ngIf="websiteForm.controls.domain.hasError('takenDomainError')" [innerHTML]="'ADD_WEBSITE.new.taken_domain_error' | translate"></mat-error>
+        <mat-error *ngIf="websiteForm.controls.pages.hasError('domainMissingProtocol')" [innerHTML]="'ADD_WEBSITE.new.domain_missing_protocol' | translate"></mat-error>
       </mat-form-field>
       <mat-form-field>
         <label for="ADD_WEBSITE.new_pages">{{ "ADD_WEBSITE.new.urls_label" | translate }}</label>
         <textarea id="ADD_WEBSITE.new_pages" name="pages" matInput cdkTextareaAutosize cdkAutosizeMinRows="5" formControlName="pages" [errorStateMatcher]="matcher"></textarea>
+        <mat-hint>{{ "ADD_WEBSITE.new.hint" | translate }}</mat-hint>
         <mat-error *ngIf="websiteForm.controls.pages.hasError('url')" [innerHTML]="'ADD_WEBSITE.new.invalid_url' | translate"></mat-error>
         <mat-error *ngIf="websiteForm.controls.pages.hasError('domainNoMatch')" [innerHTML]="'ADD_WEBSITE.new.url_match_error' | translate"></mat-error>
+        <mat-error *ngIf="websiteForm.controls.pages.hasError('missingProtocol')" [innerHTML]="'ADD_WEBSITE.new.url_missing_protocol' | translate"></mat-error>
       </mat-form-field>
       <div fxLayout="row" fxLayoutAlign="center center">
         <button mat-raised-button color="primary" type="submit" [disabled]="websiteForm.invalid">
