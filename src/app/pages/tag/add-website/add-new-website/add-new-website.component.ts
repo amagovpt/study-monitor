@@ -154,7 +154,7 @@ function domainMissingProtocol(control: FormControl): ValidationErrors | null {
 
     const invalid = !domain.startsWith('http://') && !domain.startsWith('https://')
 
-    return invalid ? { invalidDomain: true } : null;
+    return invalid ? { domainMissingProtocol: true } : null;
   } catch(err) {
     console.log(err);
     return null;
