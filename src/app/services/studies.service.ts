@@ -313,7 +313,7 @@ export class StudiesService {
   }
 
   checkWebsiteDomainExists(tag: string, domain: string): Observable<any> {
-    return this.http.get<any>(this.config.getServer(`/website/studyMonitor/tag/${tag}/website/domainExists/${domain}`), {observe: 'response'}).pipe(
+    return this.http.get<any>(this.config.getServer(`/website/studyMonitor/tag/${tag}/website/domainExists/${encodeURIComponent(domain)}`), {observe: 'response'}).pipe(
       retry(3),
       map(res => {
         const response = <Response> res.body;
