@@ -63,7 +63,8 @@
       "second_sentence": "This operation cannot be reverted.",
       "yes": "Yes",
       "no": "No"
-    }
+    },
+    "add_tag": "Add new tag"
   },
   "TAG": {
     "title": "Category",
@@ -231,6 +232,7 @@
     },
     "mean": "Mean",
     "median": "Median",
+    "standard_deviation": "Standard deviation",
     "median_desc": "This is the value that corresponds to 50% of the distribution of the scores.",
     "variance": "Sample variance",
     "variance_desc": "It measures the dispersion of the values (scores) in relation to the central (average) value.",

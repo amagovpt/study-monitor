@@ -3,6 +3,6 @@
     <router-outlet></router-outlet>
   </div>
 </main>
-<button mat-fab color="primary" class="add-tag" matTooltip="Add new Tag" (click)="openCreateCategoryDialog()" fxHide.lt-md>
-  <mat-icon aria-label="Add content">add</mat-icon>
+<button mat-fab color="primary" class="add-tag" matTooltip="{{ 'TAGS.add_tag' | translate }}" (click)="openCreateCategoryDialog()" fxHide.lt-md>
+  <mat-icon attr.aria-label="{{ 'TAGS.add_tag' | translate }}">add</mat-icon>
 </button>

@@ -53,7 +53,7 @@
     "table": {
       "filter": "Filtro",
       "name": "Categoria",
-      "websites": "Nº de websites",
+      "websites": "Nº de sítios web",
       "pages": "Nº de páginas",
       "see_tooltip": "Ver categoria"
     },
@@ -63,43 +63,44 @@
       "second_sentence": "Esta operação não pode ser revertida.",
       "yes": "Sim",
       "no": "Não"
-    }
+    },
+    "add_tag": "Adicionar nova categoria"
   },
   "TAG": {
     "title": "Categoria",
     "no_websites": {
-      "message1": "Esta categoria não tem websites.",
-      "message2": "Carregue acima para adicionar websites a esta categoria."
+      "message1": "Esta categoria não tem sítios web.",
+      "message2": "Carregue acima para adicionar sítios web a esta categoria."
     }
   },
   "ADD_WEBSITE": {
     "existing": {
-      "title": "Adicionar um website existente",
-      "subtitle": "Adicione um website de outra categoria a esta categoria",
-      "label": "Websites",
-      "option": "<strong>Categoria</strong>: {{tag}}, <strong>Website</strong>: {{website}} - {{url}}",
-      "button": "Adicionar websites"
+      "title": "Adicionar um sítio web existente",
+      "subtitle": "Adicione um sítio web de outra categoria a esta categoria",
+      "label": "Sítios web",
+      "option": "<strong>Categoria</strong>: {{tag}}, <strong>sítio web</strong>: {{website}} - {{url}}",
+      "button": "Adicionar sítios web"
     },
     "new": {
-      "title": "Adicionar novo website",
-      "subtitle": "Adicione um novo website a esta categoria",
+      "title": "Adicionar novo sítio web",
+      "subtitle": "Adicione um novo sítio web a esta categoria",
       "name_label": "Nome",
       "domain_label": "Domain",
       "urls_label": "Urls",
       "hint": "Por favor insira urls completos, com o protocolo e www se necessário",
       "required": "Este campo é <strong>obrigatório</strong>",
-      "taken_name": "Já <strong>tem</strong> um website com este nome",
+      "taken_name": "Já <strong>tem</strong> um sítio web com este nome",
       "taken_name_error": "Ocorreu um erro ao tentar validar este nome",
       "invalid_domain": "Domínio <strong>inválido</strong>",
-      "taken_domain": "Já <strong>tem</strong> um website com este domínio",
+      "taken_domain": "Já <strong>tem</strong> um sítio web com este domínio",
       "taken_domain_error": "Ocorreu um erro ao tentar validar este domínio",
       "url_missing_protocol": "O protocolo de um dos urls está em falta (http ou https)",
       "domain_missing_protocol": "O protocolo do domínio está em falta (http or https)",
       "invalid_url": "Um dos urls é <strong>inválido</strong>",
       "url_match_error": "Um dos urls não coincide com o domínio",
-      "button": "Adicionar website",
-      "error_message": "Ocorreu um erro ao tentar adicionar o website",
-      "success_message": "Website adicionado com sucesso"
+      "button": "Adicionar sítio web",
+      "error_message": "Ocorreu um erro ao tentar adicionar o sítio web",
+      "success_message": "Sítio web adicionado com sucesso"
     },
     "error_dialog": {
       "title": "Erros",
@@ -107,38 +108,38 @@
     }
   },
   "WEBSITES": {
-    "title": "Websites da categoria {{value}}",
-    "subtitle": "Lista de websites",
+    "title": "Sítios web da categoria {{value}}",
+    "subtitle": "Lista de sítios web",
     "remove_button": "Remover",
-    "remove_success_message": "Websites removidos com successo",
-    "remove_error_message": "Ocorreu um erro ao tentar remover os websites selecionados",
+    "remove_success_message": "Sítios web removidos com successo",
+    "remove_error_message": "Ocorreu um erro ao tentar remover os sítios web selecionados",
     "table": {
       "filter": "Filtro",
       "name": "Nome",
       "domain": "Url",
       "score": "Pontuação",
-      "see_tooltip": "Ver website",
+      "see_tooltip": "Ver sítio web",
       "note": "* Número de erros por nível de conformidade"
     },
     "dialog": {
-      "title": "Remover websites",
-      "first_sentence": "Tem a certeza que pretende remover os websites selecionados?",
+      "title": "Remover sítios web",
+      "first_sentence": "Tem a certeza que pretende remover os sítios web selecionados?",
       "second_sentence": "Esta operação não pode ser revertida.",
       "yes": "Sim",
       "no": "Não"
     }
   },
   "WEBSITE": {
-    "title": "Website:",
+    "title": "Sítio web:",
     "subtitle": "Categoria:",
     "no_pages": {
-      "message1": "Este website não tem páginas.",
-      "message2": "Carregue acima para adicionar páginas a este website."
+      "message1": "Este sítio web não tem páginas.",
+      "message2": "Carregue acima para adicionar páginas a este sítio web."
     }
   },
   "ADD_PAGES": {
     "title": "Adicionar páginas",
-    "subtitle": "Adicione páginas a este website",
+    "subtitle": "Adicione páginas a este sítio web",
     "domain_label": "Domínio atual",
     "pages_label": "Urls",
     "required": "Este campo é <strong>obrigatório</strong>",
@@ -153,7 +154,7 @@
     }
   },
   "PAGES": {
-    "title": "Páginas do website {{value}}",
+    "title": "Páginas do sítio web {{value}}",
     "subtitle": "Lista de páginas",
     "remove_button": "Remover",
     "remove_success_message": "Páginas removidas com successo",
@@ -200,14 +201,14 @@
       "summary": "Sumário",
       "errors": "Erros",
       "score_distribution": "Distribuição de pontuações",
-      "websites_results": "Resultados por websites",
+      "websites_results": "Resultados por sítios web",
       "pages_results": "Resultados por páginas"
     },
     "tags": "Nº de categorias",
-    "websites": "Nº de websites",
+    "websites": "Nº de sítios web",
     "pages": "Nº de páginas",
     "tag_conform": "Comformidade da categoria:",
-    "website_conform": "Comformidade do website:",
+    "website_conform": "Comformidade do sítio web:",
     "conform_veredict_a": "Não passa nível A",
     "conform_veredict_aa": "Não passa nível AA",
     "conform_veredict_aaa": "Não passa nível AAA",
@@ -219,43 +220,44 @@
     "score": "Pontuação",
     "scores": {
       "title": "Distribuição de pontuações (páginas)",
-      "title2": "Distribuição de pontuações (websites)",
+      "title2": "Distribuição de pontuações (sítios web)",
       "frequency_p": "Frequência (nº de páginas)",
       "percentage_p": "Percentagem (nº de páginas)",
       "percentage": "Percentagem (%)",
-      "frequency_w": "Frequência (nº de websites)",
-      "percentage_w": "Percentagem (nº de websites)",
+      "frequency_w": "Frequência (nº de sítios web)",
+      "percentage_w": "Percentagem (nº de sítios web)",
       "range": "Intervalo",
       "cumulative": "Frequência cumulativa"
     },
     "mean": "Média",
     "median": "Mediana",
+    "standard_deviation": "Desvio padrão",
     "median_desc": "Trata-se do valor que corresponde a 50% da distribuição das pontuações.",
     "variance": "Variância amostral",
     "variance_desc": "Mede a dispersão dos valores (pontuações) com relação ao valor central (média).",
     "amplitude": "Amplitude amostral",
     "amplitude_desc": "A amplitude amostral é a diferença entre o valor máximo e o valor mínimo das pontuações. A amplitude amostral permite ter uma noção de dispersão dos dados.",
-    "note": "<strong>Nota:</strong> Websites sem páginas não serão usados durante os cálculos estatísticos",
+    "note": "<strong>Nota:</strong> Sítios web sem páginas não serão usados durante os cálculos estatísticos",
     "table": {
       "title": "Nº de páginas que falharam os testes por prioridade",
-      "title2": "Nº de websites que falharam os testes por prioridade"
+      "title2": "Nº de sítios web que falharam os testes por prioridade"
     },
     "table2": {
       "title": "Distribuição detalhada de erros",
       "error_label": "Teste (descrição)",
-      "n_errors_label": "Nº de ocurrências",
+      "n_errors_label": "Nº de ocorrências",
       "n_pages_label": "Nº de páginas afetadas",
-      "n_websites_label": "Nº de websites afetados",
+      "n_websites_label": "Nº de sítios web afetados",
       "details_label": "Existem",
       "details": {
-        "single_error": "ocurrência em",
-        "multi_error": "ocurrências em",
+        "single_error": "ocorrência em",
+        "multi_error": "ocorrências em",
         "single_page": "página",
         "multi_page": "páginas",
         "single_page2": "página em",
         "multi_page2": "páginas em",
-        "single_website": "website",
-        "multi_website": "websites",
+        "single_website": "sítio web",
+        "multi_website": "sítios web",
         "from": "de",
         "to": "a"
       },
@@ -266,7 +268,7 @@
       "scorerror": "Erro"
     },
     "table3": {
-      "title": "Resultados por websites",
+      "title": "Resultados por sítios web",
       "conform_label": "Conformidade",
       "nc": "Não conforme",
       "A": "Nível A",
@@ -290,12 +292,12 @@
     "title": "Categoria",
     "subtitle": "Erro",
     "list": {
-      "title": "Lista de websites",
+      "title": "Lista de sítios web",
       "subtitle": "Nº de resultados"
     }
   },
   "PAGES_ERROR": {
-    "title": "Website",
+    "title": "Sítio web",
     "subtitle": "Erro",
     "list": {
       "title": "Lista de páginas",
