@@ -110,6 +110,17 @@ export class WebsiteComponent implements OnInit, OnDestroy {
     });
   }
 
+  reEvaluatePages(): void {
+    this.studies.reEvaluatePages(this.tag, this.website)
+      .subscribe(result => {
+        if (result) {
+          this.dialog.open(BackgroundEvaluationsInformationDialogComponent, { width: '40vw' })
+        } else {
+          alert('Error');
+        }
+      });
+  }
+
   goBack(): Array<string> {
     const path = this.location.path();
     let segments = _.split(path, '/');

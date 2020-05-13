@@ -22,6 +22,8 @@ export class PagesTableComponent implements OnInit {
 
   @Output('removePages') removePages = new EventEmitter<Array<number>>();
 
+  @Output('reEvaluatePages') reEvaluatePages = new EventEmitter<void>();
+
   displayedColumns = [
     'Select',
     'Uri',
@@ -61,6 +63,10 @@ export class PagesTableComponent implements OnInit {
   deletePages(): void {
     const pagesId = _.map(this.selection.selected, 'PageId');
     this.removePages.next(pagesId);
+  }
+
+  reEvaluate(): void {
+    this.reEvaluatePages.next();
   }
 
   /** Whether the number of selected elements matches the total number of rows. */

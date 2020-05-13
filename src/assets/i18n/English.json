@@ -160,6 +160,7 @@
     "remove_button": "Remove",
     "remove_success_message": "Pages removed successfully",
     "remove_error_message": "There was an error while trying to remove the selected pages",
+    "re_evaluate": "Re-evaluate all pages",
     "table": {
       "filter": "Filter",
       "page": "Page",

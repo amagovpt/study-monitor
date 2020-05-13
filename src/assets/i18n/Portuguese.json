@@ -159,6 +159,7 @@
     "remove_button": "Remover",
     "remove_success_message": "Páginas removidas com successo",
     "remove_error_message": "Ocorreu um erro ao tentar remover as páginas selecionadas",
+    "re_evaluate": "Re-avaliar todas as páginas",
     "table": {
       "filter": "Filtro",
       "page": "Página",

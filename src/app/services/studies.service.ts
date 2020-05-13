@@ -482,6 +482,29 @@ export class StudiesService {
     );
   }
 
+  reEvaluatePages(tag: string, website: string): Observable<boolean> {
+    return this.http.post<any>(this.config.getServer('/website/studyMonitor/reEvaluate'), {tag, website}, {observe: 'response'}).pipe(
+      retry(3),
+      map(res => {
+        const response = <Response> res.body;
+
+        if (!res.body || res.status === 404) {
+          throw new AsError(404, 'Service not found', 'SERIOUS');
+        }
+
+        if (response.success !== 1) {
+          throw new AsError(response.success, response.message);
+        }
+
+        return <Array<any>> response.result;
+      }),
+      catchError(err => {
+        console.log(err);
+        return of(null);
+      })
+    );
+  }
+
   removePages(tag: string, website: string, pagesId: Array<number>): Observable<Array<Page>> {
     return this.http.post<any>(this.config.getServer('/page/studyMonitor/remove'), {tag, website, pagesId: JSON.stringify(pagesId)}, {observe: 'response'}).pipe(
       retry(3),
