@@ -113,7 +113,10 @@ export class UserService {
             this.message.show('LOGIN.messages.system_error');
             break;
         }
-
+        sessionStorage.removeItem('SM-username');
+        localStorage.removeItem('SM-SSID');
+        localStorage.removeItem('expires-at');
+        this.router.navigateByUrl(location);
         console.log(err);
         return of(false);
       })
