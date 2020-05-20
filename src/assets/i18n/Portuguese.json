@@ -171,6 +171,12 @@
         "cancel": "Cancelar",
         "submit": "Importar"
       }
+    },
+    "sitemap": {
+      "warning": "Os ficheiros sitemap necessitam que a sua primeira página seja igual ao domínio do sítio web",
+      "uris_invalid": "Um dos uris no ficheiro inserido é inválido",
+      "type_invalid": "O ficheiro inserido não é do tipo .xml ou .txt"
+    }
   },
   "PAGES": {
     "title": "Páginas do sítio web {{value}}",

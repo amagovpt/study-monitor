@@ -62,6 +62,10 @@ export class AddPagesComponent implements OnInit {
   pagesForm: FormGroup;
   domain: string;
 
+  urisFromFile: string[];
+  urisFromFileString: string;
+  fileErrorMessage: string;
+
   crawlStatus: string;
   crawlButtonDisable: boolean;
   crawlResultsDisabled: boolean;
@@ -80,6 +84,8 @@ export class AddPagesComponent implements OnInit {
     this.crawlStatus = 'not_running';
     this.crawlButtonDisable = false;
     this.crawlResultsDisabled = true;
+    this.fileErrorMessage = '';
+    this.urisFromFile = [];
   }
 
   ngOnInit(): void {
@@ -116,6 +122,82 @@ export class AddPagesComponent implements OnInit {
     this.addTagWebsitePages.next({ domain: this.domain, urls: pages});
   }
 
+  handleFileInput(files: FileList) {
+    const fileToRead = files.item(0);
+    this.urisFromFile = [];
+    if (fileToRead === null) {
+      this.fileErrorMessage = '';
+      this.urisFromFile = [];
+      return;
+    }
+
+    switch (fileToRead.type) {
+      case ('text/plain'):
+        this.parseTXT(fileToRead);
+        break;
+      case ('text/xml'):
+        this.parseXML(fileToRead);
+        break;
+      default:
+        this.urisFromFile = [];
+        this.fileErrorMessage = 'invalidType';
+        break;
+    }
+  }
+
+  parseTXT(file: File): string[] {
+    const result = [];
+    // open file and check for the urls
+    const reader = new FileReader();
+    reader.readAsText(file);
+    // divide the url in the result array
+    reader.onload = () => {
+      const urlFile = reader.result.toString();
+      const lines = urlFile.split('\n').map(l => l.trim()).filter(u => u !== '');
+
+      this.urisFromFile = _.clone(lines);
+      this.validateFileUris(this.domain, this.urisFromFile);
+      this.cd.detectChanges();
+    };
+    return result;
+  }
+
+  parseXML(file: File): string[] {
+    const reader = new FileReader();
+    const result = [];
+    reader.readAsText(file);
+    reader.onload = () => {
+      const parser = new DOMParser();
+      const json = {}; // this.xml2Json.xmlToJson(xml);
+      const urlJson = json['urlset']['url'];
+
+      this.urisFromFile = _.clone(urlJson.map(u => u.loc));
+      this.validateFileUris(this.domain, this.urisFromFile);
+    };
+    return result;
+  }
+
+  validateFileUris(domain: string, uris: string[]): void {
+    if (domain === '') {
+      this.fileErrorMessage = 'invalidDomain';
+      return;
+    }
+    if (uris !== undefined || uris !== []) {
+      for (let url of uris) {
+        if (!url.startsWith(domain)) {
+          this.fileErrorMessage = 'invalidDomain';
+          return;
+        } else {
+          this.fileErrorMessage = '';
+        }
+      }
+    }
+  }
+
+  addFilePages(): void {
+    this.addTagWebsitePages.next({ domain: this.domain, urls: this.urisFromFile });
+  }
+
   crawlWebsite(): void {
     this.studies.crawlWebsite(this.domain)
       .subscribe(result => {
@@ -140,7 +222,7 @@ export class AddPagesComponent implements OnInit {
 
     dialog.afterClosed().subscribe(data => {
       if (data) {
-        this.addTagWebsitePages.next({ domain: this.domain, urls: data});
+        this.addTagWebsitePages.next({ domain: this.domain, urls: data });
       }
     });
   }

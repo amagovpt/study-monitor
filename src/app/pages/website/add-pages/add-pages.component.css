@@ -1,4 +1,4 @@
-.crawler-container {
+.crawler-container, .sitemap-container {
   padding: 1em;
 }
 
@@ -17,4 +17,8 @@
 .check-results {
   background-color: green;
   color: white;
+}
+
+.sitemap-error {
+  color: red;
 }
