@@ -59,38 +59,6 @@ export class TagComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  addExistingWebsite(data): void {
-    this.loading = true;
-    this.studies.addExistingTagWebsite(this.tag, data)
-      .subscribe(websites => {
-        if (websites) {
-          this.message.show('ADD_WEBSITE.new.success_message');
-          this.websites = websites;
-        }
-
-        this.loading = false;
-        this.cd.detectChanges();
-      });
-  }
-
-  addNewWebsite(data): void {
-    this.loading = true;
-    this.studies.addNewTagWebsite(this.tag, data.name, data.domain, data.pages)
-      .subscribe(websites => {
-        if (websites) {
-          if (data.pages.length > 0) {
-            this.dialog.open(BackgroundEvaluationsInformationDialogComponent, { width: '40vw' });
-          }
-
-          this.message.show('ADD_WEBSITE.new.success_message');
-          this.websites = websites;
-        }
-
-        this.loading = false;
-        this.cd.detectChanges();
-      });
-  }
-
   removeWebsites(websitesId): void {
     const dialogRef = this.dialog.open(RemoveWebsitesConfirmationDialogComponent);
 

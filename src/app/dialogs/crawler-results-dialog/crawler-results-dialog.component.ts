@@ -39,6 +39,10 @@ export class CrawlerResultsDialogComponent implements OnInit {
     this.studies.getCrawlerResults(this.data.domain)
       .subscribe(pages => {
         if (pages) {
+          pages = pages.map(page => {
+            page.Uri = decodeURIComponent(page.Uri);
+            return page;
+          });
           this.dataSource = new MatTableDataSource(pages);
         } else {
           this.error = true;

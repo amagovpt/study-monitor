@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddWebsiteComponent } from './add-website.component';
+import { AddWebpagesDialogComponent } from './add-webpages-dialog.component';
 
-describe('AddWebsiteComponent', () => {
-  let component: AddWebsiteComponent;
-  let fixture: ComponentFixture<AddWebsiteComponent>;
+describe('AddWebpagesDialogComponent', () => {
+  let component: AddWebpagesDialogComponent;
+  let fixture: ComponentFixture<AddWebpagesDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddWebsiteComponent ]
+      declarations: [ AddWebpagesDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddWebsiteComponent);
+    fixture = TestBed.createComponent(AddWebpagesDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

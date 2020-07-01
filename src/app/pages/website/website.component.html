@@ -16,8 +16,6 @@
   </mat-card>
   <br>
   <div *ngIf="!loading && !error">
-    <app-add-pages [tag]="tag" [website]="website" (addPages)="addPages($event)"></app-add-pages>
-    <br>
     <span class="no-pages-message" *ngIf="pages.length === 0" fxLayout="column" fxLayoutAlign="start center">
       <p>{{ "WEBSITE.no_pages.message1" | translate }}</p>
       <p>{{ "WEBSITE.no_pages.message2" | translate }}</p>

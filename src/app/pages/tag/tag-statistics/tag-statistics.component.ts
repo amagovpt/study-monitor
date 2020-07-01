@@ -42,9 +42,9 @@ export class TagStatisticsComponent implements OnInit {
     });
     
     this.n_pages = this.websites.reduce((p, w) => p += w.Pages, 0);
-    const scores = this.websites.map(w => w.Score);
-    scores.sort();
-
+    let scores = this.websites.map(w => w.Score);
+    scores = scores.sort().filter(s => s !== 0);
+    
     let n = 0;
     const size = scores.length;
     for (let i = 0 ; i < size ; i++) {

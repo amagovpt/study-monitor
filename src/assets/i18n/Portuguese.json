@@ -14,6 +14,24 @@
       "system_error": "Erro no sistema. Por favor tente mais tarde"
     }
   },
+  "BOTTOMSHEET": {
+    "category": {
+      "title": "Categoria",
+      "subtitle": "Criar uma nova categoria"
+    },
+    "website": {
+      "title": "Sítio web",
+      "subtitle": "Adicione um novo sítio web"
+    },
+    "website2": {
+      "title": "Sítio web",
+      "subtitle": "Importe sítios web duma categoria para outra"
+    },
+    "pages": {
+      "title": "Páginas web",
+      "subtitle": "Adicione novas páginas web"
+    }
+  },
   "SIDEBAR": {
     "menu": "Menu",
     "categories": "Categorias",
@@ -70,7 +88,7 @@
       "yes": "Sim",
       "no": "Não"
     },
-    "add_tag": "Adicionar nova categoria"
+    "add_content": "Adicionar catgeorias/sítios web/páginas web"
   },
   "TAG": {
     "title": "Categoria",
@@ -81,15 +99,18 @@
   },
   "ADD_WEBSITE": {
     "existing": {
-      "title": "Adicionar um sítio web existente",
+      "title": "Importar sítio web",
       "subtitle": "Adicione um sítio web de outra categoria a esta categoria",
-      "label": "Sítios web",
+      "tags_label": "Escolha a categoria para onde quer importar",
+      "label": "Sítios web para importar",
       "option": "<strong>Categoria</strong>: {{tag}}, <strong>sítio web</strong>: {{website}} - {{url}}",
+      "no_websites": "Não existem s+itios web para importar",
       "button": "Adicionar sítios web"
     },
     "new": {
       "title": "Adicionar novo sítio web",
       "subtitle": "Adicione um novo sítio web a esta categoria",
+      "tags_label": "Escolha uma categoria",
       "name_label": "Nome",
       "domain_label": "Domain",
       "urls_label": "Urls",
@@ -146,12 +167,16 @@
   "ADD_PAGES": {
     "title": "Adicionar páginas",
     "subtitle": "Adicione páginas a este sítio web",
+    "tags_label": "Escolha uma categoria",
+    "websites_label": "Escolha um sítio web",
     "tab1": "Inserir manualmente",
     "tab2": "Inserir sitemap",
     "tab3": "Crawl sítio web",
     "domain_label": "Domínio atual",
     "pages_label": "Urls",
     "hint": "Por favor insira urls completos, com o protocolo e www se necessário",
+    "url_match_error": "O url não corresponde ao domínio",
+    "url_missing_protocol": "O protocolo (http ou https) está em falta em pelo menos um dos urls",
     "required": "Este campo é <strong>obrigatório</strong>",
     "error": "Um dos urls é <strong>inválido</strong>",
     "button": "Adicionar páginas",
@@ -175,7 +200,9 @@
         "uri_label": "Páginas",
         "import": "Importar",
         "cancel": "Cancelar",
-        "submit": "Importar"
+        "submit": "Importar",
+        "total": "Total:",
+        "selected": "Selecionadas:" 
       }
     },
     "sitemap": {

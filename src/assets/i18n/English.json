@@ -14,6 +14,24 @@
       "system_error": "There was a system error. Please try later"
     }
   },
+  "BOTTOMSHEET": {
+    "category": {
+      "title": "Category",
+      "subtitle": "Create a new category"
+    },
+    "website": {
+      "title": "Website",
+      "subtitle": "Add a new website"
+    },
+    "website2": {
+      "title": "Website",
+      "subtitle": "Import websites from one category to another"
+    },
+    "pages": {
+      "title": "Webpages",
+      "subtitle": "Add new webpages"
+    }
+  },
   "SIDEBAR": {
     "menu": "Menu",
     "categories": "Categories",
@@ -70,7 +88,7 @@
       "yes": "Yes",
       "no": "No"
     },
-    "add_tag": "Add new tag"
+    "add_content": "Add tags/websites/webpages"
   },
   "TAG": {
     "title": "Category",
@@ -81,19 +99,22 @@
   },
   "ADD_WEBSITE": {
     "existing": {
-      "title": "Add an existing website",
+      "title": "Import websites",
       "subtitle": "Add a website from other category to this category",
-      "label": "Websites",
+      "tags_label": "Choose the tag to import to",
+      "label": "Websites to import",
       "option": "<strong>Category</strong>: {{tag}}, <strong>Website</strong>: {{website}} - {{url}}",
+      "no_websites": "There are no websites to import",
       "button": "Add websites"
     },
     "new": {
       "title": "Add a new website",
       "subtitle": "Add a new website to this category",
+      "tags_label": "Choose tag",
       "name_label": "Name",
       "domain_label": "Domain",
       "urls_label": "Urls",
-      "hint": "Please write complete urls, with protocol and www if need",
+      "hint": "Please write complete urls, with protocol and www if needed",
       "required": "This field is <strong>required</strong>",
       "taken_name": "You <strong>already</strong> have an website with this name",
       "taken_name_error": "An error has ocurred while trying to validate this name",
@@ -146,12 +167,15 @@
   "ADD_PAGES": {
     "title": "Add pages",
     "subtitle": "Add pages to this website",
+    "tags_label": "Choose tag",
+    "websites_label": "Choose website",
     "tab1": "Insert manually",
     "tab2": "Insert sitemap",
     "tab3": "Crawl website",
     "domain_label": "Current domain",
     "pages_label": "Urls",
     "hint": "Please write complete urls, with protocol and www if need",
+    "url_match_error": "The url doesn't match the domain",
     "url_missing_protocol": "One of the urls protocol is missing (http or https)",
     "required": "This field is <strong>required</strong>",
     "error": "One of the urls is <strong>invalid</strong>",
@@ -176,7 +200,9 @@
         "uri_label": "Pages",
         "import": "Import",
         "cancel": "Cancel",
-        "submit": "Import"
+        "submit": "Import",
+        "total": "Total:",
+        "selected": "Selected:" 
       }
     },
     "sitemap": {

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddNewWebsiteComponent } from './add-new-website.component';
+import { BottomSheetComponent } from './bottom-sheet.component';
 
-describe('AddNewWebsiteComponent', () => {
-  let component: AddNewWebsiteComponent;
-  let fixture: ComponentFixture<AddNewWebsiteComponent>;
+describe('BottomSheetComponent', () => {
+  let component: BottomSheetComponent;
+  let fixture: ComponentFixture<BottomSheetComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddNewWebsiteComponent ]
+      declarations: [ BottomSheetComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddNewWebsiteComponent);
+    fixture = TestBed.createComponent(BottomSheetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

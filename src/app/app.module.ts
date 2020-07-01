@@ -32,7 +32,6 @@ import { NavbarComponent } from './pages/user/navbar/navbar.component';
 import { CreateCategoryDialogComponent } from './dialogs/create-category-dialog/create-category-dialog.component';
 import { TagComponent } from './pages/tag/tag.component';
 import { TagStatisticsComponent } from './pages/tag/tag-statistics/tag-statistics.component';
-import { AddWebsiteComponent } from './pages/tag/add-website/add-website.component';
 import { PagesTableComponent } from './pages/website/pages-table/pages-table.component';
 import { EvaluationResultsComponent } from './pages/evaluation-results/evaluation-results.component';
 import { ElementResultComponent } from './pages/element-result/element-result.component';
@@ -57,13 +56,15 @@ import { TagStatisticsScoreDistributionComponent } from './pages/tag-detailed-st
 import { TagStatisticsWebsitesResultsComponent } from './pages/tag-detailed-statistics/tag-statistics-websites-results/tag-statistics-websites-results.component';
 import { TagStatisticsPagesResultsComponent } from './pages/tag-detailed-statistics/tag-statistics-pages-results/tag-statistics-pages-results.component';
 import { TagListWebsitesErrorComponent } from './pages/tag-list-websites-error/tag-list-websites-error.component';
-import { AddExistingWebsiteComponent } from './pages/tag/add-website/add-existing-website/add-existing-website.component';
-import { AddNewWebsiteComponent } from './pages/tag/add-website/add-new-website/add-new-website.component';
 import { UserAuthErrorDialogComponent } from './dialogs/user-auth-error-dialog/user-auth-error-dialog.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { AddPagesErrorsDialogComponent } from './dialogs/add-pages-errors-dialog/add-pages-errors-dialog.component';
 import { BackgroundEvaluationsInformationDialogComponent } from './dialogs/background-evaluations-information-dialog/background-evaluations-information-dialog.component';
 import { CrawlerResultsDialogComponent } from './dialogs/crawler-results-dialog/crawler-results-dialog.component';
+import { BottomSheetComponent } from './dialogs/bottom-sheet/bottom-sheet.component';
+import { AddWebsiteDialogComponent } from './dialogs/add-website-dialog/add-website-dialog.component';
+import { AddWebpagesDialogComponent } from './dialogs/add-webpages-dialog/add-webpages-dialog.component';
+import { ImportWebsiteDialogComponent } from './dialogs/import-website-dialog/import-website-dialog.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent, canActivate: [NoAuthGuard] },
@@ -116,7 +117,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     CreateCategoryDialogComponent,
     TagComponent,
     TagStatisticsComponent,
-    AddWebsiteComponent,
     PagesTableComponent,
     ToFixedPipe,
     EvaluationResultsComponent,
@@ -143,13 +143,15 @@ export function HttpLoaderFactory(http: HttpClient) {
     TagStatisticsWebsitesResultsComponent,
     TagStatisticsPagesResultsComponent,
     TagListWebsitesErrorComponent,
-    AddExistingWebsiteComponent,
-    AddNewWebsiteComponent,
     UserAuthErrorDialogComponent,
     SettingsComponent,
     AddPagesErrorsDialogComponent,
     BackgroundEvaluationsInformationDialogComponent,
-    CrawlerResultsDialogComponent
+    CrawlerResultsDialogComponent,
+    BottomSheetComponent,
+    AddWebsiteDialogComponent,
+    AddWebpagesDialogComponent,
+    ImportWebsiteDialogComponent
   ],
   imports: [
     RouterModule.forRoot(

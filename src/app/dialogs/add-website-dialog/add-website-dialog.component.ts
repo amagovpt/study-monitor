@@ -1,10 +1,15 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormBuilder, Validators, FormGroupDirective, NgForm, ValidationErrors } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import * as _ from 'lodash';
 
-import { StudiesService } from '../../../../services/studies.service';
+import { BackgroundEvaluationsInformationDialogComponent } from '../../dialogs/background-evaluations-information-dialog/background-evaluations-information-dialog.component';
+
+import { StudiesService } from '../../services/studies.service';
+import { MessageService } from '../../services/message.service';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -45,24 +50,32 @@ class DomainUrlValidation {
 }
 
 @Component({
-  selector: 'app-add-new-website',
-  templateUrl: './add-new-website.component.html',
-  styleUrls: ['./add-new-website.component.css']
+  selector: 'app-add-website-dialog',
+  templateUrl: './add-website-dialog.component.html',
+  styleUrls: ['./add-website-dialog.component.css']
 })
-export class AddNewWebsiteComponent implements OnInit {
+export class AddWebsiteDialogComponent implements OnInit {
 
-  @Input('tag') tag: string;
-  @Output('addWebsite') addTagWebsite = new EventEmitter<any>();
+  loading: boolean;
+  loadingCreate: boolean;
+  error: boolean;
 
   matcher: ErrorStateMatcher;
 
   websiteForm: FormGroup;
 
+  tags: any[];
+  filteredTags: Observable<string[]>;
+
   constructor(
     private readonly studies: StudiesService, 
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private message: MessageService,
+    private dialog: MatDialog,
+    private dialogRef: MatDialogRef<AddWebsiteDialogComponent>
   ) {
     this.websiteForm = this.fb.group({
+      tags: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required], this.nameValidator.bind(this)),
       domain: new FormControl('', [
         Validators.required,
@@ -76,30 +89,82 @@ export class AddNewWebsiteComponent implements OnInit {
     }, { validator: DomainUrlValidation.UrlMatchDomain });
 
     this.matcher = new MyErrorStateMatcher();
+
+    this.loading = true;
+    this.loadingCreate = false;
+    this.error = false;
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.studies.getUserTags()
+      .subscribe(tags => {
+        if (tags) {
+          this.tags = tags;
+          this.filteredTags = this.websiteForm.controls.tags.valueChanges
+            .pipe(
+              startWith(null),
+              map(val => this.filterTag(val))
+            );
+
+          const location = window.location.pathname;
+          let segments = location.split('/');
+          segments = segments.slice(1);
+          if (segments[0] !== 'user') {
+            segments = segments.slice(1);
+          }
+          if (segments[1] !== undefined) {
+            this.websiteForm.controls.tags.setValue(decodeURIComponent(segments[1]));
+          }
+        } else {
+          this.error = true;
+        }
+
+        this.loading = false;
+      });
   }
 
-  addWebsite(e): void {
-    e.preventDefault();
+  createWebsite(e): void {
+    this.loadingCreate = true;
 
+    const tag = this.websiteForm.value.tags;
     const name = this.websiteForm.value.name;
     const domain = this.websiteForm.value.domain;
+    const pages = this.websiteForm.value.pages || [];
 
-    const pages = _.map(_.uniq(_.without(_.split(this.websiteForm.value.pages, '\n'), '')), p => {
-      return _.trim(p);
-    });
+    this.studies.addNewTagWebsite(tag, name, domain, pages)
+      .subscribe(websites => {
+        if (websites) {
+          if (pages.length > 0) {
+            this.dialog.open(BackgroundEvaluationsInformationDialogComponent, { width: '40vw' });
+          }
 
-    this.addTagWebsite.next({name, domain, pages});
+          this.message.show('ADD_WEBSITE.new.success_message');
+          this.dialogRef.close();
+        }
+
+        this.loadingCreate = false;
+      });
+  }
+
+  canSubmit(): boolean {
+    return !this.websiteForm.invalid;
+  }
+
+  validateTag(): boolean {
+    return this.websiteForm?.value?.tags && this.websiteForm?.value?.tags?.trim() !== '';
+  }
+
+  filterTag(val: any): string[] {
+    return this.tags.filter(tag =>
+      _.includes(_.toLower(tag.Name), _.toLower(val)));
   }
 
   nameValidator(control: AbstractControl): Observable<any> {
     try {
       const name = _.trim(control.value);
 
-      if (name !== '') {
-        return this.studies.checkWebsiteNameExists(this.tag, name);
+      if (name !== '' && this.websiteForm.value.tags.trim() !== '') {
+        return this.studies.checkWebsiteNameExists(this.websiteForm.value.tags, name);
       } else {
         return null;
       }
@@ -113,8 +178,9 @@ export class AddNewWebsiteComponent implements OnInit {
     try {
       const domain = _.trim(control.value);
       
-      if (domain !== '') {
-        return this.studies.checkWebsiteDomainExists(this.tag, domain);
+      
+      if (domain !== '' && this.websiteForm.value.tags.trim() !== '') {
+        return this.studies.checkWebsiteDomainExists(this.websiteForm.value.tags, domain);
       } else {
         return null;
       }
@@ -154,7 +220,7 @@ function domainMissingProtocol(control: FormControl): ValidationErrors | null {
 
     const invalid = !domain.startsWith('http://') && !domain.startsWith('https://')
 
-    return invalid ? { domainMissingProtocol: true } : null;
+    return invalid ? { domainMissingProtocol: { value: true } } : null;
   } catch(err) {
     console.log(err);
     return null;

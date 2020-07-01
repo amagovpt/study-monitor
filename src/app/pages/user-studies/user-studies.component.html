@@ -13,7 +13,7 @@
         </mat-form-field>
       </div>
 
-      <button mat-raised-button color="warn" (click)="deleteTags()" [disabled]="!selection.hasValue()">
+      <button mat-flat-button color="warn" (click)="deleteTags()" [disabled]="!selection.hasValue()">
         {{ "TAGS.remove_button" | translate }}
       </button>
 

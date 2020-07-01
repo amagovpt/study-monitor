@@ -1,0 +1,38 @@
+<div fxLayout="row">
+  <h1 class="mat-display-1" mat-dialog-title>{{ "ADD_WEBSITE.existing.title" | translate }}</h1>
+  <span fxFlex></span>
+  <button mat-icon-button aria-label="Close dialog" mat-dialog-close>
+    <mat-icon aria-hidden="false">close</mat-icon>
+  </button>
+</div>
+<form (submit)="importWebsite($event)" [formGroup]="websiteForm" novalidate>
+  <mat-dialog-content fxLayout="column">
+    <mat-form-field *ngIf="!loading" fxFlex>
+      <label for="tags">
+        {{ "ADD_WEBSITE.existing.tags_label" | translate }}
+      </label>
+      <input id="tags" type="text" aria-label="Choose tag" matInput formControlName="tags" [matAutocomplete]="auto" [errorStateMatcher]="matcher" autofocus required>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="searchWebsites()">
+        <mat-option *ngFor="let tag of filteredTags | async" [value]="tag.Name">
+          {{ tag.Name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field *ngIf="websiteForm.value.tags && websites?.length > 0">
+      <label for="websites_list">{{ "ADD_WEBSITE.existing.label" | translate }}</label>
+      <mat-select id="websites_list" formControlName="websites" multiple required>
+        <mat-option *ngFor="let w of websites" [value]="w.WebsiteId">
+          <span [innerHTML]="'ADD_WEBSITE.existing.option' | translate:{tag: w.TagName, website: w.Name, url: w.Url}"></span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <span *ngIf="websites?.length === 0"><strong>{{ "ADD_WEBSITE.existing.no_websites" | translate }}</strong></span>
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row">
+    <span fxFlex></span>
+    <button mat-raised-button color="primary" type="submit" *ngIf="!loading" [disabled]="!canSubmit()">
+      {{ "ADD_WEBSITE.existing.button" | translate }}
+    </button>
+    <span *ngIf="loading"><strong>{{ "MISC.loading" | translate }}</strong></span>
+  </mat-dialog-actions>
+</form>

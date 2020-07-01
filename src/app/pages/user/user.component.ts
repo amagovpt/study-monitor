@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
-import { CreateCategoryDialogComponent } from '../../dialogs/create-category-dialog/create-category-dialog.component';
+import { BottomSheetComponent } from '../../dialogs/bottom-sheet/bottom-sheet.component';
 
 @Component({
   selector: 'app-user',
@@ -10,16 +11,15 @@ import { CreateCategoryDialogComponent } from '../../dialogs/create-category-dia
 })
 export class UserComponent implements OnInit {
 
-  constructor(private dialog: MatDialog) { }
+  constructor(
+    private readonly dialog: MatDialog,
+    private _bottomSheet: MatBottomSheet
+  ) { }
 
   ngOnInit() {
   }
 
-  openCreateCategoryDialog(): void {
-    this.dialog.open(CreateCategoryDialogComponent, {
-      width: '40vw',
-      disableClose: false,
-      hasBackdrop: true
-    });
+  openBottomSheet(): void {
+    this._bottomSheet.open(BottomSheetComponent);
   }
 }

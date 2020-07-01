@@ -1,0 +1,59 @@
+<div fxLayout="row">
+  <h1 class="mat-display-1" mat-dialog-title>{{ "ADD_WEBSITE.new.title" | translate }}</h1>
+  <span fxFlex></span>
+  <button mat-icon-button aria-label="Close dialog" mat-dialog-close>
+    <mat-icon aria-hidden="false">close</mat-icon>
+  </button>
+</div>
+<form (submit)="createWebsite($event)" [formGroup]="websiteForm" novalidate>
+  <mat-dialog-content fxLayout="column">
+    <mat-form-field fxFlex>
+      <label for="tags">
+        {{ "ADD_WEBSITE.new.tags_label" | translate }}
+      </label>
+      <input id="tags" type="text" aria-label="Choose tag" matInput formControlName="tags" [matAutocomplete]="auto" [errorStateMatcher]="matcher" autofocus required>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let tag of filteredTags | async" [value]="tag.Name">
+          {{ tag.Name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field *ngIf="websiteForm.value.tags">
+      <label for="ADD_WEBSITE.new_name">{{ "ADD_WEBSITE.new.name_label" | translate }}</label>
+      <input id="ADD_WEBSITE.new_name" type="text" name="name" matInput formControlName="name" [errorStateMatcher]="matcher" required>
+      <mat-error *ngIf="websiteForm.controls.name.status === 'PENDING'">
+        <mat-progress-bar mode="buffer"></mat-progress-bar>
+      </mat-error>
+      <mat-error *ngIf="websiteForm.controls.name.hasError('required')" [innerHTML]="'MISC.required_field' | translate"></mat-error>
+      <mat-error *ngIf="websiteForm.controls.name.hasError('takenName')" [innerHTML]="'ADD_WEBSITE.new.taken_name' | translate"></mat-error>
+      <mat-error *ngIf="websiteForm.controls.name.hasError('takenNameError')" [innerHTML]="'ADD_WEBSITE.new.taken_name_error' | translate"></mat-error>
+    </mat-form-field>
+    <mat-form-field *ngIf="websiteForm.value.tags">
+      <label for="ADD_WEBSITE.new_domain">{{ "ADD_WEBSITE.new.domain_label" | translate }}</label>
+      <input id="ADD_WEBSITE.new_domain" type="text" name="domain" matInput formControlName="domain" [errorStateMatcher]="matcher" required>
+      <mat-error *ngIf="websiteForm.controls.domain.status === 'PENDING'">
+        <mat-progress-bar mode="buffer"></mat-progress-bar>
+      </mat-error>
+      <mat-error *ngIf="websiteForm.controls.domain.hasError('required')" [innerHTML]="'MISC.required_field' | translate"></mat-error>
+      <mat-error *ngIf="websiteForm.controls.domain.hasError('invalidDomain')" [innerHTML]="'ADD_WEBSITE.new.invalid_domain' | translate"></mat-error>
+      <mat-error *ngIf="websiteForm.controls.domain.hasError('takenDomain')" [innerHTML]="'ADD_WEBSITE.new.taken_domain' | translate"></mat-error>
+      <mat-error *ngIf="websiteForm.controls.domain.hasError('takenDomainError')" [innerHTML]="'ADD_WEBSITE.new.taken_domain_error' | translate"></mat-error>
+      <mat-error *ngIf="websiteForm.controls.domain.hasError('domainMissingProtocol')" [innerHTML]="'ADD_WEBSITE.new.domain_missing_protocol' | translate"></mat-error>
+    </mat-form-field>
+    <mat-form-field *ngIf="websiteForm.value.tags">
+      <label for="ADD_WEBSITE.new_pages">{{ "ADD_WEBSITE.new.urls_label" | translate }}</label>
+      <textarea id="ADD_WEBSITE.new_pages" name="pages" matInput cdkTextareaAutosize cdkAutosizeMinRows="5" formControlName="pages" [errorStateMatcher]="matcher"></textarea>
+      <mat-hint>{{ "ADD_WEBSITE.new.hint" | translate }}</mat-hint>
+      <mat-error *ngIf="websiteForm.controls.pages.hasError('url')" [innerHTML]="'ADD_WEBSITE.new.invalid_url' | translate"></mat-error>
+      <mat-error *ngIf="websiteForm.controls.pages.hasError('domainNoMatch')" [innerHTML]="'ADD_WEBSITE.new.url_match_error' | translate"></mat-error>
+      <mat-error *ngIf="websiteForm.controls.pages.hasError('missingProtocol')" [innerHTML]="'ADD_WEBSITE.new.url_missing_protocol' | translate"></mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row">
+    <span fxFlex></span>
+    <button mat-raised-button color="primary" type="submit" *ngIf="!loading" [disabled]="!canSubmit()">
+      {{ "ADD_WEBSITE.new.button" | translate }}
+    </button>
+    <span *ngIf="loading"><strong>{{ "MISC.loading" | translate }}</strong></span>
+  </mat-dialog-actions>
+</form>

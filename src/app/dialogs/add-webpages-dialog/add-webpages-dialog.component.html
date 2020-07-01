@@ -1,0 +1,92 @@
+<div fxLayout="row">
+  <h1 class="mat-display-1" mat-dialog-title>{{ "ADD_PAGES.title" | translate }}</h1>
+  <span fxFlex></span>
+  <button mat-icon-button aria-label="Close dialog" mat-dialog-close>
+    <mat-icon aria-hidden="false">close</mat-icon>
+  </button>
+</div>
+<form (submit)="createPages($event)" [formGroup]="pagesForm" novalidate>
+  <mat-dialog-content fxLayout="column">
+    <mat-form-field fxFlex>
+      <label for="tags">
+        {{ "ADD_PAGES.tags_label" | translate }}
+      </label>
+      <input id="tags" type="text" aria-label="Choose tag" matInput formControlName="tags" [matAutocomplete]="auto" [errorStateMatcher]="matcher" required>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="searchWebsites()">
+        <mat-option *ngFor="let tag of filteredTags | async" [value]="tag.Name">
+          {{ tag.Name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field *ngIf="pagesForm.value.tags" fxFlex>
+      <label for="websites">
+        {{ "ADD_PAGES.websites_label" | translate }}
+      </label>
+      <input id="websites" type="text" aria-label="Choose website" matInput formControlName="websites" [matAutocomplete]="auto2" [errorStateMatcher]="matcher" required>
+      <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="searchDomain()">
+        <mat-option *ngFor="let website of filteredWebsites | async" [value]="website.Name">
+          {{ website.Name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field *ngIf="pagesForm.value.websites">
+      <label for="add_pages_domain">{{ "ADD_PAGES.domain_label" | translate }}</label>
+      <input id="add_pages_domain" matInput type="text" name="domain" formControlName="domain">
+    </mat-form-field>
+    <mat-tab-group mat-stretch-tabs *ngIf="pagesForm.value.websites">
+      <mat-tab label="{{ 'ADD_PAGES.tab1' | translate }}">
+        <mat-form-field style="width: 100%;">
+          <label for="add_website_pages">{{ "ADD_PAGES.pages_label" | translate }}</label>
+          <textarea id="add_website_pages" name="pages" matInput cdkTextareaAutosize cdkAutosizeMinRows="5" formControlName="pages" [errorStateMatcher]="matcher" required></textarea>
+          <mat-hint>{{ "ADD_PAGES.hint" | translate }}</mat-hint>
+          <mat-error *ngIf="pagesForm.controls.pages.hasError('required')" [innerHTML]="'MISC.required_field' | translate"></mat-error>
+          <mat-error *ngIf="pagesForm.controls.pages.hasError('url')" [innerHTML]="'ADD_PAGES.error' | translate"></mat-error>
+          <mat-error *ngIf="pagesForm.controls.pages.hasError('domainNoMatch')" [innerHTML]="'ADD_PAGES.url_match_error' | translate"></mat-error>
+          <mat-error *ngIf="pagesForm.controls.pages.hasError('missingProtocol')" [innerHTML]="'ADD_PAGES.url_missing_protocol' | translate"></mat-error>
+        </mat-form-field>
+      </mat-tab>
+      <mat-tab label="{{ 'ADD_PAGES.tab2' | translate }}">
+        <div class="sitemap-container" fxLayout="row" fxLayoutAlign="start center">
+          <input type="file" accept="text/xml, text/plain" (change)="handleFileInput($event.target.files)" >
+        </div>
+        <div class="sitemap-container" fxLayout="row" fxLayoutAlign="start center">
+          <span class="sitemap-error" *ngIf="fileErrorMessage === 'invalidDomain'">
+            {{ "ADD_PAGES.sitemap.uris_invalid" | translate }}
+          </span>
+          <span class="sitemap-error" *ngIf="fileErrorMessage === 'invalidType'">
+            {{ "ADD_PAGES.sitemap.type_invalid" | translate }}
+          </span>
+        </div>
+        <div fxLayout="row">
+          <a href="/assets/sitemap/example_sitemap.txt" target="_blank">Sitemap txt example</a>
+          <span fxFlex="5"></span>
+          <a href="/assets/sitemap/example_sitemap.xml" target="_blank">Sitemap xml example</a>
+        </div>
+      </mat-tab>
+      <mat-tab label="{{ 'ADD_PAGES.tab3' | translate }}">
+        <div class="crawler-container" fxLayout="row" fxLayoutAlign="start center">
+          <span>{{ "ADD_PAGES.crawler.status" | translate }}: <span class="status {{ crawlStatus }}">{{ "ADD_PAGES.crawler." + crawlStatus | translate }}</span></span>
+          <span fxFlex="5"></span>
+          <button mat-flat-button color="primary" (click)="crawlWebsite()" [disabled]="crawlButtonDisable">
+            {{ "ADD_PAGES.crawler.crawl_button" | translate }}
+          </button>
+          <span fxFlex="5"></span>
+          <button mat-flat-button class="check-results" (click)="openCrawlingResultsDialog()" [disabled]="crawlResultsDisabled">
+            {{ "ADD_PAGES.crawler.results_button" | translate }}
+          </button>
+          <span fxFlex="5"></span>
+          <button mat-flat-button color="warn" (click)="deleteCrawlingResults()" [disabled]="crawlResultsDisabled">
+            {{ "ADD_PAGES.crawler.delete_button" | translate }}
+          </button>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row">
+    <span fxFlex></span>
+    <button mat-flat-button color="primary" type="submit" *ngIf="!loading" [disabled]="!canSubmit()">
+      {{ "ADD_PAGES.button" | translate }}
+    </button>
+    <span *ngIf="loading"><strong>{{ "MISC.loading" | translate }}</strong></span>
+  </mat-dialog-actions>
+</form>
