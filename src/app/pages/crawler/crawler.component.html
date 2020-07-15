@@ -1,0 +1,83 @@
+<mat-card class="mat-typography">
+  <mat-card-header fxLayout="row" fxLayoutAlign="center center">
+    <mat-card-title>
+      <h1>{{ "CRAWLER.title" | translate }}</h1>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-divider [inset]="true"></mat-divider>
+  <br>
+  <mat-card-content>
+    <form>
+      <mat-form-field fxFlex>
+        <label for="tags">
+          {{ "ADD_PAGES.tags_label" | translate }}
+        </label>
+        <input id="tags" type="text" aria-label="Choose tag" matInput [formControl]="tagsSelect" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="searchWebsites()">
+          <mat-option *ngFor="let tag of filteredTags | async" [value]="tag.Name">
+            {{ tag.Name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+    <br>
+    <div *ngIf="!loading && this.websites">
+      <h2>{{ "CRAWLER.websites_title" | translate }}</h2>
+      <mat-table #table [dataSource]="dataSource">
+  
+        <ng-container matColumnDef="Website">
+          <mat-header-cell *matHeaderCellDef>
+            {{ "CRAWLER.table.name" | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <a [routerLink]="['/user', tagsSelect.value, element.Name]"><strong>{{element.Name}}</strong></a>
+          </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="Status">
+          <mat-header-cell *matHeaderCellDef>
+            {{ "CRAWLER.table.status" | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <span *ngIf="element.Done === 1">
+              {{ "CRAWLER.table.done" | translate }}
+            </span>
+            <span *ngIf="element.Done === 0">
+              {{ "CRAWLER.table.progress" | translate }}
+            </span>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Results">
+          <mat-header-cell *matHeaderCellDef>
+            
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <div *ngIf="element.Done === 1">
+              <button mat-flat-button class="check-results" (click)="openCrawlingResultsDialog(element.Name, element.Url, element.DomainId)">
+                {{ "ADD_PAGES.crawler.results_button" | translate }}
+              </button>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Delete">
+          <mat-header-cell *matHeaderCellDef>
+            
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <div *ngIf="element.Done === 1">
+              <button mat-flat-button color="warn" (click)="deleteCrawlingResults(element.DomainId)">
+                {{ "ADD_PAGES.crawler.delete_button" | translate }}
+              </button>
+            </div>
+          </mat-cell>
+        </ng-container>
+  
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+    <app-loading *ngIf="loading"></app-loading>
+  </mat-card-content>
+</mat-card>

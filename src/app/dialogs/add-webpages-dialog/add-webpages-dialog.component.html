@@ -33,7 +33,7 @@
       <label for="add_pages_domain">{{ "ADD_PAGES.domain_label" | translate }}</label>
       <input id="add_pages_domain" matInput type="text" name="domain" formControlName="domain">
     </mat-form-field>
-    <mat-tab-group mat-stretch-tabs *ngIf="pagesForm.value.websites">
+    <mat-tab-group mat-stretch-tabs *ngIf="pagesForm.value.websites" (selectedTabChange)="tabChanged($event)">
       <mat-tab label="{{ 'ADD_PAGES.tab1' | translate }}">
         <mat-form-field style="width: 100%;">
           <label for="add_website_pages">{{ "ADD_PAGES.pages_label" | translate }}</label>
@@ -70,21 +70,13 @@
           <button mat-flat-button color="primary" (click)="crawlWebsite()" [disabled]="crawlButtonDisable">
             {{ "ADD_PAGES.crawler.crawl_button" | translate }}
           </button>
-          <span fxFlex="5"></span>
-          <button mat-flat-button class="check-results" (click)="openCrawlingResultsDialog()" [disabled]="crawlResultsDisabled">
-            {{ "ADD_PAGES.crawler.results_button" | translate }}
-          </button>
-          <span fxFlex="5"></span>
-          <button mat-flat-button color="warn" (click)="deleteCrawlingResults()" [disabled]="crawlResultsDisabled">
-            {{ "ADD_PAGES.crawler.delete_button" | translate }}
-          </button>
         </div>
       </mat-tab>
     </mat-tab-group>
   </mat-dialog-content>
   <mat-dialog-actions fxLayout="row">
     <span fxFlex></span>
-    <button mat-flat-button color="primary" type="submit" *ngIf="!loading" [disabled]="!canSubmit()">
+    <button mat-flat-button color="primary" type="submit" *ngIf="!loading && !hideAddPagesButton" [disabled]="!canSubmit()">
       {{ "ADD_PAGES.button" | translate }}
     </button>
     <span *ngIf="loading"><strong>{{ "MISC.loading" | translate }}</strong></span>

@@ -1,16 +1,13 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, FormBuilder, Validators, FormGroupDirective, NgForm, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, FormBuilder, Validators, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Observable } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+
 import * as _ from 'lodash';
-
-import { BackgroundEvaluationsInformationDialogComponent } from '../../dialogs/background-evaluations-information-dialog/background-evaluations-information-dialog.component';
-import { CrawlerResultsDialogComponent } from '../../dialogs/crawler-results-dialog/crawler-results-dialog.component';
-
 import { StudiesService } from '../../services/studies.service';
-import { MessageService } from '../../services/message.service';
+import { MatDialog } from '@angular/material/dialog';
+import { BackgroundEvaluationsInformationDialogComponent } from '../background-evaluations-information-dialog/background-evaluations-information-dialog.component';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -80,12 +77,14 @@ export class AddWebpagesDialogComponent implements OnInit {
   websites: any[];
   filteredWebsites: Observable<string[]>;
 
+  hideAddPagesButton: boolean;
+  addingPages: boolean;
+  addingFile: boolean;
+
   constructor(
     private readonly studies: StudiesService, 
     private readonly fb: FormBuilder,
-    private message: MessageService,
-    private dialog: MatDialog,
-    private dialogRef: MatDialogRef<AddWebpagesDialogComponent>,
+    private readonly dialog: MatDialog,
     private cd: ChangeDetectorRef
   ) {
     this.pagesForm = this.fb.group({
@@ -98,13 +97,16 @@ export class AddWebpagesDialogComponent implements OnInit {
     this.matcher = new MyErrorStateMatcher();
     this.crawlStatus = 'not_running';
     this.crawlButtonDisable = false;
-    this.crawlResultsDisabled = true;
     this.fileErrorMessage = '';
     this.urisFromFile = [];
 
     this.loading = true;
     this.loadingCreate = false;
     this.error = false;
+
+    this.hideAddPagesButton = false;
+    this.addingPages = true;
+    this.addingFile = false;
   }
 
   ngOnInit() {
@@ -142,7 +144,29 @@ export class AddWebpagesDialogComponent implements OnInit {
   }
 
   createPages(e) {
+    e.preventDefault();
 
+    const tag = this.pagesForm.value.tags;
+    const website = this.pagesForm.value.websites;
+    const domain = this.pagesForm.value.domain;
+    let pages = new Array<string>();
+
+    if (this.addingPages) {
+      pages = this.pagesForm.value.pages.split('\n').filter(p => p.trim() !== '').map(p => p.trim());
+    }
+
+    if (this.addingFile) {
+      pages = this.urisFromFile.filter(p => p.trim() !== '').map(p => p.trim());
+    }
+
+    this.studies.addTagWebsitePages(tag, website, domain, pages)
+      .subscribe(success => {
+        if (success) {
+          this.dialog.open(BackgroundEvaluationsInformationDialogComponent);
+        } else {
+          alert('error');
+        }
+      });
   }
 
   searchWebsites(): void {
@@ -194,7 +218,13 @@ export class AddWebpagesDialogComponent implements OnInit {
   }
 
   canSubmit(): boolean {
-    return !this.pagesForm.invalid;
+    if (this.addingPages) {
+      return !this.pagesForm.invalid; 
+    }
+
+    if (this.addingFile) {
+      return this.fileErrorMessage === '';
+    }
   }
 
   filterTag(val: any): string[] {
@@ -252,10 +282,16 @@ export class AddWebpagesDialogComponent implements OnInit {
     reader.readAsText(file);
     reader.onload = () => {
       const parser = new DOMParser();
-      const json = {}; // this.xml2Json.xmlToJson(xml);
-      const urlJson = json['urlset']['url'];
+      const doc = parser.parseFromString(reader.result.toString(), 'text/xml');
+      
+      const urls = doc.getElementsByTagName('loc');
 
-      this.urisFromFile = _.clone(urlJson.map(u => u.loc));
+      this.urisFromFile = new Array<string>();
+      for (let i = 0 ; i < urls.length ; i++) {
+        const url = urls.item(i);
+        this.urisFromFile.push(url.textContent.trim());
+      }
+
       this.validateFileUris(this.domain, this.urisFromFile);
     };
     return result;
@@ -294,32 +330,24 @@ export class AddWebpagesDialogComponent implements OnInit {
       });
   }
 
-  openCrawlingResultsDialog(): void {
-    const dialog = this.dialog.open(CrawlerResultsDialogComponent, {
-      width: '60vw',
-      data: {
-        domain: this.domain
-      }
-    });
-
-    dialog.afterClosed().subscribe(data => {
-      if (data) {
-        //this.addTagWebsitePages.next({ domain: this.domain, urls: data });
-      }
-    });
-  }
-
-  deleteCrawlingResults(): void {
-    this.studies.deleteCrawlingResults(this.domain)
-      .subscribe(result => {
-        if (result) {
-          this.crawlStatus = 'not_running';
-          this.crawlButtonDisable = false;
-          this.crawlResultsDisabled = true;
-        } else {
-          alert('Error');
-        }
-      });
+  tabChanged(event: any): void {
+    if (event.index === 0) {
+      this.addingPages = true;
+      this.addingFile = false;
+    } else if (event.index === 1) {
+      this.addingPages = false;
+      this.addingFile = true;
+    } else {
+      this.addingPages = false;
+      this.addingFile = false;
+    }
+    
+    if (event.index === 2) {
+      this.hideAddPagesButton = true;
+    } else {
+      this.hideAddPagesButton = false;
+    }
+    this.cd.detectChanges();
   }
 }
 

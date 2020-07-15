@@ -129,7 +129,7 @@ export class AddWebsiteDialogComponent implements OnInit {
     const tag = this.websiteForm.value.tags;
     const name = this.websiteForm.value.name;
     const domain = this.websiteForm.value.domain;
-    const pages = this.websiteForm.value.pages || [];
+    const pages = this.websiteForm.value.pages.split('\n').filter(p => p.trim() !== '').map(p => p.trim()) || [];
 
     this.studies.addNewTagWebsite(tag, name, domain, pages)
       .subscribe(websites => {

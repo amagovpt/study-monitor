@@ -16,19 +16,19 @@
   },
   "BOTTOMSHEET": {
     "category": {
-      "title": "Categoria",
+      "title": "Criar uma nova categoria",
       "subtitle": "Criar uma nova categoria"
     },
     "website": {
-      "title": "Sítio web",
+      "title": "Adicione um novo sítio web",
       "subtitle": "Adicione um novo sítio web"
     },
     "website2": {
-      "title": "Sítio web",
+      "title": "Importar sítios web",
       "subtitle": "Importe sítios web duma categoria para outra"
     },
     "pages": {
-      "title": "Páginas web",
+      "title": "Adicione novas páginas web",
       "subtitle": "Adicione novas páginas web"
     }
   },
@@ -46,7 +46,8 @@
       "code": "Código",
       "statistics": "Estatísticas"
     },
-    "settings": "Definições"
+    "settings": "Definições",
+    "crawler": "Crawler"
   },
   "SETTINGS": {
     "title": "Definições do utilizador",
@@ -67,6 +68,23 @@
       "success": "Palavra-chave alterada com sucesso"
     }
   },
+  "CRAWLER": {
+    "title": "Estado do crawler",
+    "websites_title": "Lista de sítios web com crawler",
+    "table": {
+      "name": "Sítio web",
+      "status": "Estado",
+      "done": "Terminado",
+      "progress": "Em progresso"
+    }
+  },
+  "ITEMS_PER_PAGE_LABEL": "Itens por página",
+  "NEXT_PAGE_LABEL": "Próxima página",
+  "PREVIOUS_PAGE_LABEL": "Página anterior",
+  "FIRST_PAGE_LABEL": "Primeira página",
+  "LAST_PAGE_LABEL": "Última páginas",
+  "RANGE_PAGE_LABEL_1": "0 de {{length}}",
+  "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} de {{length}}",
   "TAGS": {
     "title": "Lista de categorias",
     "create_message": "Atualemnte não tem categorias. Carregue no botão abaixo para criar uma.",
@@ -104,7 +122,7 @@
       "tags_label": "Escolha a categoria para onde quer importar",
       "label": "Sítios web para importar",
       "option": "<strong>Categoria</strong>: {{tag}}, <strong>sítio web</strong>: {{website}} - {{url}}",
-      "no_websites": "Não existem s+itios web para importar",
+      "no_websites": "Não existem sítios web para importar",
       "button": "Adicionar sítios web"
     },
     "new": {
@@ -444,7 +462,7 @@
   },
   "FOOTER": {
     "language": "Língua",
-    "link": "Unidade ACESSO",
+    "link": "Agência para a Modernização Administrativa",
     "rights": "Todos os Direitos Reservados."
   },
   "LANGUAGES": {

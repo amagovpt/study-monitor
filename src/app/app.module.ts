@@ -42,7 +42,6 @@ import { RemovePagesConfirmationDialogComponent } from './dialogs/remove-pages-c
 import { WebsitesTableComponent } from './pages/tag/websites-table/websites-table.component';
 import { WebsiteComponent } from './pages/website/website.component';
 import { WebsiteStatisticsComponent } from './pages/website/website-statistics/website-statistics.component';
-import { AddPagesComponent } from './pages/website/add-pages/add-pages.component';
 import { WebsiteDetailedStatisticsComponent } from './pages/website-detailed-statistics/website-detailed-statistics.component';
 import { TagDetailedStatisticsComponent } from './pages/tag-detailed-statistics/tag-detailed-statistics.component';
 import { RemoveWebsitesConfirmationDialogComponent } from './dialogs/remove-websites-confirmation-dialog/remove-websites-confirmation-dialog.component';
@@ -65,6 +64,7 @@ import { BottomSheetComponent } from './dialogs/bottom-sheet/bottom-sheet.compon
 import { AddWebsiteDialogComponent } from './dialogs/add-website-dialog/add-website-dialog.component';
 import { AddWebpagesDialogComponent } from './dialogs/add-webpages-dialog/add-webpages-dialog.component';
 import { ImportWebsiteDialogComponent } from './dialogs/import-website-dialog/import-website-dialog.component';
+import { CrawlerComponent } from './pages/crawler/crawler.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent, canActivate: [NoAuthGuard] },
@@ -72,6 +72,7 @@ const appRoutes: Routes = [
     { path: '', component: UserStudiesComponent, canActivate: [UserAuthGuard] },
     { path: 'add-category', component: AddCategoryComponent, canActivate: [UserAuthGuard] },
     { path: 'settings', component: SettingsComponent, canActivate: [UserAuthGuard] },
+    { path: 'crawler', component: CrawlerComponent, canActivate: [UserAuthGuard] },
     { path: ':tag', component: TagComponent, canActivate: [UserAuthGuard] },
     { path: ':tag/statistics', component: TagDetailedStatisticsComponent, canActivate: [UserAuthGuard] },
     { path: ':tag/statistics/:tagError', component: TagListWebsitesErrorComponent, canActivate: [UserAuthGuard] },
@@ -129,7 +130,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     WebsitesTableComponent,
     WebsiteComponent,
     WebsiteStatisticsComponent,
-    AddPagesComponent,
     WebsiteDetailedStatisticsComponent,
     TagDetailedStatisticsComponent,
     RemoveWebsitesConfirmationDialogComponent,
@@ -151,7 +151,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     BottomSheetComponent,
     AddWebsiteDialogComponent,
     AddWebpagesDialogComponent,
-    ImportWebsiteDialogComponent
+    ImportWebsiteDialogComponent,
+    CrawlerComponent
   ],
   imports: [
     RouterModule.forRoot(

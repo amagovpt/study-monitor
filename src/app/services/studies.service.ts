@@ -482,6 +482,37 @@ export class StudiesService {
     );
   }
 
+  getUserTagCrawledWebsites(tagName: string): Observable<any> {
+    return this.http.get<any>(this.config.getServer('/crawler/tag/' + encodeURIComponent(tagName)), {observe: 'response'}).pipe(
+      retry(3),
+      map(res => {
+        const response = <Response> res.body;
+
+        if (!res.body || res.status === 404) {
+          throw new AsError(404, 'Service not found', 'SERIOUS');
+        }
+
+        if (response.success !== 1) {
+          throw new AsError(response.success, response.message, 'NORMAL', response.errors, response.result);
+        }
+
+        return <Array<Website>> response.result;
+      }),
+      catchError(err => {
+        if (err.code === 0) {
+          this.dialog.open(AddPagesErrorsDialogComponent, {
+            data: err.errors
+          });
+          return of(err.result);
+        } else {
+          console.log(err);
+          this.message.show('MISC.unexpected_error');
+          return of(null);
+        }
+      })
+    );
+  }
+
   checkCrawler(domain: string): Observable<boolean> {
     return this.http.post<any>(this.config.getServer('/crawler/crawlStudiesUserCheck'), {domain}, {observe: 'response'}).pipe(
       map(res => {
@@ -525,7 +556,7 @@ export class StudiesService {
     );
   }
 
-  getCrawlerResults(domain: string): Observable<any> {
+  getCrawlerResults(domain: number): Observable<any> {
     return this.http.post<any>(this.config.getServer('/crawler/crawlStudiesUserResults'), {domain}, {observe: 'response'}).pipe(
       map(res => {
         const response = <Response> res.body;
@@ -547,7 +578,7 @@ export class StudiesService {
     );
   }
 
-  deleteCrawlingResults(domain: string): Observable<boolean> {
+  deleteCrawlingResults(domain: number): Observable<boolean> {
     return this.http.post<any>(this.config.getServer('/crawler/crawlStudiesUserDelete'), {domain}, {observe: 'response'}).pipe(
       map(res => {
         const response = <Response> res.body;
