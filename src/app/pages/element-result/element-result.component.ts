@@ -45,16 +45,18 @@ export class ElementResultComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   ngAfterViewInit(): void {
-    const images = document.querySelectorAll('.img img');
-    
-    for (let i = 0 ; i < images.length ; i++) {
-      const img = images.item(i);
+    if (this.ele !== 'titleOk' && this.ele !== 'lang') {
+      const images = document.querySelectorAll('.img img');
       
-      if (img['width'] > 500 || img['height'] > 200) {
-        if (img['width'] > img['height']) {
-          img['width'] = '500';
-        } else {
-          img['height'] = '200';
+      for (let i = 0 ; i < images.length ; i++) {
+        const img = images.item(i);
+        
+        if (img['width'] > 500 || img['height'] > 200) {
+          if (img['width'] > img['height']) {
+            img['width'] = '500';
+          } else {
+            img['height'] = '200';
+          }
         }
       }
     }

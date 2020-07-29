@@ -47,7 +47,7 @@
       </mat-tab>
       <mat-tab label="{{ 'ADD_PAGES.tab2' | translate }}">
         <div class="sitemap-container" fxLayout="row" fxLayoutAlign="start center">
-          <input type="file" accept="text/xml, text/plain" (change)="handleFileInput($event.target.files)" >
+          <input id="file" type="file" accept="text/xml, text/plain" (change)="handleFileInput($event.target.files)" >
         </div>
         <div class="sitemap-container" fxLayout="row" fxLayoutAlign="start center">
           <span class="sitemap-error" *ngIf="fileErrorMessage === 'invalidDomain'">

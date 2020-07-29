@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { AngularCsv } from 'angular7-csv';
 import { Observable } from 'rxjs/internal/Observable';
 import { of } from 'rxjs/internal/observable/of';
 import { map, retry, catchError } from 'rxjs/operators';
@@ -149,7 +148,7 @@ export class EvaluationService {
     if (ele !== 'fontAbsVal' && ele !== 'justifiedCss' && ele !== 'lineHeightNo' && ele !== 'colorContrast' && ele !== 'colorFgBgNo' && testSee['css'].includes(ele)) {
       results = this.getCSSList(ele, JSON.parse(allNodes[ele]));
     } else {
-      results = this.getElements(allNodes, ele, true /*testSee['div'].includes(ele) || testSee['span'].includes(ele)*/);
+      results = this.getElements(allNodes, ele, ele !== 'titleOk' && ele !== 'lang' /*testSee['div'].includes(ele) || testSee['span'].includes(ele)*/);
     }
 
     return results;
@@ -229,6 +228,94 @@ export class EvaluationService {
       const blob = new Blob([csvContent], { type: 'text/csv' });
       saveAs(blob, 'eval.csv');
     });
+  }
+
+  downloadEARL(): void {
+    const data = {
+      '@context': 'https://act-rules.github.io/earl-context.json',
+      '@graph': new Array<any>()
+    };
+
+    const assertor = {
+      '@id': 'Access Monitor',
+      '@type': 'Software',
+      homepage: 'http://accessmonitor.acessibilidade.gov.pt/amp/'
+    };
+  
+    const testSubject = {
+      '@type': 'TestSubject',
+      source: this.url,
+      assertor,
+      assertions: new Array<any>()
+    };
+    
+    for (const test in this.evaluation.data.tot.results || {}) {
+      
+      const value = this.evaluation.processed.results.filter(r => r.msg === test)[0].tech_list.tot;
+      
+      const sources = new Array<any>();
+      
+      let pointers = new Array<any>(); 
+      
+      if (test === 'img_01a') {
+        pointers = typeof this.evaluation.data.nodes['img'] === 'string' ?
+          this.evaluation.data.nodes['img'].split(',') :
+          this.evaluation.data.nodes['img'][0].split(',');
+      } else if (this.evaluation.data.nodes[tests[test].test] !== undefined) {
+        pointers = typeof this.evaluation.data.nodes[tests[test].test] === 'string' ?
+          this.evaluation.data.nodes[tests[test].test].split(',') : 
+          this.evaluation.data.nodes[tests[test].test][0].split(',');
+      }
+
+      for (const pointer of pointers || []) {
+
+        const source = {
+          result: {
+            pointer: pointer.trim(),
+            outcome: 'earl:' + (tests_colors[test] !== 'Y' ? tests_colors[test] === 'G' ? 'passed' : 'failed' : 'cantTell'),
+          }
+        };
+
+        sources.push(source);
+      }
+
+      const result = {
+        '@type': 'TestResult',
+        outcome: 'earl:' + (tests_colors[test] !== 'Y' ? tests_colors[test] === 'G' ? 'passed' : 'failed' : 'cantTell'),
+        source: sources,
+        description: this.translate.instant('TESTS_RESULTS.' + test + (value === 1 ? '.s' : '.p'), { value })
+                      .replace('<mark>', '')
+                      .replace('</mark>', '')
+                      .replace('<code>', '')
+                      .replace('</code>', ''),
+        date: this.evaluation.data.date
+      };
+      
+      const assertion = {
+        '@type': 'Assertion',
+        test: {
+          '@id': test,
+          '@type': 'TestCase',
+          title: this.translate.instant('TECHS.' + tests[test].ref),
+          description: this.translate.instant('TXT_TECHNIQUES.' + tests[test].ref)
+                        .replace('<p>', '')
+                        .replace('</p>', '')
+                        .replace('<code>', '')
+                        .replace('</code>', '')
+                        .replace('&lt;', '')
+                        .replace('&gt;', '')
+        },
+        mode: 'earl:automatic',
+        result
+      };
+
+      testSubject.assertions.push(assertion);
+    }
+
+    data['@graph'].push(testSubject);
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'text/json' });
+    saveAs(blob, 'eval.json');
   }
 
   private getElements(allNodes: Array < string > , ele: string, inpage: boolean): any {

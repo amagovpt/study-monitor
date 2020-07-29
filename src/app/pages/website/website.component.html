@@ -18,7 +18,6 @@
   <div *ngIf="!loading && !error">
     <span class="no-pages-message" *ngIf="pages.length === 0" fxLayout="column" fxLayoutAlign="start center">
       <p>{{ "WEBSITE.no_pages.message1" | translate }}</p>
-      <p>{{ "WEBSITE.no_pages.message2" | translate }}</p>
     </span>
     <app-website-statistics *ngIf="pages.length > 0" [tag]="tag" [website]="website" [pages]="pages"></app-website-statistics>
     <br *ngIf="pages.length > 0">

@@ -95,8 +95,12 @@ export class EvaluationResultsComponent implements OnInit, OnDestroy {
       });
   }
 
-  downloadEvaluation(): void {
+  downloadCSV(): void {
     this.evaluation.downloadCSV();
+  }
+
+  downloadEARL(): void {
+    this.evaluation.downloadEARL();
   }
 
   goBack(): Array<string> {

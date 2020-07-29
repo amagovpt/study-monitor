@@ -223,7 +223,7 @@ export class AddWebpagesDialogComponent implements OnInit {
     }
 
     if (this.addingFile) {
-      return this.fileErrorMessage === '';
+      return this.fileErrorMessage === '' && this.urisFromFile.length > 0;
     }
   }
 
