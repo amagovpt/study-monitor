@@ -1,7 +1,6 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
 
