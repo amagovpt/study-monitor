@@ -10,6 +10,7 @@ import { BackgroundEvaluationsInformationDialogComponent } from '../../dialogs/b
 
 import { StudiesService } from '../../services/studies.service';
 import { MessageService } from '../../services/message.service';
+import { EvaluationService } from '../../services/evaluation.service';
 
 import { Page } from '../../models/page';
 
@@ -34,6 +35,7 @@ export class WebsiteComponent implements OnInit, OnDestroy {
     private location: Location,
     private studies: StudiesService,
     private message: MessageService,
+    private evaluation: EvaluationService,
     private dialog: MatDialog,
     private cd: ChangeDetectorRef
   ) {
@@ -119,6 +121,15 @@ export class WebsiteComponent implements OnInit, OnDestroy {
           alert('Error');
         }
       });
+  }
+
+  downloadCSV(): void {
+    //TODO: download website csv report
+  }
+
+  downloadEARL(): void {
+    this.evaluation.downloadWebsiteEARL(this.tag, this.website)
+      .subscribe();
   }
 
   goBack(): Array<string> {
