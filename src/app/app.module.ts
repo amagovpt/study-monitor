@@ -65,6 +65,11 @@ import { AddWebsiteDialogComponent } from './dialogs/add-website-dialog/add-webs
 import { AddWebpagesDialogComponent } from './dialogs/add-webpages-dialog/add-webpages-dialog.component';
 import { ImportWebsiteDialogComponent } from './dialogs/import-website-dialog/import-website-dialog.component';
 import { CrawlerComponent } from './pages/crawler/crawler.component';
+import { WebsiteAccessibilityPlotComponent } from './pages/website-detailed-statistics/website-accessibility-plot/website-accessibility-plot.component';
+import { WebsiteTopFiveErrorsComponent } from './pages/website-detailed-statistics/website-top-five-errors/website-top-five-errors.component';
+import { WebsiteTopFiveBestPracticesComponent } from './pages/website-detailed-statistics/website-top-five-best-practices/website-top-five-best-practices.component';
+import { TagTopFiveBestPracticesComponent } from './pages/tag-detailed-statistics/tag-top-five-best-practices/tag-top-five-best-practices.component';
+import { TagTopFiveErrorsComponent } from './pages/tag-detailed-statistics/tag-top-five-errors/tag-top-five-errors.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent, canActivate: [NoAuthGuard] },
@@ -152,7 +157,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddWebsiteDialogComponent,
     AddWebpagesDialogComponent,
     ImportWebsiteDialogComponent,
-    CrawlerComponent
+    CrawlerComponent,
+    WebsiteAccessibilityPlotComponent,
+    WebsiteTopFiveErrorsComponent,
+    WebsiteTopFiveBestPracticesComponent,
+    TagTopFiveBestPracticesComponent,
+    TagTopFiveErrorsComponent
   ],
   imports: [
     RouterModule.forRoot(

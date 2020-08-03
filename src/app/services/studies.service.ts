@@ -11,9 +11,6 @@ import { UserService } from './user.service';
 import { MessageService } from './message.service';
 
 import { Response } from '../models/response';
-import { Tag } from '../models/tag';
-import { Website } from '../models/website';
-import { Page } from '../models/page';
 import { AsError } from '../models/error';
 
 import { AddPagesErrorsDialogComponent } from '../dialogs/add-pages-errors-dialog/add-pages-errors-dialog.component';
@@ -31,7 +28,7 @@ export class StudiesService {
     private readonly dialog: MatDialog
   ) { }
 
-  getUserTags(): Observable<Array<Tag>> {
+  getUserTags(): Observable<Array<any>> {
     return this.http.get<any>(this.config.getServer('/tag/studyMonitor'), {observe: 'response'}).pipe(
       retry(3),
       map(res => {
@@ -45,7 +42,7 @@ export class StudiesService {
           throw new AsError(response.success, response.message);
         }
 
-        return <Array<Tag>> response.result;
+        return <Array<any>> response.result;
       }),
       catchError(err => {
         console.log(err);
@@ -54,7 +51,7 @@ export class StudiesService {
     );
   }
 
-  getUserTagWebsites(tag: string): Observable<Array<Website>> {
+  getUserTagWebsites(tag: string): Observable<Array<any>> {
     return this.http.get<any>(this.config.getServer('/website/studyMonitor/tag/' + tag), {observe: 'response'}).pipe(
       retry(3),
       map(res => {
@@ -68,7 +65,7 @@ export class StudiesService {
           throw new AsError(response.success, response.message);
         }
 
-        return <Array<Website>> response.result;
+        return <Array<any>> response.result;
       }),
       catchError(err => {
         if (err.code === -1) {
@@ -103,7 +100,7 @@ export class StudiesService {
     );
   }
 
-  getUserTagWebsitePages(tag: string, website: string): Observable<Array<Page>> {
+  getUserTagWebsitePages(tag: string, website: string): Observable<Array<any>> {
     return this.http.get<any>(this.config.getServer(`/page/studyMonitor/tag/${tag}/website/${website}`), {observe: 'response'}).pipe(
       retry(3),
       map(res => {
@@ -117,7 +114,7 @@ export class StudiesService {
           throw new AsError(response.success, response.message);
         }
 
-        return <Array<Page>> response.result;
+        return <Array<any>> response.result;
       }),
       catchError(err => {
         if (err.code === -1) {
@@ -129,7 +126,7 @@ export class StudiesService {
     );
   }
 
-  getUserTagWebsitePagesData(tag: string, website: string): Observable<Array<Page>> {
+  getUserTagWebsitePagesData(tag: string, website: string): Observable<Array<any>> {
     return this.http.get<any>(this.config.getServer(`/tag/studyMonitor/${tag}/website/${website}/data`), {observe: 'response'}).pipe(
       retry(3),
       map(res => {
@@ -143,7 +140,7 @@ export class StudiesService {
           throw new AsError(response.success, response.message);
         }
 
-        return <Array<Page>> response.result;
+        return <Array<any>> response.result;
       }),
       catchError(err => {
         console.log(err);
@@ -152,7 +149,7 @@ export class StudiesService {
     );
   }
 
-  getUserWebsitesFromOtherTags(tag: string): Observable<Array<Website>> {
+  getUserWebsitesFromOtherTags(tag: string): Observable<Array<any>> {
     return this.http.get<any>(this.config.getServer('/website/studyMonitor/otherTags/' + tag), {observe: 'response'}).pipe(
       retry(3),
       map(res => {
@@ -166,7 +163,7 @@ export class StudiesService {
           throw new AsError(response.success, response.message);
         }
         
-        return <Array<Website>> response.result;
+        return <Array<any>> response.result;
       }),
       catchError(err => {
         console.log(err);
@@ -175,7 +172,7 @@ export class StudiesService {
     );
   }
 
-  getOfficialTags(): Observable<Array<Tag>> {
+  getOfficialTags(): Observable<Array<any>> {
     return this.http.get<any>(this.config.getServer('/tag/allOfficial'), {observe: 'response'}).pipe(
       retry(3),
       map(res => {
@@ -189,7 +186,7 @@ export class StudiesService {
           throw new AsError(response.success, response.message);
         }
 
-        return <Array<Tag>> response.result;
+        return <Array<any>> response.result;
       }),
       catchError(err => {
         console.log(err);
@@ -258,7 +255,7 @@ export class StudiesService {
     );
   }
 
-  removeTags(tagsId: Array<number>): Observable<Array<Tag>> {
+  removeTags(tagsId: Array<number>): Observable<Array<any>> {
     return this.http.post(this.config.getServer('/tag/user/remove'), {tagsId: JSON.stringify(tagsId)}, {observe: 'response'}).pipe(
       retry(3),
       map(res => {
@@ -272,7 +269,7 @@ export class StudiesService {
           throw new AsError(response.success, response.message);
         }
         
-        return <Array<Tag>> response.result;
+        return <Array<any>> response.result;
       }),
       catchError(err => {
         console.log(err);
@@ -338,7 +335,7 @@ export class StudiesService {
     );
   }
 
-  addExistingTagWebsite(tag: string, websitesId: Array<number>): Observable<Array<Website>> {
+  addExistingTagWebsite(tag: string, websitesId: Array<number>): Observable<Array<any>> {
     return this.http.post<any>(this.config.getServer('/website/studyMonitor/link'), {tag, websitesId: JSON.stringify(websitesId)}, {observe: 'response'}).pipe(
       retry(3),
       map(res => {
@@ -352,7 +349,7 @@ export class StudiesService {
           throw new AsError(response.success, response.message);
         }
 
-        return <Array<Website>> response.result;
+        return <Array<any>> response.result;
       }),
       catchError(err => {
         console.log(err);
@@ -366,7 +363,7 @@ export class StudiesService {
     );
   }
 
-  addNewTagWebsite(tag: string, name: string, domain: string, pages: Array<string>): Observable<Array<Website>> {
+  addNewTagWebsite(tag: string, name: string, domain: string, pages: Array<string>): Observable<Array<any>> {
     return this.http.post<any>(this.config.getServer('/website/studyMonitor/create'), {tag, name, domain, pages: JSON.stringify(pages)}, {observe: 'response'}).pipe(
       retry(3),
       map(res => {
@@ -380,7 +377,7 @@ export class StudiesService {
           throw new AsError(response.success, response.message, 'NORMAL', response.errors, response.result);
         }
 
-        return <Array<Website>> response.result;
+        return <Array<any>> response.result;
       }),
       catchError(err => {
         if (err.code === 0) {
@@ -397,7 +394,7 @@ export class StudiesService {
     );
   }
 
-  removeWebsites(tag: string, websitesId: Array<number>): Observable<Array<Website>> {
+  removeWebsites(tag: string, websitesId: Array<number>): Observable<Array<any>> {
     return this.http.post<any>(this.config.getServer('/website/studyMonitor/remove'), {tag, websitesId: JSON.stringify(websitesId),}, {observe: 'response'}).pipe(
       retry(3),
       map(res => {
@@ -411,7 +408,7 @@ export class StudiesService {
           throw new AsError(response.success, response.message);
         }
 
-        return <Array<Website>> response.result;
+        return <Array<any>> response.result;
       }),
       catchError(err => {
         console.log(err);
@@ -451,7 +448,7 @@ export class StudiesService {
     );
   }
 
-  addTagWebsitePages(tag: string, website: string, domain: string, pages: Array<string>): Observable<Array<Page>> {
+  addTagWebsitePages(tag: string, website: string, domain: string, pages: Array<string>): Observable<Array<any>> {
     return this.http.post<any>(this.config.getServer('/page/studyMonitor/create'), {tag, website, domain, pages: JSON.stringify(pages)}, {observe: 'response'}).pipe(
       retry(3),
       map(res => {
@@ -465,7 +462,7 @@ export class StudiesService {
           throw new AsError(response.success, response.message, 'NORMAL', response.errors, response.result);
         }
 
-        return <Array<Page>> response.result;
+        return <Array<any>> response.result;
       }),
       catchError(err => {
         if (err.code === 0) {
@@ -496,7 +493,7 @@ export class StudiesService {
           throw new AsError(response.success, response.message, 'NORMAL', response.errors, response.result);
         }
 
-        return <Array<Website>> response.result;
+        return <Array<any>> response.result;
       }),
       catchError(err => {
         if (err.code === 0) {
@@ -623,7 +620,7 @@ export class StudiesService {
     );
   }
 
-  removePages(tag: string, website: string, pagesId: Array<number>): Observable<Array<Page>> {
+  removePages(tag: string, website: string, pagesId: Array<number>): Observable<Array<any>> {
     return this.http.post<any>(this.config.getServer('/page/studyMonitor/remove'), {tag, website, pagesId: JSON.stringify(pagesId)}, {observe: 'response'}).pipe(
       retry(3),
       map(res => {
@@ -637,7 +634,7 @@ export class StudiesService {
           throw new AsError(response.success, response.message);
         }
 
-        return <Array<Page>> response.result;
+        return <Array<any>> response.result;
       }),
       catchError(err => {
         console.log(err);

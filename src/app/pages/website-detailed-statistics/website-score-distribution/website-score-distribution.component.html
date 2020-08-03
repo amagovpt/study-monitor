@@ -5,6 +5,34 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content fxLayout="row" fxLayoutAlign="center center">
-    <canvas #scoreChart fxFlex="60" fxFlex.lt-md="100"></canvas>
+    <mat-tab-group fxFlex="90">
+      <mat-tab label="{{ 'DIALOGS.chart_title' | translate }}">
+        <div class="chart">
+          <canvas #scoreChart></canvas>
+        </div>
+      </mat-tab>
+      <mat-tab label="{{ 'DIALOGS.table_title' | translate }}">
+        <table border="1" frame="void" rules="rows">
+          <thead>
+            <tr>
+              <th>{{ "DIALOGS.scores.range" | translate }}</th>
+              <th>{{ "DIALOGS.scores.frequency" | translate }}</th>
+              <th fxHide.lt-sm>{{ "DIALOGS.scores.frequency" | translate }} (%)</th>
+              <th>{{ "DIALOGS.scores.cumulative" | translate }}</th>
+              <th fxHide.lt-sm>{{ "DIALOGS.scores.cumulative" | translate }} (%)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let lab of labels; let i = index">
+              <td>{{labels[i]}}</td>
+              <td>{{values[i]}}</td>
+              <td fxHide.lt-sm>{{percentageValues[i] | toFixed}}%</td>
+              <td>{{freq[i]}}</td>
+              <td fxHide.lt-sm>{{freqPer[i] | toFixed}}%</td>
+            </tr>
+          </tbody>
+        </table>
+      </mat-tab>
+    </mat-tab-group>
   </mat-card-content>
 </mat-card>

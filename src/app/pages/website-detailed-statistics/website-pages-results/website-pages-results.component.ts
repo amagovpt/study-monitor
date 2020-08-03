@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as _ from 'lodash';
 
-import { Page } from '../../../models/page';
-
 @Component({
   selector: 'app-website-pages-results',
   templateUrl: './website-pages-results.component.html',
@@ -17,7 +15,7 @@ export class WebsitePagesResultsComponent implements OnInit {
 
   @Input('tag') tag: string;
   @Input('website') website: string;
-  @Input('pages') pages: Array<Page>;
+  @Input('pages') pages: Array<any>;
 
   resultsKeys: Array<string>;
   results: any;

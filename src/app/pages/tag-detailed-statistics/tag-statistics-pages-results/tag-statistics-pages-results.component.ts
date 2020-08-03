@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as _ from 'lodash';
+import { Tag } from 'src/app/models/tag';
 
 @Component({
   selector: 'app-tag-statistics-pages-results',
@@ -15,6 +16,7 @@ export class TagStatisticsPagesResultsComponent implements OnInit {
 
   @Input('tag') tag: string;
   @Input('pages') pages: Array<any>;
+  @Input('data') tagObject: Tag;
 
   resultsKeys: Array<string>;
   results: any;

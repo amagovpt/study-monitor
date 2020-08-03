@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { of } from 'rxjs/internal/observable/of';
@@ -15,12 +14,9 @@ import * as CSSSelect from 'css-select';
 import * as _ from 'lodash';
 
 import { Response } from '../models/response';
-import { Evaluation } from '../models/evaluation';
 import { AsError } from '../models/error';
 
 import { ConfigService } from './config.service';
-import { UserService } from './user.service';
-import { MessageService } from './message.service';
 
 import tests from './tests.new';
 import scs from './scs';
@@ -33,25 +29,22 @@ import tests_colors from './tests_colors';
 export class EvaluationService {
 
   url: string;
-  evaluation: Evaluation;
+  evaluation: any;
 
   constructor(
-    private router: Router,
     private http: HttpClient,
-    private message: MessageService,
-    private user: UserService,
     private config: ConfigService,
     private translate: TranslateService
   ) { }
 
-  getEvaluation(tag: string, website: string, url: string): Observable<Evaluation> {
+  getEvaluation(tag: string, website: string, url: string): Observable<any> {
     if (this.url && _.isEqual(this.url, url) && this.evaluation) {
       return of(this.evaluation.processed);
     } else {
       const _url = sessionStorage.getItem('url');
       if (_url && _.isEqual(_url, url)) {
         this.url = _url;
-        this.evaluation = <Evaluation> JSON.parse(sessionStorage.getItem('evaluation'));
+        this.evaluation = JSON.parse(sessionStorage.getItem('evaluation'));
         return of(this.evaluation.processed);
       } else {
         return this.http.get<any>(this.config.getServer(`/evaluation/studyMonitor/${tag}/${website}/${encodeURIComponent(url)}`), {observe: 'response'}).pipe(

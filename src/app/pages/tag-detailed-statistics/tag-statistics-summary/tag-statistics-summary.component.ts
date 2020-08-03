@@ -139,16 +139,14 @@ export class TagStatisticsSummaryComponent implements OnInit {
       }
     }
 
-
-
     for (const c in results) {
       for (const w in results[c]) {
-        this.table[c] = this.calculateQuartiles(this.getErrorOcurrenceByWebsite(c));
+        this.table[c] = this.calculateQuartiles(this.getErrorOccurrenceByWebsite(c));
       }
     }
   }
 
-  getErrorOcurrenceByWebsite(conform: string): Array<number> {
+  getErrorOccurrenceByWebsite(conform: string): Array<number> {
     const ocur = new Array<number>();
     const websites = _.groupBy(this.pages, 'Name');
     for (const w in websites) {

@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 
 import { StudiesService } from '../../services/studies.service';
 
-import { Page } from '../../models/page';
+import { Website } from '../../models/website';
 
 @Component({
   selector: 'app-website-detailed-statistics',
@@ -23,7 +23,9 @@ export class WebsiteDetailedStatisticsComponent implements OnInit, OnDestroy {
   tag: string;
   website: string;
 
-  pages: Array<Page>;
+  websiteObject: Website;
+
+  pages: Array<any>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -46,6 +48,11 @@ export class WebsiteDetailedStatisticsComponent implements OnInit, OnDestroy {
             this.error = true;
           } else {
             this.pages = pages;
+
+            this.websiteObject = new Website();
+            for (const page of this.pages || []) {
+              this.websiteObject.addPage(page.Score, page.Errors, page.Tot, page.A, page.AA, page.AAA, page.Evaluation_Date);
+            }
           }
 
           this.loading = false;

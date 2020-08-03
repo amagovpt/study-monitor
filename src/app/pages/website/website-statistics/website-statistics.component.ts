@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Page } from '../../../models/page';
-
 @Component({
   selector: 'app-website-statistics',
   templateUrl: './website-statistics.component.html',
@@ -11,7 +9,7 @@ export class WebsiteStatisticsComponent implements OnInit {
 
   @Input('tag') tag: string;
   @Input('website') website: string;
-  @Input('pages') pages: Array<Page>;
+  @Input('pages') pages: Array<any>;
 
   thresholdConfig: any;
 

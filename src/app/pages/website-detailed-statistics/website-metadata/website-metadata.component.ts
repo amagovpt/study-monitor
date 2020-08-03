@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Page } from '../../../models/page';
-
 @Component({
   selector: 'app-website-metadata',
   templateUrl: './website-metadata.component.html',
@@ -9,7 +7,7 @@ import { Page } from '../../../models/page';
 })
 export class WebsiteMetadataComponent implements OnInit {
 
-  @Input('pages') pages: Array<Page>;
+  @Input('pages') pages: Array<any>;
 
   thresholdConfig: any;
 

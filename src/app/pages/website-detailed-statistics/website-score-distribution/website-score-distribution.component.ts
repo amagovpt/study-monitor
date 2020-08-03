@@ -3,8 +3,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { Chart } from 'chart.js';
 import * as _ from 'lodash';
 
-import { Page } from '../../../models/page';
-
 @Component({
   selector: 'app-website-score-distribution',
   templateUrl: './website-score-distribution.component.html',
@@ -12,7 +10,7 @@ import { Page } from '../../../models/page';
 })
 export class WebsiteScoreDistributionComponent implements OnInit {
 
-  @Input('pages') pages: Array<Page>;
+  @Input('pages') pages: Array<any>;
 
   @ViewChild('scoreChart', { static: true }) scoreChart: any;
   chart: any;

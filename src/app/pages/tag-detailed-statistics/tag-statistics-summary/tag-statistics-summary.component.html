@@ -14,7 +14,7 @@
       <div>
         <mat-list>
           <mat-list-item>
-            <span><strong>WCAG 2.0</strong></span>
+            <span><strong>WCAG 2.1</strong></span>
           </mat-list-item>
           <mat-list-item>
             <span mat-line>
@@ -29,36 +29,33 @@
             </span>
             <div class="pages_conform" mat-line fxLayout="column">
               <span>
-                {{ (pagesWithErrorsA / pages.length) * 100 | toFixed }}% A
+                {{ (pages.length - pagesWithErrorsA) / pages.length * 100 | toFixed }}% A
                 <em *ngIf="pagesWithErrorsA === 1">
-                  ({{ pagesWithErrorsA }} {{ "STATISTICS.n_pages.s" | translate }})
+                  ({{ pages.length - pagesWithErrorsA }} {{ "STATISTICS.n_pages.s" | translate }})
                 </em>
                 <em *ngIf="pagesWithErrorsA !== 1">
-                  ({{ pagesWithErrorsA }} {{ "STATISTICS.n_pages.p" | translate }})
+                  ({{ pages.length - pagesWithErrorsA }} {{ "STATISTICS.n_pages.p" | translate }})
                 </em>
               </span>
               <span>
-                {{ (pagesWithErrorsAA / pages.length) * 100 | toFixed }}% AA
+                {{ (pages.length - pagesWithErrorsAA - pagesWithErrorsA) / pages.length * 100 | toFixed }}% AA
                 <em *ngIf="pagesWithErrorsAA === 1">
-                  ({{ pagesWithErrorsAA }} {{ "STATISTICS.n_pages.s" | translate }})
+                  ({{ pages.length - pagesWithErrorsAA - pagesWithErrorsA }} {{ "STATISTICS.n_pages.s" | translate }})
                 </em>
                 <em *ngIf="pagesWithErrorsAA !== 1">
-                  ({{ pagesWithErrorsAA }} {{ "STATISTICS.n_pages.p" | translate }})
+                  ({{ pages.length - pagesWithErrorsAA - pagesWithErrorsA }} {{ "STATISTICS.n_pages.p" | translate }})
                 </em>
               </span>
               <span>
-                {{ (pagesWithErrorsAAA / pages.length) * 100 | toFixed }}% AA
+                {{ (pages.length - pagesWithErrorsAAA - pagesWithErrorsAA - pagesWithErrorsA) / pages.length * 100 | toFixed }}% AA
                 <em *ngIf="pagesWithErrorsAAA === 1">
-                  ({{ pagesWithErrorsAAA }} {{ "STATISTICS.n_pages.s" | translate }})
+                  ({{ pages.length - pagesWithErrorsAAA - pagesWithErrorsAA - pagesWithErrorsA }} {{ "STATISTICS.n_pages.s" | translate }})
                 </em>
                 <em *ngIf="pagesWithErrorsAAA !== 1">
-                  ({{ pagesWithErrorsAAA }} {{ "STATISTICS.n_pages.p" | translate }})
+                  ({{ pages.length - pagesWithErrorsAAA - pagesWithErrorsAA - pagesWithErrorsA }} {{ "STATISTICS.n_pages.p" | translate }})
                 </em>
               </span>
             </div>
-          </mat-list-item>
-          <mat-list-item>
-            <span><strong>{{ "STATISTICS.mean" | translate }}:</strong> {{ score | toFixed:{places: 3} }}</span>
           </mat-list-item>
           <mat-list-item>
             <span><strong>{{ "STATISTICS.websites" | translate }}:</strong> {{ n_websites }}</span>
@@ -291,16 +288,16 @@
     <div>
       <mat-list>
         <mat-list-item>
-          <span mat-line><strong>{{ "STATISTICS.median" | translate }}:</strong> {{ median | toFixed:{places: 3} }}</span>
+          <span mat-line><strong>{{ "STATISTICS.median" | translate }}:</strong> {{ median | toFixed:{places: 1} }}</span>
           <p mat-line fxHide.lt-md>{{ "STATISTICS.median_desc" | translate }}</p>
         </mat-list-item>
         <mat-list-item>
-          <span mat-line><strong>{{ "STATISTICS.amplitude" | translate }}:</strong> {{ amplitude | toFixed:{places: 3}
+          <span mat-line><strong>{{ "STATISTICS.amplitude" | translate }}:</strong> {{ amplitude | toFixed:{places: 1}
             }}</span>
           <p mat-line fxHide.lt-md>{{ "STATISTICS.amplitude_desc" | translate }}</p>
         </mat-list-item>
         <mat-list-item>
-          <span mat-line><strong>{{ "STATISTICS.variance" | translate }}:</strong> {{ variance | toFixed:{places: 3} }}</span>
+          <span mat-line><strong>{{ "STATISTICS.variance" | translate }}:</strong> {{ variance | toFixed:{places: 1} }}</span>
           <p mat-line fxHide.lt-md>{{ "STATISTICS.variance_desc" | translate }}</p>
         </mat-list-item>
       </mat-list>

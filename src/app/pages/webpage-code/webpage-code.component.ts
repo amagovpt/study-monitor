@@ -6,6 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import * as _ from 'lodash';
 
 import { saveAs } from 'file-saver';
+import { html } from 'js-beautify';
 
 @Component({
   selector: 'app-webpage-code',
@@ -36,7 +37,7 @@ export class WebpageCodeComponent implements OnInit, OnDestroy {
       this.website = params.website;
       this.url = params.url;
 
-      this.pagecode = JSON.parse(sessionStorage.getItem('evaluation')).pagecode;
+      this.pagecode = html(JSON.parse(sessionStorage.getItem('evaluation')).pagecode, { indent_size: 2 });
       const blob = new Blob([this.pagecode], { type: 'text/html' });
       this.downloadHTML = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
     });

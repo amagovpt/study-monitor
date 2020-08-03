@@ -24,10 +24,10 @@
         <app-tag-statistics-score-distribution [pages]="pages"></app-tag-statistics-score-distribution>
       </mat-tab>
       <mat-tab label="{{ 'STATISTICS.menu.websites_results' | translate }}">
-        <app-tag-statistics-websites-results [tag]="tag" [pages]="pages"></app-tag-statistics-websites-results>
+        <app-tag-statistics-websites-results [tag]="tag" [pages]="pages" [data]="tagObject"></app-tag-statistics-websites-results>
       </mat-tab>
       <mat-tab label="{{ 'STATISTICS.menu.pages_results' | translate }}">
-        <app-tag-statistics-pages-results [tag]="tag" [pages]="pages"></app-tag-statistics-pages-results>
+        <app-tag-statistics-pages-results [tag]="tag" [pages]="pages" [data]="tagObject"></app-tag-statistics-pages-results>
       </mat-tab>
     </mat-tab-group>
   </div>

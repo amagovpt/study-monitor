@@ -6,8 +6,6 @@ import * as _ from 'lodash';
 
 import { StudiesService } from '../../services/studies.service';
 
-import { Page } from '../../models/page';
-
 @Component({
   selector: 'app-website-list-pages-error',
   templateUrl: './website-list-pages-error.component.html',
@@ -27,7 +25,7 @@ export class WebsiteListPagesErrorComponent implements OnInit, OnDestroy {
   qLower: number;
   qUpper: number;
 
-  pages: Array<Page>;
+  pages: Array<any>;
   list: any[];
 
   constructor(
